@@ -15,6 +15,7 @@
 
 ## Tokenomics
 Here's the breakdown of DRKT's 1B total supply:
+![DogeRocket Logo](https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreie6nzmivbe4hfh333msh2ulxrwxfpefctahimyzry3loz4sii7jgi)
 <argument name="image_id">8</argument>
 <argument name="caption">"An engaging tokenomics pie chart for DogeRocket: 40% Staking Rewards, 30% Locked Pool, 20% Vested Team, 10% Owner Liquidity."</argument>
 <argument name="align">"CENTER"</argument>

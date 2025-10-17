@@ -10,6 +10,8 @@
 - **Locked Vesting**: 30% supply vested over 10 years to ensure long-term stability.
 - **Reward Pool Donations**: Contribute to the pool and boost everyone's earnings.
 - **Metadata Support**: On-chain metadata for token info and IPFS integration.
+- Secure staking with minimum/maximum stake limits and cooldown periods.
+- Polygon-optimized for low gas fees and high performance.
 
 ## Tokenomics
 Here's the breakdown of DRKT's 1B total supply:

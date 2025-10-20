@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="DogeRocket: Meme Coin with 300% Rocket Booster Staking on Polygon">
+  <meta name="description" content="Join DogeRocket on dogerocket.site! Stake DRKT with 300% Rocket Booster for high rewards, join our IDO, and explore DogeDAO tokenomics. Soar to the crypto moon with low-fee transactions.">
+  <meta name="keywords" content="DogeRocket meme coin, Polygon staking, DRKT IDO, DRKT staking, Polygon meme coin, DogeDAO">
+  <meta name="robots" content="index, follow">
+  <title>DogeRocket - The Meme Coin to Launch Your Portfolio to the Stars!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'dark-blue': '#1E3A8A',
+            'light-blue': '#00BFFF',
+            'secondary-blue': '#0EA5E9',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #E6F0FA; /* Very light blue */
+      color: #1E3A8A; /* Darker blue for text visibility */
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #00BFFF; /* Light blue */
+      text-align: center;
+    }
+    h3 {
+      color: #1E3A8A;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+    .cta-button:hover {
+      transform: scale(1.05);
+    }
+    .cta-light-blue {
+      background: #00BFFF;
+      color: #1E3A8A;
+    }
+    .cta-dark-blue {
+      background: #1E3A8A;
+      color: #00BFFF;
+    }
+    /* Header */
+    header {
+      position: fixed;
+      width: 100%;
+      background: #FFFFFF; /* White for best visibility */
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1E3A8A;
+      text-decoration: none;
+    }
+    header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+    header nav ul li a {
+      color: #1E3A8A;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    header nav ul li a:hover {
+      color: #00BFFF;
+    }
+    /* Hero Section */
+    .hero-section {
+      background: url('assets/hero-image.png') no-repeat center/cover;
+      padding: 150px 20px;
+      text-align: center;
+      color: #00BFFF; /* Changed from white to light blue for readability */
+    }
+    .hero-section h1 {
+      font-size: 48px;
+      color: #00BFFF;
+      text-shadow: 2px 2px rgba(0, 31, 63, 0.7);
+    }
+    .hero-section p {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+    .ido-countdown {
+      font-size: 24px;
+      background: rgba(30, 58, 138, 0.8);
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+      color: #00BFFF; /* Changed from white to light blue for readability */
+    }
+    /* About Section */
+    .about-section {
+      padding: 60px 20px;
+      background: #FFFFFF;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .about-section h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    .about-section p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #1E3A8A;
+    }
+    /* Tokenomics Section */
+    .tokenomics-section {
+      padding: 60px 20px;
+      text-align: center;
+      background: #FFFFFF;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .tokenomics-section ul {
+      list-style: none;
+      padding: 0;
+    }
+    .tokenomics-section li {
+      font-size: 18px;
+      margin: 10px 0;
+      color: #1E3A8A;
+    }
+    .tokenomics-section img {
+      max-width: 100%;
+      margin: 20px 0;
+    }
+    /* Staking Section */
+    .staking-section {
+      padding: 60px 20px;
+      background: #FFFFFF;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .staking-calculator {
+      margin: 20px 0;
+      padding: 20px;
+      background: #00BFFF;
+      border-radius: 5px;
+    }
+    .staking-calculator input, .staking-calculator button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+    }
+    .staking-calculator button {
+      background: #1E3A8A;
+      color: #00BFFF; /* Changed from white to light blue for readability */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    /* DogeDAO Section */
+    .dogedao-section {
+      padding: 60px 20px;
+      background: #FFFFFF;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    /* Staking Dashboard Section */
+    .dashboard-section {
+      padding: 60px 20px;
+      background: #FFFFFF;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .dashboard-card {
+      background: #E6F0FA;
+      padding: 20px;
+      border: 2px solid #00BFFF;
+      border-radius: 5px;
+    }
+    .dashboard-card input, .dashboard-card button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    .dashboard-card button {
+      background: #00BFFF;
+      color: #1E3A8A;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    /* Roadmap Section */
+    .roadmap-section {
+      padding: 60px 20px;
+      text-align: center;
+      background: #FFFFFF;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .roadmap-timeline {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+    .milestone {
+      width: 22%;
+      padding: 20px;
+      background: #E6F0FA;
+      border: 2px solid #00BFFF;
+      border-radius: 5px;
+    }
+    /* Team Section */
+    .team-section {
+      padding: 60px 20px;
+      background: #FFFFFF;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .team-member {
+      padding: 20px;
+      background: #E6F0FA;
+      border-radius: 5px;
+    }
+    .team-member img {
+      width: 100px;
+      border-radius: 50%;
+      margin: 0 auto;
+      display: block;
+    }
+    /* FAQ Section */
+    .faq-section {
+      padding: 60px 20px;
+      background: #FFFFFF;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .faq-accordion {
+      margin: 20px 0;
+      text-align: left;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    .faq-item {
+      border-bottom: 1px solid #00BFFF;
+      padding: 10px 0;
+    }
+    .faq-item h3 {
+      font-size: 20px;
+      cursor: pointer;
+      color: #1E3A8A;
+      position: relative;
+    }
+    .faq-item h3::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+    }
+    .faq-item.active h3::after {
+      content: '-';
+    }
+    .faq-item p {
+      display: none;
+      font-size: 16px;
+      color: #1E3A8A;
+    }
+    .faq-item.active p {
+      display: block;
+    }
+    /* Socials Section */
+    .socials-section {
+      padding: 60px 20px;
+      text-align: center;
+      background: #FFFFFF;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .socials-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .socials-list li {
+      display: flex;
+      align-items: center;
+    }
+    .socials-list img {
+      width: 30px;
+      margin-right: 10px;
+    }
+    /* Tracker Section */
+    .tracker-section {
+      padding: 60px 20px;
+      background: #FFFFFF;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .tracker-widget {
+      background: #00BFFF;
+      padding: 20px;
+      border-radius: 5px;
+      margin: 20px 0;
+    }
+    /* Articles Section */
+    .articles-section {
+      padding: 60px 20px;
+      background: #FFFFFF;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .article-card {
+      background: #E6F0FA;
+      padding: 20px;
+      border: 2px solid #00BFFF;
+      border-radius: 5px;
+      margin: 20px 0;
+      text-align: left;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .hero-section h1 { font-size: 32px; }
+      .hero-section p { font-size: 18px; }
+      .hero-section .cta-button { display: block; margin: 10px auto; }
+      .about-section h2, .tokenomics-section h2, .staking-section h2, .dogedao-section h2, .dashboard-section h2, .roadmap-section h2, .team-section h2, .faq-section h2, .socials-section h2, .tracker-section h2 { font-size: 28px; }
+      .roadmap-timeline, .team-grid, .dashboard-grid { flex-direction: column; grid-template-columns: 1fr; }
+      .milestone, .team-member, .dashboard-card { width: 100%; margin: 10px 0; }
+      .socials-list { flex-direction: column; }
+      .staking-calculator input, .staking-calculator button, .dashboard-card input, .dashboard-card button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="fixed w-full bg-white py-4 shadow-lg z-10">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-dark-blue">DogeRocket</a>
+      <nav class="hidden md:flex space-x-6">
+        <a href="#home" class="text-dark-blue hover:text-light-blue">Home</a>
+        <a href="#about" class="text-dark-blue hover:text-light-blue">About</a>
+        <a href="#tokenomics" class="text-dark-blue hover:text-light-blue">Tokenomics</a>
+        <a href="assets/whitepaper.pdf" class="text-dark-blue hover:text-light-blue">Whitepaper</a>
+        <a href="#staking" class="text-dark-blue hover:text-light-blue">Staking</a>
+        <a href="#dogedao" class="text-dark-blue hover:text-light-blue">DogeDAO</a>
+        <a href="#dashboard" class="text-dark-blue hover:text-light-blue">Dashboard</a>
+        <a href="#roadmap" class="text-dark-blue hover:text-light-blue">Roadmap</a>
+        <a href="#team" class="text-dark-blue hover:text-light-blue">Team</a>
+        <a href="#faq" class="text-dark-blue hover:text-light-blue">FAQ</a>
+        <a href="#resources" class="text-dark-blue hover:text-light-blue">Resources</a>
+        <a href="#tracker" class="text-dark-blue hover:text-light-blue">Tracker</a>
+        <a href="#socials" class="text-dark-blue hover:text-light-blue">Socials</a>
+        <a href="#contact" class="text-dark-blue hover:text-light-blue">Contact</a>
+      </nav>
+      <button id="wallet-connect" class="bg-light-blue text-dark-blue py-2 px-4 rounded hover:bg-secondary-blue">Connect Wallet</button>
+    </div>
+  </header>
+  <!-- Hero Section -->
+  <section id="home" class="hero-section">
+    <div class="container">
+      <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="mx-auto w-32 h-32 mb-4 rounded-full shadow-lg">
+      <a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d" class="block text-center text-00BFFF hover:text-light-blue mb-4">Polygon Contract Address</a>
+      <button onclick="addToMetaMask()" class="block mx-auto mt-2 cta-light-blue mb-6">Add to MetaMask</button>
+      <h1>DogeRocket: 300% Rocket Booster for Your Journey to the Stars!</h1>
+      <p>Blast off with DogeRocket—stake DRKT and watch your portfolio soar! Up to 300% APY, community-driven DAO, and meme magic on Polygon.</p>
+      <div class="cta-buttons flex justify-center gap-4 mt-6">
+        <a href="https://app.trustpad.io/dogerocket" class="cta-button cta-light-blue">Join the IDO Now</a>
+        <a href="#staking" class="cta-button cta-dark-blue">Stake DRKT</a>
+      </div>
+      <div class="ido-countdown">IDO Live on November 1st, 2025: <span id="timer">17d 3h 12m</span></div>
+    </div>
+  </section>
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <h2>What is DogeRocket?</h2>
+      <p>DogeRocket is not just a meme coin—it's your ticket to the crypto cosmos! Built on Polygon for fast, cheap transactions, DRKT combines fun with finance. With a 2% tax on unstake sent straight to the reward pool, every unstake fuels rewards. Our 300% Rocket Booster staking lets you earn massive APY, while DogeDAO puts power in your paws. Whether you're a degen trader or long-term holder, DogeRocket is engineered for liftoff!</p>
+    </div>
+  </section>
+  <!-- Tokenomics Section -->
+  <section id="tokenomics" class="tokenomics-section">
+    <div class="container">
+      <h2>DogeRocket Tokenomics</h2>
+      <h3>1 Billion DRKT Supply: Built to Last!</h3>
+      <p>Our tokenomics are as solid as a rocket’s core, designed for fairness and sustainability:</p>
+      <ul>
+        <li><strong>10% (100M DRKT)</strong>: Minted to owner at launch.</li>
+        <li><strong>40% (400M DRKT)</strong>: Staking rewards pool, fueled by 2% tax on unstake sent to the reward pool. Stake and stack rewards!</li>
+        <li><strong>30% (300M DRKT)</strong>: Locked funds, vested over 10 periods with DAO governance post-IDO.</li>
+        <li><strong>20% (200M DRKT)</strong>: Vested allocation, claimable by owner over 10 periods.</li>
+      </ul>
+      <h3>DogeDAO Tokenomics for 30% Funds</h3>
+      <p>DogeDAO empowers community control over 300M DRKT: 50M IDO for presale, 100M liquidity for trading pools, 50M airdrop for early joiners, 50M team allocation, and 50M reserve for future initiatives. DAO votes on usage starting post-IDO.</p>
+      <h3>The 2% Tax: Rocket Fuel for Growth!</h3>
+      <p>Every unstake has a 2% tax sent to the reward pool: fueling staking rewards for the pack. No tricks, just treats!</p>
+      <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreifn5zc3vpvifvmfztrhub6hfsa2ed6kqjw2xwovyeds5kkdlfvtaa" alt="DogeRocket Tokenomics" loading="lazy">
+      <a href="https://quickswap.exchange/swap?inputCurrency=MATIC&outputCurrency=0x03720cc99a302c101dbd48489a6c2c8bb52d178d" class="cta-button cta-light-blue">Buy DRKT Now</a>
+    </div>
+  </section>
+  <!-- Staking Section -->
+  <section id="staking" class="staking-section">
+    <div class="container">
+      <h2>Stake DRKT for Up to 300% Rocket Booster Rewards!</h2>
+      <p>Blast off with DogeRocket’s staking program! Lock your <strong>DRKT</strong> (min 100 DRKT, max 1M DRKT) to earn high rewards with our 300% Rocket Booster feature—boost your APY up to 300% on select stakes (min duration 14 days, max 365 days, 24-hour cooldown). Our secure smart contract, built with OpenZeppelin’s ReentrancyGuard, keeps your funds safe from cosmic threats. Stake, watch your rewards grow, and claim anytime (within 1095 days max claim window).</p>
+      <h3>Try Our Staking Calculator</h3>
+      <p>Enter your DRKT amount to see your potential rewards!</p>
+      <div class="staking-calculator">
+        <label for="drkt-amount" class="block text-dark-blue font-semibold">DRKT to Stake:</label>
+        <input type="number" id="drkt-amount" placeholder="1000" class="border border-dark-blue rounded">
+        <button onclick="calculateRewards()" class="mt-2">Calculate</button>
+        <p id="result" class="text-dark-blue mt-4">Example: Stake 1000 DRKT for 1 year at 50% APY = ~500 DRKT</p>
+      </div>
+      <h3>Why Stake with DogeRocket?</h3>
+      <ul>
+        <li><strong>High Rewards</strong>: Up to 300% APY, funded by 400M DRKT and 2% tax on unstake sent to the reward pool.</li>
+        <li><strong>Rock-Solid Security</strong>: Audited contract with nonReentrant functions to prevent manipulation.</li>
+        <li><strong>Flexible</strong>: Stake and unstake anytime, no lock-in drama (2% withdraw fee).</li>
+      </ul>
+      <img src="assets/staking-dog.png" alt="DogeRocket Staking" loading="lazy">
+      <a href="#dashboard" class="cta-button cta-dark-blue">Stake Now</a>
+    </div>
+  </section>
+  <!-- DogeDAO Section -->
+  <section id="dogedao" class="dogedao-section">
+    <div class="container">
+      <h2>DogeDAO: Community Governance</h2>
+      <p>DogeDAO puts power in the pack's paws! Governing 300M DRKT (30% of supply), it includes: 50M IDO for presale, 100M liquidity for trading pools, 50M airdrop for early joiners, 50M team allocation, and 50M reserve for future initiatives. DAO votes start post-IDO, with proposals on fund usage. Join to shape DogeRocket's future!</p>
+      <a href="https://t.me/dogerocket" class="cta-button cta-light-blue">Join DogeDAO Discussion</a>
+    </div>
+  </section>
+  <!-- Staking Dashboard Section -->
+  <section id="dashboard" class="dashboard-section">
+    <div class="container">
+      <h2>DogeRocket Staking Dashboard</h2>
+      <p>Manage your DRKT staking, view rewards, and join the moon mission!</p>
+      <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <h3>Stake DRKT</h3>
+          <p>Lock your DRKT to earn up to 300% APY!</p>
+          <input type="number" id="stake-amount" placeholder="Enter DRKT amount (min 100, max 1M)">
+          <button onclick="stakeTokens()">Stake Now</button>
+        </div>
+        <div class="dashboard-card">
+          <h3>Unstake DRKT</h3>
+          <p>Withdraw your staked DRKT anytime (2% fee).</p>
+          <input type="number" id="unstake-amount" placeholder="Enter DRKT amount">
+          <button onclick="unstakeTokens()">Unstake</button>
+        </div>
+        <div class="dashboard-card">
+          <h3>Claim Rewards</h3>
+          <p>Collect your staking rewards!</p>
+          <p id="rewards-balance">Rewards: 0 DRKT</p>
+          <button onclick="claimRewards()">Claim Rewards</button>
+        </div>
+      </div>
+      <p><strong>Wallet Status</strong>: <span id="wallet-status">Not Connected</span></p>
+      <button onclick="connectWallet()" class="cta-button cta-light-blue">Connect MetaMask</button>
+    </div>
+  </section>
+  <!-- Resources/Articles Section -->
+  <section id="resources" class="articles-section">
+    <div class="container">
+      <h2>Resources to Boost Your Investment Journey</h2>
+      <p>Explore these insightful articles to attract quick investment and grow our community!</p>
+      <div class="article-card">
+        <h3>Designing a Meme Coin with Lasting Value: Technical & Community Strategies</h3>
+        <p>This article explores the blueprint behind designing a meme coin with real staying power, combining technology and culture into a self-sustaining ecosystem.</p>
+        <a href="https://vocal.media/theChain/designing-a-meme-coin-with-lasting-value-technical-and-community-strategies" class="text-light-blue hover:underline">Read Article</a>
+      </div>
+      <div class="article-card">
+        <h3>How Is Staking-Enabled Meme Coin Development Flipping the Script?</h3>
+        <p>Unlike traditional meme coins, these coins offer utility through staking, incentivizing long-term investment, and community engagement.</p>
+        <a href="https://www.antiersolutions.com/blogs/how-is-staking-enabled-meme-coin-development-flipping-the-script/" class="text-light-blue hover:underline">Read Article</a>
+      </div>
+      <div class="article-card">
+        <h3>Polygon Staking: The Definitive Guide to Generating Crypto Earnings</h3>
+        <p>Polygon staking could be the solution! By putting Polygon coins to work, you can earn passive income while helping to secure the network.</p>
+        <a href="https://www.bitdegree.org/crypto/tutorials/polygon-staking" class="text-light-blue hover:underline">Read Article</a>
+      </div>
+      <div class="article-card">
+        <h3>Meme Coins: How Social Consensus Plays Into An Investment</h3>
+        <p>These memes can skyrocket hundreds to thousands of percent growth in a short time.</p>
+        <a href="https://www.rollingstone.com/culture-council/articles/meme-coins-how-social-consensus-plays-into-investment-1235165627/" class="text-light-blue hover:underline">Read Article</a>
+      </div>
+      <div class="article-card">
+        <h3>What Drives Meme Coin Virality? Insights from Dogecoin & Pepe</h3>
+        <p>Meme coin virality is driven by culture, community, timing, marketing, a relatable meme, social media, and a strong community.</p>
+        <a href="https://www.blockchainappfactory.com/blog/what-drives-meme-coin-virality-insights-dogecoin-pepe/" class="text-light-blue hover:underline">Read Article</a>
+      </div>
+    </div>
+  </section>
+  <!-- Roadmap Section -->
+  <section id="roadmap" class="roadmap-section">
+    <div class="container">
+      <h2>DogeRocket’s Journey to the Stars</h2>
+      <p>Our mission is to build a meme coin that lasts. Here’s our flight plan:</p>
+      <div class="roadmap-timeline">
+        <div class="milestone">
+          <h3>Q4 2025</h3>
+          <p>Deploy smart contract on Polygon Mainnet. Launch IDO on Trustpad, Tokonomo, UNCX, and DuckSTARTER. Lock liquidity and team tokens for trust.</p>
+        </div>
+        <div class="milestone">
+          <h3>Q1 2026</h3>
+          <p>List DRKT on QuickSwap and PinkSwap. Activate staking with 300% Rocket Booster. Airdrop 1M DRKT to early community joiners.</p>
+        </div>
+        <div class="milestone">
+          <h3>Q2 2026</h3>
+          <p>Host community events (meme contests, AMAs). Partner with mid-tier influencers (10K–100K followers) for galactic hype. First liquidity locking event for 50% funds.</p>
+        </div>
+        <div class="milestone">
+          <h3>Q3 2026</h3>
+          <p>Explore DogeRocket-themed NFTs with staking boosts (e.g., +5% APY). Expand to new DEXs and partnerships.</p>
+        </div>
+      </div>
+      <a href="https://t.me/dogerocket" class="cta-button cta-light-blue">Join the Mission</a>
+    </div>
+  </section>
+  <!-- Team Section -->
+  <section id="team" class="team-section">
+    <div class="container">
+      <h2>Meet the DogeRocket Pack</h2>
+      <p>Our crew is ready to send DRKT to the stars!</p>
+      <div class="team-grid">
+        <div class="team-member">
+          <img src="assets/cryptodoge.png" alt="CryptoDoge" loading="lazy">
+          <h3>CryptoDoge</h3>
+          <p>Lead developer, 5 years in Solidity, built 3 Polygon DApps. Passionate about meme coins and secure code.</p>
+          <a href="https://github.com/cryptodoge" class="text-light-blue hover:underline">GitHub</a>
+        </div>
+        <div class="team-member">
+          <img src="assets/moonbarker.png" alt="MoonBarker" loading="lazy">
+          <h3>MoonBarker</h3>
+          <p>Marketing guru, launched 3 viral crypto campaigns. Expert at hyping communities to the moon!</p>
+        </div>
+        <div class="team-member">
+          <img src="assets/starpup.png" alt="StarPup" loading="lazy">
+          <h3>StarPup</h3>
+          <p>Community manager, runs 24/7 Telegram and Discord. Keeps the pack barking with AMAs and giveaways.</p>
+        </div>
+        <div class="team-member">
+          <img src="assets/rocketpaw.png" alt="RocketPaw" loading="lazy">
+          <h3>RocketPaw</h3>
+          <p>Blockchain advisor, 7 years in DeFi. Ensures DogeRocket’s tech is out-of-this-world.</p>
+        </div>
+      </div>
+      <a href="https://discord.gg/9QQ8FmY6nq" class="cta-button cta-light-blue">Join Our Pack</a>
+    </div>
+  </section>
+  <!-- FAQ Section -->
+  <section id="faq" class="faq-section">
+    <div class="container">
+      <h2>DogeRocket FAQ</h2>
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <h3>How do I stake DRKT?</h3>
+          <p>Connect your MetaMask wallet to our staking dashboard, select your DRKT amount (min 100 DRKT), and stake for 14-365 days. Claim rewards anytime, no lock-in!</p>
+        </div>
+        <div class="faq-item">
+          <h3>What’s the 2% tax?</h3>
+          <p>Every unstake has a 2% tax sent to the reward pool: fueling staking rewards for the pack. No tricks, just treats!</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is DogeRocket audited?</h3>
+          <p>Built with OpenZeppelin’s secure libraries, our contract is rock-solid. Certik/Hacken audit pending/published—check our docs for details!</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I join the IDO?</h3>
+          <p>Visit Trustpad, Tokonomo, UNCX, or DuckSTARTER, connect your wallet, and buy DRKT with MATIC. Join early to secure your spot!</p>
+        </div>
+        <div class="faq-item">
+          <h3>What are the risks?</h3>
+          <p>Crypto is volatile, like a rocket ride! Only invest what you can afford to lose. Check our legal disclaimer for more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Socials Section -->
+  <section id="socials" class="socials-section">
+    <div class="container">
+      <h2>Join the DogeRocket Pack!</h2>
+      <p>Be part of our cosmic community:</p>
+      <ul class="socials-list">
+        <li><a href="https://x.com/DRKTDogeRocket"><img src="assets/twitter-icon.png" alt="Twitter/X" loading="lazy" width="30"> Twitter/X: Follow for daily memes, IDO updates, and giveaways (10K followers and counting!)</a></li>
+        <li><a href="https://t.me/dogerocket"><img src="assets/telegram-icon.png" alt="Telegram" loading="lazy" width="30"> Telegram: Join our 24/7 chat for AMAs and 500 DRKT rewards</a></li>
+        <li><a href="https://discord.gg/9QQ8FmY6nq"><img src="assets/discord-icon.png" alt="Discord" loading="lazy" width="30"> Discord: Hang with the pack, join events, and win airdrops</a></li>
+        <li><a href="https://reddit.com/r/CryptoMoonShots"><img src="assets/reddit-icon.png" alt="Reddit" loading="lazy" width="30"> Reddit: Share your #DogeRocketToTheMoon memes</a></li>
+      </ul>
+      <a href="https://t.me/dogerocket" class="cta-button cta-light-blue">Join Now!</a>
+    </div>
+  </section>
+  <!-- Live Tracker Section -->
+  <section id="tracker" class="tracker-section">
+    <div class="container">
+      <h2>DRKT Price & Staking APY</h2>
+      <p>Track DogeRocket’s value and rewards in real-time:</p>
+      <div class="tracker-widget text-white">
+        <p><strong>Price</strong>: <span id="drkt-price">$0.05/DRKT</span> (via CoinGecko)</p>
+        <p><strong>Staking APY</strong>: <span id="drkt-apy">300%</span> (updated dynamically)</p>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer class="text-center py-8 bg-dark-blue text-white">
+    <p>&copy; 2025 DogeRocket. All rights reserved.</p>
+    <ul class="socials-list mt-4">
+      <li><a href="https://x.com/DRKTDogeRocket"><img src="assets/twitter-icon.png" alt="Twitter/X" loading="lazy" width="30"> Twitter/X</a></li>
+      <li><a href="https://t.me/dogerocket"><img src="assets/telegram-icon.png" alt="Telegram" loading="lazy" width="30"> Telegram</a></li>
+      <li><a href="https://discord.gg/9QQ8FmY6nq"><img src="assets/discord-icon.png" alt="Discord" loading="lazy" width="30"> Discord</a></li>
+      <li><a href="https://reddit.com/r/CryptoMoonShots"><img src="assets/reddit-icon.png" alt="Reddit" loading="lazy" width="30"> Reddit</a></li>
+    </ul>
+  </footer>
+  <script>
+    // IDO Countdown Timer
+    const endDate = new Date('2025-11-01T00:00:00Z').getTime();
+    function updateTimer() {
+      const now = new Date().getTime();
+      const timeLeft = endDate - now;
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById('timer').textContent = `${days}d ${hours}h ${minutes}m`;
+    }
+    setInterval(updateTimer, 60000);
+    updateTimer();
+    // Staking Calculator (updated for 50% base APY example, hype 300% booster)
+    function calculateRewards() {
+      const amount = parseFloat(document.getElementById('drkt-amount').value);
+      const rewardRate = 95130; // MAX_REWARD_RATE for 300% APY
+      const stakingDuration = 31536000; // 1 year in seconds
+      const reward = (amount * rewardRate * stakingDuration) / (10**18 * 1000);
+      document.getElementById('result').textContent = `Stake ${amount} DRKT for 1 year at up to 300% Rocket Booster APY = ~${Math.floor(reward)} DRKT`;
+    }
+    // FAQ Accordion
+    document.querySelectorAll('.faq-item h3').forEach(item => {
+      item.addEventListener('click', () => {
+        item.parentElement.classList.toggle('active');
+      });
+    });
+    // Live Tracker (Mock CoinGecko API)
+    async function updateTracker() {
+      // Mock data for demonstration
+      document.getElementById('drkt-price').textContent = '$0.05/DRKT';
+      document.getElementById('drkt-apy').textContent = '300%';
+    }
+    updateTracker();
+    setInterval(updateTracker, 60000);
+    // Mock Wallet Functions (for demonstration)
+    function connectWallet() {
+      document.getElementById('wallet-status').textContent = 'Connected';
+      alert('Wallet connected (mock).');
+    }
+    function stakeTokens() {
+      const amount = parseFloat(document.getElementById('stake-amount').value);
+      if (amount >= 100 && amount <= 1000000) {
+        alert(`Staked ${amount} DRKT (mock).`);
+      } else {
+        alert('Amount must be between 100 and 1,000,000 DRKT.');
+      }
+    }
+    function unstakeTokens() {
+      const amount = parseFloat(document.getElementById('unstake-amount').value);
+      if (amount > 0) {
+        alert(`Unstaked ${amount} DRKT (mock, 2% fee applied).`);
+      } else {
+        alert('Enter a valid DRKT amount.');
+      }
+    }
+    function claimRewards() {
+      alert('Rewards claimed (mock).');
+      document.getElementById('rewards-balance').textContent = 'Rewards: 0 DRKT';
+    }
+    // Add to MetaMask
+    function addToMetaMask() {
+      if (window.ethereum) {
+        window.ethereum.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: '0x03720cc99a302c101dbd48489a6c2c8bb52d178d',
+              symbol: 'DRKT',
+              decimals: 18,
+              image: 'https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i',
+            },
+          },
+        });
+      } else {
+        alert('MetaMask not detected!');
+      }
+    }
+  </script>
+</body>
+</html>

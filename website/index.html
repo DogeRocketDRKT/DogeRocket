@@ -98,7 +98,7 @@
       position: fixed;
       width: 100%;
       background: #FFFFFF;
-      padding: 10px 0;
+      padding: 5px 0;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 10;
     }
@@ -168,6 +168,7 @@
       padding: 60px 15px;
       text-align: center;
       color: #00BFFF;
+      margin-top: 40px; /* Ensure logo is not covered by header */
     }
     .hero-section h1 {
       font-size: 2rem;
@@ -393,7 +394,7 @@
       .nav-menu {
         display: none;
         position: absolute;
-        top: 60px;
+        top: 40px;
         left: 0;
         right: 0;
         background: #FFFFFF;
@@ -451,14 +452,13 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="fixed w-full bg-white py-4 shadow-lg z-10">
+  <header class="fixed w-full bg-white py-2 shadow-lg z-10">
     <div class="container mx-auto px-4 flex justify-between items-center">
       <div>
         <strong>DogeRocket (DRKT)</strong>
-        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="ml-2 inline-block w-10 h-10 rounded-full">
+        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="ml-2 inline-block w-8 h-8 rounded-full">
       </div>
       <div class="flex items-center gap-4">
-        <button id="wallet-connect" class="bg-light-blue text-dark-blue py-2 px-4 rounded hover:bg-secondary-blue">Connect Wallet</button>
         <nav class="nav-menu">
           <ul>
             <li><a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d" target="_blank" rel="noopener noreferrer">Explorer</a></li>
@@ -491,7 +491,7 @@
         <a href="ido.html" target="_blank" rel="noopener noreferrer" class="cta-button cta-light-blue">Join the IDO</a>
         <a href="#staking" class="cta-button cta-dark-blue">Stake DRKT</a>
       </div>
-      <div class="ido-countdown">IDO Live on November 10th, 2025: <span id="timer">16d 11h 24m</span></div>
+      <div class="ido-countdown">IDO Live on November 10th, 2025: <span id="timer">16d 12h 27m</span></div>
     </div>
   </section>
   <!-- About Section -->
@@ -611,13 +611,13 @@
           <img src="assets/cryptodoge.png" alt="CryptoDoge Profile" loading="lazy">
           <h3>CryptoDoge</h3>
           <p>Lead developer, 5 years in Solidity, built 3 Polygon DApps. Passionate about meme coins and secure code.</p>
-          <a href="https://github.com/cryptodoge" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">GitHub</a>
+          <a href="https://github.com/DogeRocketDRKT" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">GitHub</a>
         </div>
         <div class="team-member">
           <img src="assets/moonbarker.png" alt="MoonBarker Profile" loading="lazy">
           <h3>MoonBarker</h3>
           <p>Marketing guru, launched 3 viral crypto campaigns. Expert at hyping communities to the moon!</p>
-          <a href="https://x.com/MoonBarkerDRKT" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Twitter</a>
+          <a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Twitter</a>
         </div>
         <div class="team-member">
           <img src="assets/starpup.png" alt="StarPup Profile" loading="lazy">
@@ -688,7 +688,7 @@
     <p>&copy; 2025 DogeRocket. All rights reserved.</p>
     <div class="links-section mt-4">
       <ul>
-        <li><a href="#" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://github.com/DogeRocketDRKT/DogeRocket" target="_blank" rel="noopener noreferrer">GitHub</a></li>
         <li><a href="#" target="_blank" rel="noopener noreferrer">CoinGecko</a></li>
         <li><a href="#" target="_blank" rel="noopener noreferrer">CoinMarketCap</a></li>
         <li><a href="#" target="_blank" rel="noopener noreferrer">Certik</a></li>

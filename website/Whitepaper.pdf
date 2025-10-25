@@ -1,0 +1,68 @@
+# DogeRocket Whitepaper
+
+## Executive Summary
+
+DogeRocket (DRKT) is a decentralized ERC20 token on the Polygon network, designed to combine the viral appeal of meme coins with robust staking mechanics. With a total supply of 1 billion DRKT, the project allocates 40% to a reward pool funded by a 2% tax on unstakes, enabling dynamic APY ranging from 5.8% to 347.2%, with up to 300% achievable through strategic staking. The 30% locked pool and 20% vested allocation ensure long-term sustainability, vested over 10 periods. 10% is minted to the owner at launch for initial liquidity.
+
+The IDO launches on November 10, 2025, across platforms raising funds for marketing and ecosystem growth. DogeRocket aims to foster community governance via DogeDAO, positioning DRKT as a high-yield, community-driven meme token on Polygon.
+
+## Introduction
+
+In the evolving landscape of cryptocurrency, meme coins have captured the imagination of retail investors through viral marketing and community engagement. However, many lack utility beyond speculation. DogeRocket addresses this by integrating staking rewards directly into its tokenomics, creating a self-sustaining ecosystem where unstake taxes fuel the reward pool. Built on Polygon for low fees and high throughput, DRKT offers an accessible entry to DeFi staking with meme coin flair.
+
+## Tokenomics
+
+### Supply and Distribution
+- **Total Supply**: 1,000,000,000 DRKT
+- **Owner (10%)**: 100,000,000 DRKT - For initial liquidity and operations.
+- **Reward Pool (40%)**: 400,000,000 DRKT - Funds staking rewards, replenished by 2% unstake tax.
+- **Locked Pool (30%)**: 300,000,000 DRKT - Vested over 10 annual periods, claimable after 365 days, added to reward pool.
+- **Vested Allocation (20%)**: 200,000,000 DRKT - Vested over 10 annual periods, claimable by DogeDAO after 10 * 365 days.
+
+### Tax Mechanism
+A 2% tax applies solely to unstakes, with 100% directed to the reward pool. No tax on stakes, transfers, or claims, ensuring fair play.
+
+### Vesting Schedule
+Both locked and vested allocations follow a 10-period schedule over 10 years, with claims starting after a 1-year cliff (365 days). Each period releases 1/10th of the allocation, added to the reward pool (locked) or transferable to DogeDAO (vested).
+
+## Staking Mechanics
+
+### Core Features
+- **Minimum Stake**: 100 DRKT
+- **Maximum Stake**: 1,000,000 DRKT
+- **Stake Duration**: Minimum 14 days, maximum 365 days
+- **Cooldown**: 24 hours between actions
+- **Withdraw Fee**: 2% (sent to reward pool)
+- **Claim Window**: 1095 days (3 years) for pending rewards
+
+### Reward Calculation
+Rewards are dynamic, based on total staked and reward pool coverage:
+- Base Rate: MIN_REWARD_RATE (159) to MAX_REWARD_RATE (95,130)
+- APY: Scaled from 5.8% to 347.2%, with 300% achievable under optimal conditions
+- Formula: Accrued = (stakeAmount * duration * dynamicRate) / DENOMINATOR
+
+Stakers earn proportional to their share, with compounding encouraged for maximum yields.
+
+## DogeDAO Governance
+
+DogeDAO governs the 30% locked allocation, enabling community proposals on usage (e.g., airdrops, partnerships). Post-IDO, token holders vote on initiatives, with 50M for IDO, 100M for liquidity, and reserves for growth. This ensures decentralization and alignment with holders.
+
+## Roadmap
+
+- **Q4 2025**: Mainnet deployment, IDO launch on multiple platforms.
+- **Q1 2026**: DEX listings (QuickSwap, PinkSwap), staking activation, airdrop.
+- **Q2 2026**: Community events, influencer partnerships, liquidity locking.
+- **Q3 2026**: NFT integration for staking boosts, ecosystem expansions.
+
+## Risks and Disclaimers
+
+Investing in DRKT involves risks, including market volatility and smart contract vulnerabilities. This whitepaper is for informational purposes only. Conduct your own research (DYOR). The team is not liable for losses.
+
+## Contact
+
+- Website: https://dogerocket.site
+- Twitter: https://x.com/DRKTDogeRocket
+- Discord: https://discord.gg/9QQ8FmY6nq
+- Telegram: https://t.me/dogerocket
+
+© 2025 DogeRocket. All rights reserved.

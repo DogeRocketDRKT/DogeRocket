@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DogeRocket (DRKT) Pitch Deck</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #E6F0FA; /* Very light blue */
+      color: #1E3A8A; /* Darker blue for text */
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .slide {
+      width: 100%;
+      min-height: 100vh;
+      padding: 50px;
+      box-sizing: border-box;
+      text-align: center;
+      display: none;
+    }
+    .slide.active {
+      display: block;
+    }
+    h1 {
+      color: #00BFFF; /* Light blue */
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 1.8em;
+      margin-bottom: 15px;
+    }
+    p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto 20px;
+    }
+    .logo {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+    .tokenomics-table, .roadmap-table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: #FFFFFF;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .tokenomics-table th, .tokenomics-table td, .roadmap-table th, .roadmap-table td {
+      padding: 10px;
+      border: 1px solid #00BFFF;
+      text-align: left;
+    }
+    .tokenomics-table th, .roadmap-table th {
+      background: #00BFFF;
+      color: #1E3A8A;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #1E3A8A;
+      color: #00BFFF;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      transition: transform 0.2s;
+    }
+    .cta-button:hover {
+      transform: scale(1.05);
+    }
+    .nav-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+    .nav-buttons button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background: #00BFFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #1E3A8A;
+    }
+    .nav-buttons button:disabled {
+      background: #CCCCCC;
+      cursor: not-allowed;
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      h2 { font-size: 1.5em; }
+      p { font-size: 1em; }
+      .tokenomics-table, .roadmap-table { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide active" id="slide1">
+    <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="logo">
+    <h1>Welcome to DogeRocket (DRKT)</h1>
+    <p>A meme coin with a mission: revolutionize staking on Polygon with up to 300% APY. Launching IDO on November 10th, 2025.</p>
+  </div>
+
+  <div class="slide" id="slide2">
+    <h1>The Problem & Opportunity</h1>
+    <p>Meme coins often lack utility, leading to volatility and short-lived hype. DogeRocket solves this with staking rewards and DAO governance, tapping into Polygon’s $5B+ ecosystem and the 2025 meme coin resurgence.</p>
+    <p>Market Potential: $50M MC within 6 months post-IDO.</p>
+  </div>
+
+  <div class="slide" id="slide3">
+    <h1>Our Solution</h1>
+    <h2>300% Rocket Booster Staking</h2>
+    <p>Stake DRKT (min 100, max 1M) for 14-365 days to earn up to 300% APY, fueled by a 2% unstake tax to the reward pool. Built on Polygon for low fees and scalability.</p>
+    <h2>Community Empowerment</h2>
+    <p>20% of supply locked for a DAO, giving token holders governance post-IDO.</p>
+  </div>
+
+  <div class="slide" id="slide4">
+    <h1>Tokenomics</h1>
+    <table class="tokenomics-table">
+      <tr>
+        <th>Allocation</th>
+        <th>Percentage</th>
+        <th>Amount (DRKT)</th>
+      </tr>
+      <tr>
+        <td>Staking Rewards</td>
+        <td>40%</td>
+        <td>400M</td>
+      </tr>
+      <tr>
+        <td>DAO Governance</td>
+        <td>30%</td>
+        <td>300M</td>
+      </tr>
+      <tr>
+        <td>Vested (Team/Founders)</td>
+        <td>20%</td>
+        <td>200M</td>
+      </tr>
+      <tr>
+        <td>Launch Allocation</td>
+        <td>10%</td>
+        <td>100M</td>
+      </tr>
+    </table>
+    <p>Total Supply: 1B DRKT | Initial Price: $0.001</p>
+  </div>
+
+  <div class="slide" id="slide5">
+    <h1>Roadmap</h1>
+    <table class="roadmap-table">
+      <tr>
+        <th>Phase</th>
+        <th>Timeline</th>
+        <th>Milestone</th>
+      </tr>
+      <tr>
+        <td>Phase 1</td>
+        <td>Q4 2025</td>
+        <td>IDO Launch (Nov 10th), Smart Contract Deployment</td>
+      </tr>
+      <tr>
+        <td>Phase 2</td>
+        <td>Q1 2026</td>
+        <td>Staking Live, 50M DRKT Staked, Airdrop 1M DRKT</td>
+      </tr>
+      <tr>
+        <td>Phase 3</td>
+        <td>Q3 2026</td>
+        <td>NFT Staking Boosts, $5M Market Cap Target</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="slide" id="slide6">
+    <h1>Why Invest?</h1>
+    <ul style="text-align: left; max-width: 800px; margin: 0 auto;">
+      <li><strong>High Yield**: Up to 300% APY attracts stakers and investors.</li>
+      <li><strong>Polygon Advantage**: Low fees, fast transactions, $5B+ ecosystem.</li>
+      <li><strong>Scalable Growth**: DAO governance ensures long-term value.</li>
+    </ul>
+    <p>Seeking $50K seed for marketing and liquidity. IDO raise target: $100K.</p>
+  </div>
+
+  <div class="slide" id="slide7">
+    <h1>Team & Partnerships</h1>
+    <p><strong>CryptoDoge</strong> - Lead Dev, 5+ years in Solidity, Polygon DApps.</p>
+    <p><strong>MoonBarker</strong> - Marketing, viral crypto campaign expert.</p>
+    <p><strong>Partnerships**: QuickSwap, Trustpad, Polygon Grants (applying).</p>
+    <p>Audited by OpenZeppelin; Certik/Hacken audit pending.</p>
+  </div>
+
+  <div class="slide" id="slide8">
+    <h1>Call to Action</h1>
+    <p>Join the DogeRocket journey! Invest in our IDO or partner with us.</p>
+    <a href="https://dogerocket.site/ido" class="cta-button">Join IDO</a>
+    <a href="mailto:your@email.com?subject=DRKT%20Investment%20Inquiry" class="cta-button">Contact Us</a>
+    <p>Twitter: [@DRKTDogeRocket](https://x.com/DRKTDogeRocket)</p>
+    <p>Contract: [0x03720cc99a302c101dbd48489a6c2c8bb52d178d](https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d)</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button onclick="previousSlide()" id="prevBtn">Previous</button>
+    <button onclick="nextSlide()" id="nextBtn">Next</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) slide.classList.add('active');
+      });
+      document.getElementById('prevBtn').disabled = index === 0;
+      document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    }
+
+    function previousSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
+    }
+
+    // Initialize
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>

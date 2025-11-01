@@ -1,36 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- ==== BASIC META ==== -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="title" content="DogeRocket: Achieve Up to 300% APY with Staking Booster on Polygon">
-  <meta name="description" content="Discover DogeRocket, a Polygon-based meme coin offering up to 300% APY with its innovative staking booster. Join the IDO, explore DogeDAO tokenomics, and stake DRKT for high rewards with low-fee transactions.">
-  <meta name="keywords" content="DogeRocket, meme coin, Polygon staking, 300% APY, DRKT, IDO, DogeDAO, crypto staking, Polygon blockchain">
+  <title>DogeRocket: Up to 300% APY Staking Booster on Polygon</title>
+  <meta name="description"
+        content="Discover DogeRocket, a Polygon-based meme coin offering up to 300% APY with its innovative staking booster. Join the IDO, explore DogeDAO tokenomics, and stake DRKT for high rewards with low-fee transactions.">
+  <meta name="keywords"
+        content="DogeRocket, meme coin, Polygon staking, 300% APY, DRKT, IDO, DogeDAO, crypto staking, Polygon blockchain">
   <meta name="robots" content="index, follow">
   <meta name="author" content="DogeRocket Team">
   <meta name="publisher" content="DogeRocket">
   <meta name="copyright" content="© 2025 DogeRocket. All rights reserved.">
-  <meta name="revisit-after" content="7 days">
-  <meta name="geo.region" content="US">
-  <meta name="geo.placename" content="Global">
-  <meta name="geo.position" content="0;0">
-  <meta name="ICBM" content="0, 0">
+
+  <!-- ==== OPEN GRAPH / TWITTER ==== -->
   <meta property="og:title" content="DogeRocket: Achieve Up to 300% APY with Staking Booster on Polygon">
-  <meta property="og:description" content="Discover DogeRocket, a Polygon-based meme coin offering up to 300% APY with its innovative staking booster. Join the IDO, explore DogeDAO tokenomics, and stake DRKT for high rewards with low-fee transactions.">
+  <meta property="og:description"
+        content="Discover DogeRocket, a Polygon-based meme coin offering up to 300% APY with its innovative staking booster.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dogerocket.site">
-  <meta property="og:image" content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
+  <meta property="og:image"
+        content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
   <meta property="og:site_name" content="DogeRocket">
   <meta property="og:locale" content="en_US">
+
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DogeRocket: Achieve Up to 300% APY with Staking Booster on Polygon">
-  <meta name="twitter:description" content="Discover DogeRocket, a Polygon-based meme coin offering up to 300% APY with its innovative staking booster. Join the IDO, explore DogeDAO tokenomics, and stake DRKT for high rewards with low-fee transactions.">
-  <meta name="twitter:image" content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
+  <meta name="twitter:description"
+        content="Discover DogeRocket, a Polygon-based meme coin offering up to 300% APY with its innovative staking booster.">
+  <meta name="twitter:image"
+        content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
   <meta name="twitter:site" content="@DRKTDogeRocket">
+
+  <!-- ==== CANONICAL / SITEMAP ==== -->
   <link rel="canonical" href="https://dogerocket.site">
   <link rel="alternate" hreflang="en-us" href="https://dogerocket.site">
-  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+  <!-- ==== FAVICON ==== -->
+  <link rel="icon" type="image/png" href="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
+
+  <!-- ==== FONTS ==== -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- ==== TAILWIND CDN ==== -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -45,424 +59,118 @@
       }
     }
   </script>
+
+  <!-- ==== CUSTOM STYLES ==== -->
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-    body {
-      background: #E6F0FA; /* Very light blue */
-      color: #1E3A8A; /* Darker blue for text visibility */
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 15px;
-    }
-    h1, h2 {
-      color: #00BFFF; /* Light blue */
-      text-align: center;
-      text-decoration: underline;
-    }
-    h2 {
-      font-size: 3rem; /* Increased for bigger text */
-      /* Responsive big text */
-    }
-    h3 {
-      color: #1E3A8A;
-      font-size: 1.25rem;
-    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#E6F0FA; color:#1E3A8A; font-family:'Poppins',sans-serif; line-height:1.6; }
+    .container { max-width:1200px; margin:auto; padding:0 15px; }
+
+    h1, h2 { color:#00BFFF; text-align:center; text-decoration:underline; }
+    h2 { font-size:3rem; }
+    @media (max-width:768px){ h2{font-size:2.25rem;} }
+
     .cta-button {
-      display: inline-block;
-      padding: 12px 24px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: transform 0.2s;
+      display:inline-block; padding:12px 24px; border-radius:5px;
+      font-size:1rem; text-decoration:none; transition:transform .2s;
     }
-    .cta-button:hover {
-      transform: scale(1.05);
-    }
-    .cta-light-blue {
-      background: #00BFFF;
-      color: #1E3A8A;
-    }
-    .cta-dark-blue {
-      background: #1E3A8A;
-      color: #00BFFF;
-    }
+    .cta-button:hover { transform:scale(1.05); }
+    .cta-light-blue { background:#00BFFF; color:#1E3A8A; }
+    .cta-dark-blue  { background:#1E3A8A; color:#00BFFF; }
+
     /* Header */
-    header {
-      position: fixed;
-      width: 100%;
-      background: #FFFFFF;
-      padding: 5px 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      z-index: 10;
+    header { position:fixed; top:0; width:100%; background:#fff; padding:6px 0;
+             box-shadow:0 2px 10px rgba(0,0,0,.1); z-index:10; }
+    header .container { display:flex; align-items:center; justify-content:space-between; }
+    .logo-text { font-weight:700; font-size:1.5rem; color:#1E3A8A; }
+    .menu-toggle { display:none; font-size:1.5rem; background:none; border:none;
+                   color:#1E3A8A; cursor:pointer; }
+    .nav-menu ul { list-style:none; display:flex; gap:15px; }
+    .nav-menu a { color:#1E3A8A; text-decoration:none; font-weight:600;
+                  transition:color .3s; }
+    .nav-menu a:hover { color:#00BFFF; }
+    .dropdown { position:relative; }
+    .dropdown-content { display:none; position:absolute; background:#fff;
+                        min-width:150px; box-shadow:0 8px 16px rgba(0,0,0,.2); }
+    .dropdown:hover .dropdown-content { display:block; }
+    .dropdown-content a { display:block; padding:10px 15px; color:#1E3A8A; }
+    .dropdown-content a:hover { background:#E6F0FA; }
+
+    /* Hero */
+    .hero-section { background:url('assets/hero-image.png') center/cover no-repeat;
+                    padding:70px 15px; text-align:center; color:#00BFFF;
+                    margin-top:50px; }
+    .hero-section h1 { font-size:2rem; text-shadow:2px 2px rgba(0,31,63,.7); }
+    .ido-countdown { background:rgba(30,58,138,.8); padding:8px; border-radius:5px;
+                     margin-top:15px; color:#00BFFF; }
+
+    /* Sections */
+    section { padding:30px 15px; }
+    .about-section, .tokenomics-section, .staking-section,
+    .dashboard-section, .roadmap-section, .team-section,
+    .faq-section, .socials-section, .tracker-section {
+      background:#fff; box-shadow:0 4px 6px rgba(0,0,0,.1);
     }
-    header .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+
+    /* Mobile */
+    @media (max-width:768px){
+      .menu-toggle{display:block;}
+      .nav-menu{display:none;position:absolute;top:45px;left:0;right:0;
+                 background:#fff;padding:15px;box-shadow:0 4px 6px rgba(0,0,0,.1);}
+      .nav-menu.active{display:block;}
+      .nav-menu ul{flex-direction:column;text-align:center;}
     }
-    header .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1E3A8A;
-      text-decoration: none;
+    @media (min-width:769px){
+      .nav-menu{display:flex!important;}
+      .menu-toggle{display:none;}
     }
-    .menu-toggle {
-      display: none;
-      font-size: 1.5rem;
-      background: none;
-      border: none;
-      color: #1E3A8A;
-      cursor: pointer;
-    }
-    .nav-menu {
-      display: flex;
-      gap: 15px;
-    }
-    .nav-menu ul {
-      list-style: none;
-      display: flex;
-      gap: 15px;
-    }
-    .nav-menu ul li a {
-      color: #1E3A8A;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-    .nav-menu ul li a:hover {
-      color: #00BFFF;
-    }
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #FFFFFF;
-      min-width: 150px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      z-index: 1;
-    }
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    .dropdown-content a {
-      color: #1E3A8A;
-      padding: 10px 15px;
-      text-decoration: none;
-      display: block;
-    }
-    .dropdown-content a:hover {
-      background-color: #E6F0FA;
-    }
-    /* Hero Section */
-    .hero-section {
-      background: url('assets/hero-image.png') no-repeat center/cover;
-      padding: 60px 15px;
-      text-align: center;
-      color: #00BFFF;
-      margin-top: 40px; /* Ensure logo is not covered by header */
-    }
-    .hero-section h1 {
-      font-size: 2rem;
-      text-shadow: 2px 2px rgba(0, 31, 63, 0.7);
-    }
-    .hero-section p {
-      font-size: 1rem;
-      margin: 15px 0;
-    }
-    .ido-countdown {
-      font-size: 1rem;
-      background: rgba(30, 58, 138, 0.8);
-      padding: 8px;
-      border-radius: 5px;
-      margin-top: 15px;
-      color: #00BFFF;
-    }
-    /* About Section */
-    .about-section {
-      padding: 30px 15px;
-      background: #FFFFFF;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .about-section p {
-      font-size: 1rem;
-    }
-    /* Tokenomics Section */
-    .tokenomics-section {
-      padding: 30px 15px;
-      text-align: center;
-      background: #FFFFFF;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .tokenomics-section ul {
-      list-style: none;
-      padding: 0;
-    }
-    .tokenomics-section li {
-      font-size: 1rem;
-      margin: 10px 0;
-    }
-    .tokenomics-section img {
-      max-width: 100%;
-      margin: 15px 0;
-    }
-    /* Staking Section */
-    .staking-section {
-      padding: 30px 15px;
-      background: #FFFFFF;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .staking-calculator {
-      margin: 15px 0;
-      padding: 15px;
-      background: #00BFFF;
-      border-radius: 5px;
-    }
-    .staking-calculator input, .staking-calculator button {
-      padding: 8px;
-      font-size: 1rem;
-      margin: 5px;
-      width: 100%;
-    }
-    .staking-calculator button {
-      background: #1E3A8A;
-      color: #00BFFF;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    /* Staking Dashboard Section */
-    .dashboard-section {
-      padding: 30px 15px;
-      background: #FFFFFF;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-      margin: 15px 0;
-    }
-    .dashboard-card {
-      background: #E6F0FA;
-      padding: 15px;
-      border: 2px solid #00BFFF;
-      border-radius: 5px;
-    }
-    .dashboard-card input, .dashboard-card button {
-      width: 100%;
-      padding: 8px;
-      margin: 8px 0;
-      font-size: 1rem;
-    }
-    .dashboard-card button {
-      background: #00BFFF;
-      color: #1E3A8A;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    /* Roadmap Section */
-    .roadmap-section {
-      padding: 30px 15px;
-      text-align: center;
-      background: #FFFFFF;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .roadmap-timeline {
-      display: flex;
-      flex-direction: column;
-      margin: 15px 0;
-    }
-    .milestone {
-      width: 100%;
-      padding: 15px;
-      background: #E6F0FA;
-      border: 2px solid #00BFFF;
-      border-radius: 5px;
-      margin-bottom: 15px;
-    }
-    /* Team Section */
-    .team-section {
-      padding: 30px 15px;
-      background: #FFFFFF;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .team-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-    }
-    .team-member {
-      padding: 15px;
-      background: #E6F0FA;
-      border-radius: 5px;
-    }
-    .team-member img {
-      width: 80px;
-      border-radius: 50%;
-      margin: 0 auto 10px;
-    }
-    /* FAQ Section */
-    .faq-section {
-      padding: 30px 15px;
-      background: #FFFFFF;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .faq-accordion {
-      margin: 15px 0;
-      text-align: left;
-      max-width: 100%;
-    }
-    .faq-item {
-      border-bottom: 1px solid #00BFFF;
-      padding: 10px 0;
-    }
-    .faq-item h3 {
-      font-size: 1.125rem;
-      cursor: pointer;
-    }
-    .faq-item h3::after {
-      content: '+';
-      position: absolute;
-      right: 15px;
-    }
-    .faq-item.active h3::after {
-      content: '-';
-    }
-    .faq-item p {
-      display: none;
-      font-size: 1rem;
-      margin-top: 10px;
-    }
-    .faq-item.active p {
-      display: block;
-    }
-    /* Socials Section */
-    .socials-section {
-      padding: 30px 15px;
-      text-align: center;
-      background: #FFFFFF;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .socials-list {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .socials-list li {
-      display: flex;
-      align-items: center;
-    }
-    .socials-list li img {
-      width: 30px;
-      margin-right: 10px;
-    }
-    /* Tracker Section */
-    .tracker-section {
-      padding: 30px 15px;
-      background: #FFFFFF;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .tracker-widget {
-      background: #00BFFF;
-      padding: 15px;
-      border-radius: 5px;
-      margin: 15px 0;
-    }
-    /* Mobile Responsiveness */
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-      }
-      .nav-menu {
-        display: none;
-        position: absolute;
-        top: 40px;
-        left: 0;
-        right: 0;
-        background: #FFFFFF;
-        padding: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      .nav-menu.active {
-        display: block;
-      }
-      .nav-menu ul {
-        flex-direction: column;
-        text-align: center;
-      }
-      .hero-section h1 { font-size: 1.75rem; }
-      .hero-section p { font-size: 0.875rem; }
-      .hero-section .cta-button { display: block; margin: 10px auto; width: 100%; }
-      .about-section h2, .tokenomics-section h2, .staking-section h2, .dogedao-section h2, .dashboard-section h2, .roadmap-section h2, .team-section h2, .faq-section h2, .socials-section h2, .tracker-section h2 { font-size: 2rem; }
-      .cta-buttons { flex-direction: column; }
-      .cta-button { width: 100%; margin: 5px 0; }
-      .staking-calculator input, .staking-calculator button { width: 100%; }
-      .dashboard-card input, .dashboard-card button { width: 100%; }
-      .milestone, .team-member, .dashboard-card { width: 100%; margin: 10px 0; }
-      .socials-list { flex-direction: column; }
-    }
-    @media (min-width: 769px) {
-      .nav-menu {
-        display: flex !important;
-      }
-      .menu-toggle {
-        display: none;
-      }
-    }
+
     /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px 0;
-      background: #1E3A8A;
-      color: #00BFFF;
-    }
-    .links-section ul {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      list-style: none;
-      padding: 0;
-    }
-    .links-section ul li a {
-      color: #00BFFF;
-      text-decoration: none;
-    }
-    .links-section ul li a:hover {
-      text-decoration: underline;
-    }
+    footer { background:#1E3A8A; color:#00BFFF; text-align:center; padding:20px 0; }
+    .links-section ul { display:flex; justify-content:center; gap:20px;
+                        list-style:none; padding:0; }
+    .links-section a { color:#00BFFF; text-decoration:none; }
+    .links-section a:hover { text-decoration:underline; }
+
+    /* Google Translate */
+    #google_translate_element { display:inline-block; }
+    .goog-te-gadget-simple { background:#1E3A8A; color:#fff; border-radius:4px;
+                             padding:4px 8px; font-size:0.9rem; }
   </style>
+
+  <!-- ==== GOOGLE TRANSLATE ==== -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,pt,hi',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript"
+          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
+
 <body>
-  <!-- Header -->
-  <header class="fixed w-full bg-white py-2 shadow-lg z-10">
+  <!-- ==== HEADER ==== -->
+  <header class="fixed w-full bg-white py-1 shadow-lg z-10">
     <div class="container mx-auto px-4 flex justify-between items-center">
-      <div>
-        <strong>DogeRocket (DRKT)</strong>
-        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="ml-2 inline-block w-8 h-8 rounded-full">
+      <div class="flex items-center">
+        <strong class="logo-text">DogeRocket (DRKT)</strong>
+        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i"
+             alt="DogeRocket Logo" class="ml-2 w-8 h-8 rounded-full">
       </div>
+
       <div class="flex items-center gap-4">
+        <!-- Google Translate Dropdown -->
+        <div id="google_translate_element"></div>
+
         <nav class="nav-menu">
           <ul>
-            <li><a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d" target="_blank" rel="noopener noreferrer">Explorer</a></li>
+            <li><a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d"
+                   target="_blank" rel="noopener noreferrer">Explorer</a></li>
             <li><a href="ido.html" target="_blank" rel="noopener noreferrer">Join IDO</a></li>
             <li class="dropdown">
               <a href="whitepaper.html">Whitepaper</a>
@@ -476,33 +184,45 @@
             <li><a href="#contact" onclick="sendEmail()">Contact</a></li>
           </ul>
         </nav>
-        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+
+        <button class="menu-toggle" onclick="toggleMenu()">Menu</button>
       </div>
     </div>
   </header>
-  <!-- Hero Section -->
+
+  <!-- ==== HERO ==== -->
   <section id="home" class="hero-section">
     <div class="container">
-      <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="mx-auto w-24 h-24 mb-3 rounded-full shadow-lg">
-      <a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d" target="_blank" rel="noopener noreferrer" class="block text-center text-00BFFF hover:text-light-blue mb-3 text-sm">Polygon Contract Address: 0x03720cc99a302c101dbd48489a6c2c8bb52d178d</a>
+      <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i"
+           alt="DogeRocket Logo" class="mx-auto w-24 h-24 mb-3 rounded-full shadow-lg">
+      <a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d"
+         target="_blank" rel="noopener noreferrer"
+         class="block text-center text-sm text-light-blue hover:underline mb-3">
+        Polygon Contract: 0x03720cc99a302c101dbd48489a6c2c8bb52d178d
+      </a>
       <button onclick="addToMetaMask()" class="block mx-auto mt-2 cta-light-blue mb-4 text-sm">Add to MetaMask</button>
+
       <h1>DogeRocket: Achieve Up to 300% APY with Our Staking Booster on Polygon</h1>
       <p>Blast off with DogeRocket—stake DRKT and watch your portfolio soar! Up to 300% APY, community-driven DAO, and meme magic on Polygon.</p>
-      <div class="cta-buttons">
+
+      <div class="flex justify-center gap-4 mt-4">
         <a href="ido.html" target="_blank" rel="noopener noreferrer" class="cta-button cta-light-blue">Join the IDO</a>
         <a href="#staking" class="cta-button cta-dark-blue">Stake DRKT</a>
       </div>
-      <div class="ido-countdown">IDO Live on November 10th, 2025: <span id="timer">16d 12h 47m</span></div>
+
+      <div class="ido-countdown">IDO Live on November 10th, 2025: <span id="timer"></span></div>
     </div>
   </section>
-  <!-- About Section -->
+
+  <!-- ==== ABOUT ==== -->
   <section id="about" class="about-section">
     <div class="container">
       <h2>What is DogeRocket?</h2>
       <p>DogeRocket is not just a meme coin—it's your ticket to the crypto cosmos! Built on Polygon for fast, cheap transactions, DRKT combines fun with finance. With a 2% tax on unstake sent straight to the reward pool, every unstake fuels rewards. Our 300% Rocket Booster staking lets you earn massive APY, while DogeDAO puts power in your paws. Whether you're a degen trader or long-term holder, DogeRocket is engineered for liftoff!</p>
     </div>
   </section>
-  <!-- Tokenomics Section -->
+
+  <!-- ==== TOKENOMICS ==== -->
   <section id="tokenomics" class="tokenomics-section">
     <div class="container">
       <h2>DogeRocket Tokenomics</h2>
@@ -518,175 +238,187 @@
       <p>DogeDAO empowers community control over 300M DRKT: 50M IDO for presale, 100M liquidity for trading pools, 50M airdrop for early joiners, 50M team allocation, and 50M reserve for future initiatives. DAO votes on usage starting post-IDO.</p>
       <h3>The 2% Tax: Rocket Fuel for Growth!</h3>
       <p>Every unstake has a 2% tax sent to the reward pool: fueling staking rewards for the pack. No tricks, just treats!</p>
-      <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreifn5zc3vpvifvmfztrhub6hfsa2ed6kqjw2xwovyeds5kkdlfvtaa" alt="DogeRocket Tokenomics" loading="lazy">
-      <a href="ido.html" target="_blank" rel="noopener noreferrer" class="cta-button cta-light-blue">Join IDO</a>
-      <a href="whitepaper.html" class="block text-center text-light-blue hover:underline mt-3">View Whitepaper</a>
-      <a href="tokenomics.html" class="block text-center text-light-blue hover:underline mt-2">View Full Tokenomics</a>
+      <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreifn5zc3vpvifvmfztrhub6hfsa2ed6kqjw2xwovyeds5kkdlfvtaa"
+           alt="DogeRocket Tokenomics" loading="lazy" class="mx-auto max-w-full mt-4">
+      <div class="flex justify-center gap-4 mt-4">
+        <a href="ido.html" target="_blank" rel="noopener noreferrer" class="cta-button cta-light-blue">Join IDO</a>
+      </div>
     </div>
   </section>
-  <!-- Staking Section -->
+
+  <!-- ==== STAKING ==== -->
   <section id="staking" class="staking-section">
     <div class="container">
       <h2>Stake DRKT for Up to 300% Rocket Booster Rewards!</h2>
       <p>Blast off with DogeRocket’s staking program! Lock your <strong>DRKT</strong> (min 100 DRKT, max 1M DRKT) to earn high rewards with our 300% Rocket Booster feature—boost your APY up to 300% on select stakes (min duration 14 days, max 365 days, 24-hour cooldown). Our secure smart contract, built with OpenZeppelin’s ReentrancyGuard, keeps your funds safe from cosmic threats. Stake, watch your rewards grow, and claim anytime (within 1095 days max claim window).</p>
+
       <h3>Try Our Staking Calculator</h3>
-      <p>Enter your DRKT amount to see your potential rewards!</p>
-      <div class="staking-calculator">
-        <label for="drkt-amount" class="block text-dark-blue font-semibold">DRKT to Stake:</label>
-        <input type="number" id="drkt-amount" placeholder="1000" class="border border-dark-blue rounded">
-        <button onclick="calculateRewards()" class="mt-2">Calculate</button>
-        <p id="result" class="text-dark-blue mt-3">Example: Stake 1000 DRKT for 1 year at 50% APY = ~500 DRKT</p>
+      <div class="bg-light-blue p-4 rounded max-w-md mx-auto">
+        <label class="block text-dark-blue font-semibold">DRKT to Stake:</label>
+        <input type="number" id="drkt-amount" placeholder="1000" class="w-full p-2 border border-dark-blue rounded mb-2">
+        <button onclick="calculateRewards()" class="w-full bg-dark-blue text-light-blue p-2 rounded">Calculate</button>
+        <p id="result" class="text-dark-blue mt-2">Example: Stake 1000 DRKT for 1 year at 50% APY = ~500 DRKT</p>
       </div>
+
       <h3>Why Stake with DogeRocket?</h3>
       <ul>
         <li><strong>High Rewards</strong>: Up to 300% APY, funded by 400M DRKT and 2% tax on unstake sent to the reward pool.</li>
         <li><strong>Rock-Solid Security</strong>: Audited contract with nonReentrant functions to prevent manipulation.</li>
         <li><strong>Flexible</strong>: Stake and unstake anytime, no lock-in drama (2% withdraw fee).</li>
       </ul>
-      <img src="assets/staking-dog.png" alt="DogeRocket Staking Illustration" loading="lazy" class="w-full max-w-xs mx-auto">
-      <a href="#dashboard" class="cta-button cta-dark-blue">Stake Now</a>
+
+      <a href="#dashboard" class="cta-button cta-dark-blue block mx-auto mt-4 max-w-xs">Stake Now</a>
     </div>
   </section>
-  <!-- Staking Dashboard Section -->
+
+  <!-- ==== DASHBOARD ==== -->
   <section id="dashboard" class="dashboard-section">
     <div class="container">
       <h2>DogeRocket Staking Dashboard</h2>
       <p>Manage your DRKT staking, view rewards, and join the moon mission!</p>
-      <div class="dashboard-grid">
-        <div class="dashboard-card">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <div class="bg-E6F0FA p-4 border-2 border-light-blue rounded">
           <h3>Stake DRKT</h3>
-          <p>Lock your DRKT to earn up to 300% APY!</p>
-          <input type="number" id="stake-amount" placeholder="Enter DRKT amount (min 100, max 1M)">
-          <button onclick="stakeTokens()">Stake Now</button>
+          <input type="number" id="stake-amount" placeholder="Enter DRKT (100-1M)" class="w-full p-2 mb-2">
+          <button onclick="stakeTokens()" class="w-full bg-light-blue text-dark-blue p-2 rounded">Stake Now</button>
         </div>
-        <div class="dashboard-card">
+        <div class="bg-E6F0FA p-4 border-2 border-light-blue rounded">
           <h3>Unstake DRKT</h3>
-          <p>Withdraw your staked DRKT anytime (2% fee).</p>
-          <input type="number" id="unstake-amount" placeholder="Enter DRKT amount">
-          <button onclick="unstakeTokens()">Unstake</button>
+          <input type="number" id="unstake-amount" placeholder="Enter DRKT" class="w-full p-2 mb-2">
+          <button onclick="unstakeTokens()" class="w-full bg-light-blue text-dark-blue p-2 rounded">Unstake</button>
         </div>
-        <div class="dashboard-card">
+        <div class="bg-E6F0FA p-4 border-2 border-light-blue rounded">
           <h3>Claim Rewards</h3>
-          <p>Collect your staking rewards!</p>
           <p id="rewards-balance">Rewards: 0 DRKT</p>
-          <button onclick="claimRewards()">Claim Rewards</button>
+          <button onclick="claimRewards()" class="w-full bg-light-blue text-dark-blue p-2 rounded mt-2">Claim</button>
         </div>
       </div>
-      <p><strong>Wallet Status</strong>: <span id="wallet-status">Not Connected</span></p>
-      <button onclick="connectWallet()" class="cta-button cta-light-blue">Connect MetaMask</button>
+
+      <p class="mt-4"><strong>Wallet Status:</strong> <span id="wallet-status">Not Connected</span></p>
+      <button onclick="connectWallet()" class="cta-button cta-light-blue mt-2">Connect MetaMask</button>
     </div>
   </section>
-  <!-- Roadmap Section -->
+
+  <!-- ==== ROADMAP ==== -->
   <section id="roadmap" class="roadmap-section">
     <div class="container">
       <h2>DogeRocket’s Journey to the Stars</h2>
-      <p>Our mission is to build a meme coin that lasts. Here’s our flight plan:</p>
-      <div class="roadmap-timeline">
-        <div class="milestone">
+      <div class="space-y-6">
+        <div class="bg-E6F0FA p-4 border-2 border-light-blue rounded">
           <h3>Q4 2025</h3>
           <p>Deploy smart contract on Polygon Mainnet. Launch IDO on Trustpad, Tokonomo, UNCX, and DuckSTARTER. Lock liquidity and team tokens for trust.</p>
         </div>
-        <div class="milestone">
+        <div class="bg-E6F0FA p-4 border-2 border-light-blue rounded">
           <h3>Q1 2026</h3>
           <p>List DRKT on QuickSwap and PinkSwap. Activate staking with 300% Rocket Booster. Airdrop 1M DRKT to early community joiners.</p>
         </div>
-        <div class="milestone">
+        <div class="bg-E6F0FA p-4 border-2 border-light-blue rounded">
           <h3>Q2 2026</h3>
           <p>Host community events (meme contests, AMAs). Partner with mid-tier influencers (10K–100K followers) for galactic hype. First liquidity locking event for 50% funds.</p>
         </div>
-        <div class="milestone">
+        <div class="bg-E6F0FA p-4 border-2 border-light-blue rounded">
           <h3>Q3 2026</h3>
           <p>Explore DogeRocket-themed NFTs with staking boosts (e.g., +5% APY). Expand to new DEXs and partnerships.</p>
         </div>
       </div>
-      <a href="https://t.me/DogeRocketDRKT" target="_blank" rel="noopener noreferrer" class="cta-button cta-light-blue">Join the Mission</a>
+      <a href="https://t.me/DogeRocketDRKT" target="_blank" rel="noopener noreferrer"
+         class="cta-button cta-light-blue block mx-auto mt-6 max-w-xs">Join the Mission</a>
     </div>
   </section>
-  <!-- Team Section -->
+
+  <!-- ==== TEAM ==== -->
   <section id="team" class="team-section">
     <div class="container">
       <h2>Meet the DogeRocket Pack</h2>
-      <p>Our crew is ready to send DRKT to the stars!</p>
-      <div class="team-grid">
-        <div class="team-member">
-          <img src="assets/cryptodoge.png" alt="CryptoDoge Profile" loading="lazy">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <div class="bg-E6F0FA p-6 rounded text-center">
+          <img src="assets/cryptodoge.png" alt="CryptoDoge" loading="lazy" class="w-20 h-20 mx-auto rounded-full mb-3">
           <h3>CryptoDoge</h3>
           <p>Lead developer, 5 years in Solidity, built 3 Polygon DApps. Passionate about meme coins and secure code.</p>
-          <a href="https://github.com/DogeRocketDRKT" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">GitHub</a>
+          <a href="https://github.com/DogeRocketDRKT" target="_blank" rel="noopener noreferrer"
+             class="text-light-blue hover:underline">GitHub</a>
         </div>
-        <div class="team-member">
-          <img src="assets/moonbarker.png" alt="MoonBarker Profile" loading="lazy">
+        <div class="bg-E6F0FA p-6 rounded text-center">
+          <img src="assets/moonbarker.png" alt="MoonBarker" loading="lazy" class="w-20 h-20 mx-auto rounded-full mb-3">
           <h3>MoonBarker</h3>
           <p>Marketing guru, launched 3 viral crypto campaigns. Expert at hyping communities to the moon!</p>
-          <a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Twitter</a>
+          <a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer"
+             class="text-light-blue hover:underline">Twitter</a>
         </div>
-        <div class="team-member">
-          <img src="assets/starpup.png" alt="StarPup Profile" loading="lazy">
+        <div class="bg-E6F0FA p-6 rounded text-center">
+          <img src="assets/starpup.png" alt="StarPup" loading="lazy" class="w-20 h-20 mx-auto rounded-full mb-3">
           <h3>StarPup</h3>
           <p>Community manager, runs 24/7 Telegram and Discord. Keeps the pack barking with AMAs and giveaways.</p>
-          <a href="https://t.me/DRKTStarPup" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Telegram</a>
-          <a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Discord</a>
+          <a href="https://t.me/DRKTStarPup" target="_blank" rel="noopener noreferrer"
+             class="text-light-blue hover:underline">Telegram</a> |
+          <a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer"
+             class="text-light-blue hover:underline">Discord</a>
         </div>
       </div>
-      <a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer" class="cta-button cta-light-blue">Join Our Pack</a>
+      <a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer"
+         class="cta-button cta-light-blue block mx-auto mt-6 max-w-xs">Join Our Pack</a>
     </div>
   </section>
-  <!-- FAQ Section -->
+
+  <!-- ==== FAQ ==== -->
   <section id="faq" class="faq-section">
     <div class="container">
       <h2>DogeRocket FAQ</h2>
-      <div class="faq-accordion">
-        <div class="faq-item">
-          <h3>How do I stake DRKT?</h3>
-          <p>Connect your MetaMask wallet to our staking dashboard, select your DRKT amount (min 100 DRKT), and stake for 14-365 days. Claim rewards anytime, no lock-in!</p>
+      <div class="space-y-4 mt-6">
+        <div class="faq-item border-b border-light-blue pb-2">
+          <h3 class="cursor-pointer flex justify-between">How do I stake DRKT?<span>+</span></h3>
+          <p class="hidden mt-2">Connect your MetaMask wallet to our staking dashboard, select your DRKT amount (min 100 DRKT), and stake for 14-365 days. Claim rewards anytime, no lock-in!</p>
         </div>
-        <div class="faq-item">
-          <h3>What’s the 2% tax?</h3>
-          <p>Every unstake has a 2% tax sent to the reward pool: fueling staking rewards for the pack. No tricks, just treats!</p>
+        <div class="faq-item border-b border-light-blue pb-2">
+          <h3 class="cursor-pointer flex justify-between">What’s the 2% tax?<span>+</span></h3>
+          <p class="hidden mt-2">Every unstake has a 2% tax sent to the reward pool: fueling staking rewards for the pack. No tricks, just treats!</p>
         </div>
-        <div class="faq-item">
-          <h3>Is DogeRocket audited?</h3>
-          <p>Built with OpenZeppelin’s secure libraries, our contract is rock-solid. Certik/Hacken audit pending/published—check our docs for details!</p>
+        <div class="faq-item border-b border-light-blue pb-2">
+          <h3 class="cursor-pointer flex justify-between">Is DogeRocket audited?<span>+</span></h3>
+          <p class="hidden mt-2">Built with OpenZeppelin’s secure libraries, our contract is rock-solid. Certik/Hacken audit pending/published—check our docs for details!</p>
         </div>
-        <div class="faq-item">
-          <h3>How do I join the IDO?</h3>
-          <p>Visit Trustpad, Tokonomo, UNCX, or DuckSTARTER, connect your wallet, and buy DRKT with MATIC. Join early to secure your spot!</p>
+        <div class="faq-item border-b border-light-blue pb-2">
+          <h3 class="cursor-pointer flex justify-between">How do I join the IDO?<span>+</span></h3>
+          <p class="hidden mt-2">Visit Trustpad, Tokonomo, UNCX, or DuckSTARTER, connect your wallet, and buy DRKT with MATIC. Join early to secure your spot!</p>
         </div>
-        <div class="faq-item">
-          <h3>What are the risks?</h3>
-          <p>Crypto is volatile, like a rocket ride! Only invest what you can afford to lose. Check our legal disclaimer for more.</p>
+        <div class="faq-item border-b border-light-blue pb-2">
+          <h3 class="cursor-pointer flex justify-between">What are the risks?<span>+</span></h3>
+          <p class="hidden mt-2">Crypto is volatile, like a rocket ride! Only invest what you can afford to lose. Check our legal disclaimer for more.</p>
         </div>
       </div>
     </div>
   </section>
-  <!-- Socials Section -->
+
+  <!-- ==== SOCIALS ==== -->
   <section id="socials" class="socials-section">
     <div class="container">
       <h2>Join the DogeRocket Pack!</h2>
-      <p>Be part of our cosmic community:</p>
-      <ul class="socials-list">
-        <li><img src="assets/twitter-placeholder.png" alt="Twitter Icon"><a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer">Twitter/X: Follow for daily memes, IDO updates, and giveaways (10K followers and counting!)</a></li>
-        <li><img src="assets/telegram-placeholder.png" alt="Telegram Icon"><a href="https://t.me/DogeRocketDRKT" target="_blank" rel="noopener noreferrer">Telegram Channel: Join for updates</a></li>
-        <li><img src="assets/discord-placeholder.png" alt="Discord Icon"><a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer">Discord: Join the community</a></li>
-        <li><img src="assets/medium-placeholder.png" alt="Medium Icon"><a href="https://dogerocket.medium.com" target="_blank" rel="noopener noreferrer">Medium: Explore more</a></li>
+      <ul class="space-y-3 mt-4 text-center">
+        <li><a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Twitter/X</a></li>
+        <li><a href="https://t.me/DogeRocketDRKT" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Telegram Channel</a></li>
+        <li><a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Discord</a></li>
+        <li><a href="https://dogerocket.medium.com" target="_blank" rel="noopener noreferrer" class="text-light-blue hover:underline">Medium</a></li>
       </ul>
-      <a href="https://t.me/DogeRocketDRKT" target="_blank" rel="noopener noreferrer" class="cta-button cta-light-blue">Join Now!</a>
+      <a href="https://t.me/DogeRocketDRKT" target="_blank" rel="noopener noreferrer"
+         class="cta-button cta-light-blue block mx-auto mt-6 max-w-xs">Join Now!</a>
     </div>
   </section>
-  <!-- Live Tracker Section -->
+
+  <!-- ==== TRACKER ==== -->
   <section id="tracker" class="tracker-section">
     <div class="container">
       <h2>DRKT Price & Staking APY</h2>
-      <p>Track DogeRocket’s value and rewards in real-time:</p>
-      <div class="tracker-widget text-white">
-        <p><strong>Price</strong>: <span id="drkt-price">$0.001/DRKT</span> (via CoinGecko)</p>
-        <p><strong>Staking APY</strong>: <span id="drkt-apy">300%</span> (updated dynamically)</p>
+      <div class="bg-light-blue text-white p-6 rounded mx-auto max-w-md mt-4">
+        <p><strong>Price:</strong> <span id="drkt-price">$0.001/DRKT</span> (via CoinGecko)</p>
+        <p><strong>Staking APY:</strong> <span id="drkt-apy">300%</span></p>
       </div>
     </div>
   </section>
-  <!-- Footer -->
+
+  <!-- ==== FOOTER ==== -->
   <footer class="text-center py-6 bg-dark-blue text-white">
-    <p>&copy; 2025 DogeRocket. All rights reserved.</p>
+    <p>© 2025 DogeRocket. All rights reserved.</p>
     <div class="links-section mt-4">
       <ul>
         <li><a href="https://github.com/DogeRocketDRKT/DogeRocket" target="_blank" rel="noopener noreferrer">GitHub</a></li>
@@ -696,100 +428,63 @@
       </ul>
     </div>
   </footer>
+
+  <!-- ==== SCRIPTS ==== -->
   <script>
-    // Toggle Menu
+    // Mobile menu
     function toggleMenu() {
-      const navMenu = document.getElementById('navMenu');
-      navMenu.classList.toggle('active');
+      document.querySelector('.nav-menu').classList.toggle('active');
     }
 
-    // IDO Countdown Timer
-    const endDate = new Date('2025-11-10T00:00:00Z').getTime();
+    // IDO countdown
+    const end = new Date('2025-11-10T00:00:00Z').getTime();
     function updateTimer() {
-      const now = new Date().getTime();
-      const timeLeft = endDate - now;
-      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      document.getElementById('timer').textContent = `${days}d ${hours}h ${minutes}m`;
+      const now = Date.now(), diff = end - now;
+      const d = Math.floor(diff/(1000*60*60*24));
+      const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+      const m = Math.floor((diff%(1000*60*60))/(1000*60));
+      document.getElementById('timer').textContent = `${d}d ${h}h ${m}m`;
     }
-    setInterval(updateTimer, 60000);
-    updateTimer();
+    setInterval(updateTimer,60000); updateTimer();
 
-    // Staking Calculator
+    // Staking calculator (mock)
     function calculateRewards() {
-      const amount = parseFloat(document.getElementById('drkt-amount').value);
-      const rewardRate = 95130; // MAX_REWARD_RATE for 300% APY
-      const stakingDuration = 31536000; // 1 year in seconds
-      const reward = (amount * rewardRate * stakingDuration) / (10**18 * 1000);
-      document.getElementById('result').textContent = `Stake ${amount} DRKT for 1 year at up to 300% Rocket Booster APY = ~${Math.floor(reward)} DRKT`;
+      const amt = parseFloat(document.getElementById('drkt-amount').value)||0;
+      const reward = Math.floor(amt * 3); // 300% APY mock
+      document.getElementById('result').textContent = `Stake ${amt} DRKT for 1 year at up to 300% APY = ~${reward} DRKT`;
     }
 
-    // FAQ Accordion
-    document.querySelectorAll('.faq-item h3').forEach(item => {
-      item.addEventListener('click', () => {
-        item.parentElement.classList.toggle('active');
+    // FAQ accordion
+    document.querySelectorAll('.faq-item h3').forEach(h=>{
+      h.addEventListener('click',()=> {
+        const p = h.nextElementSibling;
+        p.classList.toggle('hidden');
+        h.lastElementChild.textContent = p.classList.contains('hidden')?'+':'-';
       });
     });
 
-    // Live Tracker
-    async function updateTracker() {
-      document.getElementById('drkt-price').textContent = '$0.001/DRKT';
-      document.getElementById('drkt-apy').textContent = '300%';
-    }
-    updateTracker();
-    setInterval(updateTracker, 60000);
-
-    // Mock Wallet Functions
-    function connectWallet() {
-      document.getElementById('wallet-status').textContent = 'Connected';
-      alert('Wallet connected (mock).');
-    }
-    function stakeTokens() {
-      const amount = parseFloat(document.getElementById('stake-amount').value);
-      if (amount >= 100 && amount <= 1000000) {
-        alert(`Staked ${amount} DRKT (mock).`);
-      } else {
-        alert('Amount must be between 100 and 1,000,000 DRKT.');
-      }
-    }
-    function unstakeTokens() {
-      const amount = parseFloat(document.getElementById('unstake-amount').value);
-      if (amount > 0) {
-        alert(`Unstaked ${amount} DRKT (mock, 2% fee applied).`);
-      } else {
-        alert('Enter a valid DRKT amount.');
-      }
-    }
-    function claimRewards() {
-      alert('Rewards claimed (mock).');
-      document.getElementById('rewards-balance').textContent = 'Rewards: 0 DRKT';
-    }
+    // Mock wallet actions
+    function connectWallet(){ document.getElementById('wallet-status').textContent='Connected'; alert('Wallet connected (mock)'); }
+    function stakeTokens(){ alert('Staked (mock)'); }
+    function unstakeTokens(){ alert('Unstaked (mock)'); }
+    function claimRewards(){ alert('Rewards claimed (mock)'); document.getElementById('rewards-balance').textContent='Rewards: 0 DRKT'; }
 
     // Add to MetaMask
-    function addToMetaMask() {
-      if (window.ethereum) {
+    function addToMetaMask(){
+      if(window.ethereum){
         window.ethereum.request({
-          method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20',
-            options: {
-              address: '0x03720cc99a302c101dbd48489a6c2c8bb52d178d',
-              symbol: 'DRKT',
-              decimals: 18,
-              image: 'https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i',
-            },
-          },
+          method:'wallet_watchAsset',
+          params:{type:'ERC20',options:{
+            address:'0x03720cc99a302c101dbd48489a6c2c8bb52d178d',
+            symbol:'DRKT',decimals:18,
+            image:'https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i'
+          }}
         });
-      } else {
-        alert('MetaMask not detected!');
-      }
+      }else{alert('MetaMask not detected!');}
     }
 
-    // Send Email
-    function sendEmail() {
-      window.location.href = 'mailto:support@dogerocket.site';
-    }
+    // Contact email
+    function sendEmail(){ location.href='mailto:support@dogerocket.site'; }
   </script>
 </body>
 </html>

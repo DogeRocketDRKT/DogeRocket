@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { Web3Modal } from '@web3modal/ethers5';
-import abi from '../public/abi.json';
+import abi from './abi.json';
 
 const CONTRACT = '0x03720cc99a302c101dbd48489a6c2c8bb52d178d';
 const CHAIN = 137;

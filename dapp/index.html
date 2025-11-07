@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="DogeRocket Staking dApp - Earn Up to 300% APY on Polygon">
+  <meta name="description" content="Stake DRKT tokens in the official DogeRocket staking dApp. Earn dynamic rewards up to 300% APY, manage stakes, and claim rewards securely on Polygon.">
+  <meta name="keywords" content="DogeRocket staking dApp, DRKT stake, Polygon staking, crypto staking, 300% APY, Web3 wallet connect">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="DogeRocket Team">
+  <meta name="publisher" content="DogeRocket">
+  <meta name="copyright" content="© 2025 DogeRocket. All rights reserved.">
+  <meta property="og:title" content="DogeRocket Staking dApp - Earn Up to 300% APY on Polygon">
+  <meta property="og:description" content="Stake DRKT tokens in the official DogeRocket staking dApp. Earn dynamic rewards up to 300% APY, manage stakes, and claim rewards securely on Polygon.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dapp.dogerocket.site">
+  <meta property="og:image" content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
+  <meta property="og:site_name" content="DogeRocket">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DogeRocket Staking dApp - Earn Up to 300% APY on Polygon">
+  <meta name="twitter:description" content="Stake DRKT tokens in the official DogeRocket staking dApp. Earn dynamic rewards up to 300% APY, manage stakes, and claim rewards securely on Polygon.">
+  <meta name="twitter:image" content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
+  <meta name="twitter:site" content="@DRKTDogeRocket">
+  <link rel="canonical" href="https://dapp.dogerocket.site">
+  <link rel="icon" type="image/png" href="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+  <!-- Remixicon CDN (Icons) -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="https://unpkg.com/@web3modal/ethers5@3.5.4/dist/index.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'dark-blue': '#1E3A8A',
+            'light-blue': '#00BFFF',
+            'secondary-blue': '#0EA5E9',
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* GTranslate - Reduced Height ~50% */
+    #google_translate_element { font-size: 8px; width: 100px; height: 10px; }
+    #google_translate_element > div { font-size: 8px !important; }
+    .goog-te-gadget .goog-te-combo { font-size: 8px !important; padding: 1px !important; }
+    @media (max-width: 768px) { 
+      #google_translate_element { width: 90px; height: 9px; }
+      .goog-te-gadget .goog-te-combo { font-size: 7px !important; padding: 0.5px !important; }
+    }
+    /* Social Icons with Color Hover */
+    .social-icons a {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2);
+      color: #00BFFF; font-size: 1.2rem; transition: all 0.4s ease; margin: 0 6px;
+      backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .social-icons a:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+    .social-icons a:hover i { animation: pulse 1s infinite; }
+    .social-icons a[href*="github"]:hover { background: #333; color: white; }
+    .social-icons a[href*="x.com"]:hover, .social-icons a[href*="twitter"]:hover { background: #000; color: white; }
+    .social-icons a[href*="telegram"]:hover { background: #229ED9; color: white; }
+    .social-icon a[href*="discord"]:hover { background: #5865F2; color: white; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-dark-blue via-blue-800 to-light-blue text-white min-h-screen font-sans overflow-x-hidden">
+  <!-- Fixed Header -->
+  <header class="fixed w-full bg-white/95 backdrop-blur-md shadow-lg z-50 border-b border-light-blue/20">
+    <div class="container mx-auto px-4 flex justify-between items-center py-3">
+      <div class="flex items-center">
+        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="w-8 h-8 rounded-full mr-2">
+        <strong class="text-xl text-dark-blue">Staking dApp</strong>
+      </div>
+      <div class="flex items-center gap-4">
+        <nav class="hidden md:flex">
+          <ul class="flex gap-6">
+            <li><a href="https://dogerocket.site" class="text-dark-blue hover:text-light-blue font-semibold transition-colors">Home</a></li>
+            <li><a href="https://dogerocket.site/ido.html" class="text-dark-blue hover:text-light-blue font-semibold transition-colors">IDO</a></li>
+            <li><a href="https://dogerocket.site/whitepaper.html" class="text-dark-blue hover:text-light-blue font-semibold transition-colors">Whitepaper</a></li>
+          </ul>
+        </nav>
+        <div id="google_translate_element"></div>
+        <button class="md:hidden text-dark-blue text-2xl" onclick="toggleMenu()">☰</button>
+      </div>
+    </div>
+    <nav id="mobile-menu" class="hidden md:hidden bg-white px-4 py-2 border-t">
+      <ul class="flex flex-col gap-2">
+        <li><a href="https://dogerocket.site" class="text-dark-blue hover:text-light-blue py-2">Home</a></li>
+        <li><a href="https://dogerocket.site/ido.html" class="text-dark-blue hover:text-light-blue py-2">IDO</a></li>
+        <li><a href="https://dogerocket.site/whitepaper.html" class="text-dark-blue hover:text-light-blue py-2">Whitepaper</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const { ethers } = window.ethers;
+
+    // Environment variables (replace with Vercel env vars at build time, e.g., via Next.js or Vite)
+    // In a static HTML, these can be injected via build script; for Vercel, use NEXT_PUBLIC_ prefix in Next.js
+    const INFURA_KEY = process.env.NEXT_PUBLIC_INFURA_KEY || 'YOUR_INFURA_KEY'; // Fetch from Vercel env: NEXT_PUBLIC_INFURA_KEY
+    const WALLET_CONNECT_PROJECT_ID = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || 'YOUR_WALLET_CONNECT_PROJECT_ID'; // Fetch from Vercel env: NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
+
+    // Production values
+    const CONTRACT_ADDRESS = "0x03720cc99a302c101dbd48489a6c2c8bb52d178d";
+    const CHAIN_ID = 137; // Polygon Mainnet
+    const RPC_URL = `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`;
+
+    const ABI = [
+      {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
+      {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},
+      {"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},
+      {"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},
+      {"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},
+      {"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},
+      {"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},
+      {"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"OwnableInvalidOwner","type":"error"},
+      {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"OwnableUnauthorizedAccount","type":"error"},
+      {"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"SafeERC20FailedOperation","type":"error"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"wallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"LockedTokensClaimed","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"newCID","type":"string"},{"indexed":false,"internalType":"string","name":"newDescription","type":"string"}],"name":"MetadataUpdated","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"RewardClaimed","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RewardPoolContribution","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"previousPool","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newPool","type":"uint256"}],"name":"RewardPoolModified","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RewardsExpired","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"}],"name":"StakePruned","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensStaked","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"fee","type":"uint256"}],"name":"TokensUnstaked","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"wallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"VestedTokensClaimed","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},
+      {"inputs":[],"name":"LOCKED_LOCK_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"LOCKED_VESTING_PERIODS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MAX_CLAIM_WINDOW","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MAX_REWARD_RATE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MAX_STAKE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MAX_STAKE_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MIN_DONATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MIN_REWARD_RATE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MIN_STAKE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"MIN_STAKE_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"STAKE_COOLDOWN","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"STAKING_REWARDS_ALLOCATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"TARGET_POOL_COVERAGE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"WITHDRAW_FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"calculateReward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"claimLockedToPool","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[],"name":"claimReward","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"claimVested","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[],"name":"contractDescription","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"currentAPY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"deploymentTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"dogeStakes","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"pendingRewards","type":"uint256"},{"internalType":"uint64","name":"lastUpdateTime","type":"uint64"},{"internalType":"uint64","name":"lastActionTime","type":"uint64"},{"internalType":"uint64","name":"stakeStartTime","type":"uint64"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"donateToPool","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[],"name":"lockedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"lockedClaimedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"metadataCID","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"pure","type":"function"},
+      {"inputs":[],"name":"rewardPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"string","name":"newCID","type":"string"},{"internalType":"string","name":"newDescription","type":"string"}],"name":"setMetadata","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"totalStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[],"name":"vestedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"vestedClaimedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+    ];
+
+    // Web3Modal configuration
+    const projectId = WALLET_CONNECT_PROJECT_ID;
+    let modal = null;
+    if (window.Web3Modal && window.Web3Modal.Web3Modal) {
+      modal = new window.Web3Modal.Web3Modal({
+        projectId,
+        walletConnectVersion: 2,
+        themeMode: "dark",
+        themeVariables: {
+          "--w3m-accent-color": "#00BFFF",
+          "--w3m-background-color": "#1E3A8A"
+        }
+      });
+    } else {
+      console.error("Web3Modal not loaded");
+    }
+
+    function App() {
+      const [provider, setProvider] = useState(null);
+      const [signer, setSigner] = useState(null);
+      const [contract, setContract] = useState(null);
+      const [account, setAccount] = useState(null);
+      const [balance, setBalance] = useState("0");
+      const [apy, setApy] = useState("0");
+      const [totalStaked, setTotalStaked] = useState("0");
+      const [rewardPool, setRewardPool] = useState("0");
+      const [userStake, setUserStake] = useState("0");
+      const [pendingRewards, setPendingRewards] = useState("0");
+      const [stakeAmount, setStakeAmount] = useState("");
+      const [unstakeAmount, setUnstakeAmount] = useState("");
+      const [donateAmount, setDonateAmount] = useState("");
+      const [error, setError] = useState("");
+      const [loading, setLoading] = useState(false);
+
+      // Initialize provider and contract
+      useEffect(() => {
+        const init = async () => {
+          try {
+            const ethersProvider = new ethers.providers.JsonRpcProvider(RPC_URL);
+            const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, ABI, ethersProvider);
+            setProvider(ethersProvider);
+            setContract(contractInstance);
+            // Fetch initial data
+            const apyRaw = await contractInstance.currentAPY();
+            setApy(ethers.utils.formatEther(apyRaw) / 100);
+            const totalStakedRaw = await contractInstance.totalStaked();
+            setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
+            const rewardPoolRaw = await contractInstance.rewardPool();
+            setRewardPool(ethers.utils.formatEther(rewardPoolRaw));
+          } catch (err) {
+            console.error("Error fetching initial data:", err);
+            setError("Failed to load contract data. Please try again.");
+          }
+        };
+        init();
+      }, []);
+
+      // Connect wallet
+      const connectWallet = async () => {
+        if (!modal) {
+          setError("Web3Modal not initialized. Please refresh the page.");
+          return;
+        }
+        try {
+          setLoading(true);
+          const instance = await modal.connect();
+          const ethersProvider = new ethers.providers.Web3Provider(instance);
+          const signerInstance = ethersProvider.getSigner();
+          const address = await signerInstance.getAddress();
+          const chainId = Number((await ethersProvider.getNetwork()).chainId);
+          if (chainId !== CHAIN_ID) {
+            setError(`Please switch to Polygon Mainnet (Chain ID: ${CHAIN_ID})`);
+            return;
+          }
+          setSigner(signerInstance);
+          setAccount(address);
+          const contractWithSigner = new ethers.Contract(CONTRACT_ADDRESS, ABI, signerInstance);
+          setContract(contractWithSigner);
+          // Fetch user data
+          const balanceRaw = await contractWithSigner.balanceOf(address);
+          setBalance(ethers.utils.formatEther(balanceRaw));
+          const stakeData = await contractWithSigner.dogeStakes(address);
+          setUserStake(ethers.utils.formatEther(stakeData.amount));
+          const rewardsRaw = await contractWithSigner.calculateReward(address);
+          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
+        } catch (err) {
+          setError("Failed to connect wallet: " + err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      // Handle stake
+      const handleStake = async () => {
+        if (!signer || !stakeAmount || parseFloat(stakeAmount) < 0.0001) {
+          setError("Invalid stake amount. Minimum 0.0001 DRKT.");
+          return;
+        }
+        try {
+          setLoading(true);
+          setError("");
+          const amount = ethers.utils.parseEther(stakeAmount);
+          await contract.approve(CONTRACT_ADDRESS, amount);
+          const tx = await contract.stake(amount);
+          await tx.wait();
+          setStakeAmount("");
+          // Refresh data
+          const balanceRaw = await contract.balanceOf(account);
+          setBalance(ethers.utils.formatEther(balanceRaw));
+          const stakeData = await contract.dogeStakes(account);
+          setUserStake(ethers.utils.formatEther(stakeData.amount));
+          const rewardsRaw = await contract.calculateReward(account);
+          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
+          const totalStakedRaw = await contract.totalStaked();
+          setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
+        } catch (err) {
+          setError("Staking failed: " + err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      // Handle unstake
+      const handleUnstake = async () => {
+        if (!signer || !unstakeAmount || parseFloat(unstakeAmount) <= 0) {
+          setError("Invalid unstake amount.");
+          return;
+        }
+        try {
+          setLoading(true);
+          setError("");
+          const amount = ethers.utils.parseEther(unstakeAmount);
+          const tx = await contract.unstake(amount);
+          await tx.wait();
+          setUnstakeAmount("");
+          // Refresh data
+          const balanceRaw = await contract.balanceOf(account);
+          setBalance(ethers.utils.formatEther(balanceRaw));
+          const stakeData = await contract.dogeStakes(account);
+          setUserStake(ethers.utils.formatEther(stakeData.amount));
+          const rewardsRaw = await contract.calculateReward(account);
+          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
+          const totalStakedRaw = await contract.totalStaked();
+          setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
+        } catch (err) {
+          setError("Unstaking failed: " + err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      // Handle claim rewards
+      const handleClaimRewards = async () => {
+        if (!signer || parseFloat(pendingRewards) <= 0) {
+          setError("No rewards to claim.");
+          return;
+        }
+        try {
+          setLoading(true);
+          setError("");
+          const tx = await contract.claimReward();
+          await tx.wait();
+          // Refresh data
+          const balanceRaw = await contract.balanceOf(account);
+          setBalance(ethers.utils.formatEther(balanceRaw));
+          const stakeData = await contract.dogeStakes(account);
+          setUserStake(ethers.utils.formatEther(stakeData.amount));
+          const rewardsRaw = await contract.calculateReward(account);
+          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
+        } catch (err) {
+          setError("Claiming rewards failed: " + err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      // Handle donate to pool
+      const handleDonate = async () => {
+        if (!signer || !donateAmount || parseFloat(donateAmount) < 0.0001) {
+          setError("Invalid donation amount. Minimum 0.0001 DRKT.");
+          return;
+        }
+        try {
+          setLoading(true);
+          setError("");
+          const amount = ethers.utils.parseEther(donateAmount);
+          await contract.approve(CONTRACT_ADDRESS, amount);
+          const tx = await contract.donateToPool(amount);
+          await tx.wait();
+          setDonateAmount("");
+          // Refresh data
+          const balanceRaw = await contract.balanceOf(account);
+          setBalance(ethers.utils.formatEther(balanceRaw));
+          const rewardPoolRaw = await contract.rewardPool();
+          setRewardPool(ethers.utils.formatEther(rewardPoolRaw));
+        } catch (err) {
+          setError("Donation failed: " + err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      return (
+        <div className="pt-20"> {/* Offset for fixed header */}
+          <div className="container mx-auto px-4 py-8">
+            {/* Hero Section */}
+            <section className="text-center py-12 mb-12">
+              <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" className="mx-auto w-24 h-24 rounded-full shadow-xl logo-float mb-6" />
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">DogeRocket Staking dApp</h1>
+              <p className="text-xl text-gray-300 mb-8">Earn up to 300% APY with secure, dynamic staking on Polygon</p>
+              <button
+                onClick={connectWallet}
+                disabled={loading}
+                className="cta-button text-sm px-8 py-3"
+              >
+                {loading ? <i className="ri-loader-line animate-spin mr-2"></i> : <i className="ri-wallet-line mr-2"></i>}
+                {loading ? "Connecting..." : (account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : "Connect Wallet")}
+              </button>
+            </section>
+
+            {/* About Section */}
+            <section className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
+              <h2 className="text-3xl font-bold mb-6 text-center">About DogeRocket</h2>
+              <p className="text-lg text-gray-300 text-center mb-8">
+                DogeRocket (DRKT) is an ERC20 token on Polygon with a total supply of 1B tokens. Stake DRKT to earn rewards with dynamic APY (up to 300%). 40% allocated to staking rewards, 30% to locked pool, and community-driven growth.
+              </p>
+              <div className="flex justify-center space-x-6">
+                <a href="https://dogerocket.site" className="text-light-blue hover:text-white transition-colors"><i className="ri-home-line text-xl"></i> Website</a>
+                <a href="https://x.com/DRKTDogeRocket" className="text-light-blue hover:text-white transition-colors"><i className="ri-twitter-line text-xl"></i> Twitter</a>
+                <a href="https://discord.gg/9QQ8FmY6nq" className="text-light-blue hover:text-white transition-colors"><i className="ri-discord-line text-xl"></i> Discord</a>
+              </div>
+            </section>
+
+            {/* Stats Grid */}
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-light-blue/30">
+                <h3 className="text-lg font-semibold text-gray-300 mb-2">Current APY</h3>
+                <p className="text-3xl font-bold text-light-blue">{apy}%</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-light-blue/30">
+                <h3 className="text-lg font-semibold text-gray-300 mb-2">Total Staked</h3>
+                <p className="text-3xl font-bold text-light-blue">{totalStaked} DRKT</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-light-blue/30">
+                <h3 className="text-lg font-semibold text-gray-300 mb-2">Reward Pool</h3>
+                <p className="text-3xl font-bold text-light-blue">{rewardPool} DRKT</p>
+              </div>
+            </section>
+
+            {account ? (
+              // Connected Wallet Dashboard
+              <section className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
+                <h2 className="text-3xl font-bold mb-8 text-center">Your Staking Dashboard</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold mb-2">Account Overview</h3>
+                    <p className="text-lg mb-1"><strong>Wallet:</strong> {account}</p>
+                    <p className="text-lg mb-1"><strong>Balance:</strong> {balance} DRKT</p>
+                    <p className="text-lg mb-1"><strong>Your Stake:</strong> {userStake} DRKT</p>
+                    <p className="text-lg mb-4"><strong>Pending Rewards:</strong> {pendingRewards} DRKT</p>
+                  </div>
+                  <div>
+                    <button
+                      onClick={handleClaimRewards}
+                      disabled={loading || parseFloat(pendingRewards) <= 0}
+                      className="w-full bg-light-blue hover:bg-blue-300 text-dark-blue font-bold py-3 rounded-lg mb-4 disabled:opacity-50 transition-colors"
+                    >
+                      <i className="ri-gift-line mr-2"></i>
+                      {loading ? "Claiming..." : "Claim Rewards"}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Stake Card */}
+                  <div className="bg-dark-blue/50 rounded-xl p-6 border border-light-blue/30">
+                    <h3 className="text-xl font-bold mb-4 text-center">Stake DRKT</h3>
+                    <input
+                      type="number"
+                      value={stakeAmount}
+                      onChange={(e) => setStakeAmount(e.target.value)}
+                      className="w-full p-3 rounded-lg text-dark-blue bg-white/80 mb-4"
+                      placeholder="Enter amount (min 0.0001)"
+                    />
+                    <button
+                      onClick={handleStake}
+                      disabled={loading}
+                      className="w-full bg-light-blue hover:bg-blue-300 text-dark-blue font-bold py-3 rounded-lg disabled:opacity-50 transition-colors"
+                    >
+                      <i className="ri-add-circle-line mr-2"></i>
+                      {loading ? "Staking..." : "Stake"}
+                    </button>
+                  </div>
+
+                  {/* Unstake Card */}
+                  <div className="bg-dark-blue/50 rounded-xl p-6 border border-light-blue/30">
+                    <h3 className="text-xl font-bold mb-4 text-center">Unstake DRKT</h3>
+                    <input
+                      type="number"
+                      value={unstakeAmount}
+                      onChange={(e) => setUnstakeAmount(e.target.value)}
+                      className="w-full p-3 rounded-lg text-dark-blue bg-white/80 mb-4"
+                      placeholder="Enter amount"
+                    />
+                    <button
+                      onClick={handleUnstake}
+                      disabled={loading}
+                      className="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold py-3 rounded-lg disabled:opacity-50 transition-colors"
+                    >
+                      <i className="ri-subtract-circle-line mr-2"></i>
+                      {loading ? "Unstaking..." : "Unstake (2% Fee)"}
+                    </button>
+                  </div>
+
+                  {/* Donate Card */}
+                  <div className="bg-dark-blue/50 rounded-xl p-6 border border-light-blue/30">
+                    <h3 className="text-xl font-bold mb-4 text-center">Donate to Pool</h3>
+                    <input
+                      type="number"
+                      value={donateAmount}
+                      onChange={(e) => setDonateAmount(e.target.value)}
+                      className="w-full p-3 rounded-lg text-dark-blue bg-white/80 mb-4"
+                      placeholder="Enter amount (min 0.0001)"
+                    />
+                    <button
+                      onClick={handleDonate}
+                      disabled={loading}
+                      className="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg disabled:opacity-50 transition-colors"
+                    >
+                      <i className="ri-heart-line mr-2"></i>
+                      {loading ? "Donating..." : "Donate"}
+                    </button>
+                  </div>
+                </div>
+                {error && <p className="text-red-400 text-center mt-6 font-semibold">{error}</p>}
+              </section>
+            ) : (
+              // Pre-Connect Prompt
+              <section className="text-center py-16">
+                <h2 className="text-3xl font-bold mb-4">Ready to Stake?</h2>
+                <p className="text-xl text-gray-300 mb-8">Connect your wallet to start earning up to 300% APY on DRKT</p>
+                <button
+                  onClick={connectWallet}
+                  disabled={loading}
+                  className="cta-button text-lg px-12 py-4"
+                >
+                  <i className="ri-wallet-3-line mr-2"></i>
+                  {loading ? "Connecting..." : "Connect Wallet"}
+                </button>
+              </section>
+            )}
+
+            {/* About & Links */}
+            <section className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
+              <h2 className="text-3xl font-bold mb-6 text-center">About DogeRocket</h2>
+              <p className="text-lg text-gray-300 text-center mb-8">
+                DogeRocket (DRKT) is an ERC20 token on Polygon with a total supply of 1B tokens. Stake DRKT to earn rewards with dynamic APY (up to 300%). 40% allocated to staking rewards, 30% to locked pool, and community-driven growth.
+              </p>
+              <div className="flex justify-center space-x-8">
+                <a href="https://dogerocket.site" className="text-light-blue hover:text-white transition-colors flex items-center"><i className="ri-home-line mr-2"></i> Website</a>
+                <a href="https://x.com/DRKTDogeRocket" className="text-light-blue hover:text-white transition-colors flex items-center"><i className="ri-twitter-line mr-2"></i> Twitter</a>
+                <a href="https://discord.gg/9QQ8FmY6nq" className="text-light-blue hover:text-white transition-colors flex items-center"><i className="ri-discord-line mr-2"></i> Discord</a>
+              </div>
+            </section>
+
+            <footer className="text-center py-8 text-gray-300 border-t border-light-blue/30">
+              <p>&copy; 2025 DogeRocket. All rights reserved. | <a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d" className="text-light-blue hover:underline">Contract Explorer</a></p>
+            </footer>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+
+    // Toggle Mobile Menu
+    function toggleMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    }
+
+    // GTranslate Init
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+</body>
+</html>

@@ -93,8 +93,8 @@
     // Web3Modal configuration
     const projectId = "d2ef0dc4e30bb16fb86b1a73175e2261";
     let modal = null;
-    if (window.Web3Modal && window.Web3Modal.Web3Modal) {
-      modal = new window.Web3Modal.Web3Modal({
+    if (window.Web3Modal) {
+      modal = new window.Web3Modal({
         projectId,
         walletConnectVersion: 2,
         themeMode: "dark",
@@ -132,7 +132,7 @@
             setContract(contractInstance);
             // Fetch initial data
             const apyRaw = await contractInstance.currentAPY();
-            setApy((Number(apyRaw) / 100).toFixed(2));
+            setApy((Number(ethers.utils.formatEther(apyRaw)) / 100).toFixed(2));
             const totalStakedRaw = await contractInstance.totalStaked();
             setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
             const rewardPoolRaw = await contractInstance.rewardPool();
@@ -217,7 +217,7 @@
           const address = await signerInstance.getAddress();
           const chainId = Number((await ethersProvider.getNetwork()).chainId);
           if (chainId !== CHAIN_ID) {
-            setError(`Please switch to Polygon Mainnet`);
+            setError(`Please switch to Polygon Mainnet (Chain ID: ${CHAIN_ID})`);
             return;
           }
           setSigner(signerInstance);
@@ -257,23 +257,30 @@
             },
           });
           if (wasAdded) {
-            console.log('Token added to MetaMask');
+            console.log('DRKT token added to MetaMask successfully.');
+          } else {
+            console.log('Failed to add DRKT token to MetaMask.');
           }
         } catch (err) {
-          setError("Failed to add token: " + err.message);
+          setError("Failed to add DRKT token: " + err.message);
         }
       };
       // Handle stake
       const handleStake = async () => {
-        if (!signer || !stakeAmount) return;
+        if (!signer || !stakeAmount || parseFloat(stakeAmount) <= 0) {
+          setError("Please enter a valid stake amount.");
+          return;
+        }
         try {
           setLoading(true);
           setError("");
           const amount = ethers.utils.parseEther(stakeAmount);
-          await contract.approve(CONTRACT_ADDRESS, amount);
+          const approveTx = await contract.approve(CONTRACT_ADDRESS, amount);
+          await approveTx.wait();
           const tx = await contract.stake(amount);
           await tx.wait();
           setStakeAmount("");
+          // Refresh data
           const balanceRaw = await contract.balanceOf(account);
           setBalance(ethers.utils.formatEther(balanceRaw));
           const stakeData = await contract.dogeStakes(account);
@@ -283,14 +290,18 @@
           const totalStakedRaw = await contract.totalStaked();
           setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
         } catch (err) {
-          setError("Staking failed: " + err.message);
+          console.error(err);
+          setError("Staking failed: " + (err.message || err.data?.message || "Unknown error"));
         } finally {
           setLoading(false);
         }
       };
       // Handle unstake
       const handleUnstake = async () => {
-        if (!signer || !unstakeAmount) return;
+        if (!signer || !unstakeAmount || parseFloat(unstakeAmount) <= 0) {
+          setError("Please enter a valid unstake amount.");
+          return;
+        }
         try {
           setLoading(true);
           setError("");
@@ -298,6 +309,7 @@
           const tx = await contract.unstake(amount);
           await tx.wait();
           setUnstakeAmount("");
+          // Refresh data
           const balanceRaw = await contract.balanceOf(account);
           setBalance(ethers.utils.formatEther(balanceRaw));
           const stakeData = await contract.dogeStakes(account);
@@ -307,7 +319,8 @@
           const totalStakedRaw = await contract.totalStaked();
           setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
         } catch (err) {
-          setError("Unstaking failed: " + err.message);
+          console.error(err);
+          setError("Unstaking failed: " + (err.message || err.data?.message || "Unknown error"));
         } finally {
           setLoading(false);
         }
@@ -320,6 +333,7 @@
           setError("");
           const tx = await contract.claimReward();
           await tx.wait();
+          // Refresh data
           const balanceRaw = await contract.balanceOf(account);
           setBalance(ethers.utils.formatEther(balanceRaw));
           const stakeData = await contract.dogeStakes(account);
@@ -327,28 +341,35 @@
           const rewardsRaw = await contract.calculateReward(account);
           setPendingRewards(ethers.utils.formatEther(rewardsRaw));
         } catch (err) {
-          setError("Claiming rewards failed: " + err.message);
+          console.error(err);
+          setError("Claiming rewards failed: " + (err.message || err.data?.message || "Unknown error"));
         } finally {
           setLoading(false);
         }
       };
       // Handle donate to pool
       const handleDonate = async () => {
-        if (!signer || !donateAmount) return;
+        if (!signer || !donateAmount || parseFloat(donateAmount) <= 0) {
+          setError("Please enter a valid donation amount.");
+          return;
+        }
         try {
           setLoading(true);
           setError("");
           const amount = ethers.utils.parseEther(donateAmount);
-          await contract.approve(CONTRACT_ADDRESS, amount);
+          const approveTx = await contract.approve(CONTRACT_ADDRESS, amount);
+          await approveTx.wait();
           const tx = await contract.donateToPool(amount);
           await tx.wait();
           setDonateAmount("");
+          // Refresh data
           const balanceRaw = await contract.balanceOf(account);
           setBalance(ethers.utils.formatEther(balanceRaw));
           const rewardPoolRaw = await contract.rewardPool();
           setRewardPool(ethers.utils.formatEther(rewardPoolRaw));
         } catch (err) {
-          setError("Donation failed: " + err.message);
+          console.error(err);
+          setError("Donation failed: " + (err.message || err.data?.message || "Unknown error"));
         } finally {
           setLoading(false);
         }
@@ -356,139 +377,159 @@
       return (
         <div className="container mx-auto px-4 py-8">
           <header className="text-center py-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white">DogeRocket</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">🚀 DogeRocket</h1>
             <p className="text-lg md:text-xl text-gray-300 mt-4">
               A decentralized staking token with dynamic APY rewards
             </p>
             {!account ? (
-              <div className="mt-6 flex justify-center space-x-4">
+              <div className="mt-8 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <button
                   onClick={connectMetaMask}
                   disabled={loading}
-                  className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg disabled:opacity-50"
+                  className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-3 px-8 rounded-lg disabled:opacity-50 transition-colors"
                 >
-                  {loading ? "Connecting..." : "Connect with MetaMask"}
+                  {loading && !loadingWalletConnect ? "Connecting..." : "Connect MetaMask"}
                 </button>
                 <button
                   onClick={connectWalletConnect}
                   disabled={loading}
-                  className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg disabled:opacity-50"
+                  className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg disabled:opacity-50 transition-colors"
                 >
-                  {loading ? "Connecting..." : "Connect with WalletConnect"}
+                  {loading && loadingWalletConnect ? "Connecting..." : "Connect WalletConnect"}
                 </button>
               </div>
             ) : (
-              <p className="mt-6 text-white font-semibold">
-                Connected: {account.slice(0, 6)}...{account.slice(-4)}
-              </p>
+              <div className="mt-6 p-4 bg-blue-800 rounded-lg">
+                <p className="text-white font-semibold">
+                  Connected: <span className="font-mono">{account.slice(0, 6)}...{account.slice(-4)}</span>
+                </p>
+              </div>
             )}
           </header>
-          <section className="bg-gray-100 text-gray-800 rounded-lg p-6 mb-8">
+          <section className="bg-white/10 backdrop-blur-sm text-white rounded-xl p-6 mb-8">
             <h2 className="text-2xl font-semibold mb-4">About DogeRocket</h2>
-            <p className="text-lg">
+            <p className="text-gray-300 mb-4">
               DogeRocket (DRKT) is an ERC20 token on Polygon with a total supply of 1B tokens. Stake DRKT to earn rewards with a dynamic APY (5.8% to 347%). 30% is allocated to the team (vested over 10 years), 40% to staking rewards, and 30% to the locked pool.
             </p>
-            <div className="mt-4 flex space-x-4">
-              <a href="https://dogerocket.site" className="text-blue-600 hover:underline">Website</a>
-              <a href="https://x.com/DRKTDogeRocket" className="text-blue-600 hover:underline">Twitter</a>
-              <a href="https://discord.gg/9QQ8FmY6nq" className="text-blue-600 hover:underline">Discord</a>
+            <div className="flex flex-wrap justify-center space-x-4 space-y-2">
+              <a href="https://dogerocket.site" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">Website</a>
+              <a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">Twitter</a>
+              <a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">Discord</a>
             </div>
           </section>
           <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-blue-800 p-6 rounded-lg text-center">
+            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
               <h3 className="text-lg font-semibold text-gray-300">Current APY</h3>
-              <p className="text-2xl font-bold">{apy}%</p>
+              <p className="text-3xl font-bold text-yellow-400">{apy}%</p>
             </div>
-            <div className="bg-blue-800 p-6 rounded-lg text-center">
+            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
               <h3 className="text-lg font-semibold text-gray-300">Total Staked</h3>
-              <p className="text-2xl font-bold">{totalStaked} DRKT</p>
+              <p className="text-3xl font-bold">{parseFloat(totalStaked).toLocaleString()} DRKT</p>
             </div>
-            <div className="bg-blue-800 p-6 rounded-lg text-center">
+            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
               <h3 className="text-lg font-semibold text-gray-300">Reward Pool</h3>
-              <p className="text-2xl font-bold">{rewardPool} DRKT</p>
+              <p className="text-3xl font-bold">{parseFloat(rewardPool).toLocaleString()} DRKT</p>
             </div>
           </section>
           {account && (
-            <section className="bg-gray-100 text-gray-800 rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Staking Dashboard</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-lg font-semibold">Your Balance: {balance} DRKT</h3>
-                  <h3 className="text-lg font-semibold">Your Stake: {userStake} DRKT</h3>
-                  <h3 className="text-lg font-semibold">Pending Rewards: {pendingRewards} DRKT</h3>
+            <>
+              <section className="bg-white/10 backdrop-blur-sm text-white rounded-xl p-6 mb-8">
+                <h2 className="text-2xl font-semibold mb-6 text-center">Your Dashboard</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <div className="bg-blue-800/50 p-4 rounded-lg">
+                      <h3 className="text-lg font-semibold">Balance</h3>
+                      <p className="text-2xl font-bold">{parseFloat(balance).toLocaleString()} DRKT</p>
+                    </div>
+                    <div className="bg-blue-800/50 p-4 rounded-lg">
+                      <h3 className="text-lg font-semibold">Staked</h3>
+                      <p className="text-2xl font-bold">{parseFloat(userStake).toLocaleString()} DRKT</p>
+                    </div>
+                    <div className="bg-green-800/50 p-4 rounded-lg">
+                      <h3 className="text-lg font-semibold">Pending Rewards</h3>
+                      <p className="text-2xl font-bold text-green-400">{parseFloat(pendingRewards).toLocaleString()} DRKT</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Stake Amount</label>
+                      <input
+                        type="number"
+                        step="0.000000000000000001"
+                        value={stakeAmount}
+                        onChange={(e) => setStakeAmount(e.target.value)}
+                        className="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400"
+                        placeholder="0.0 DRKT"
+                      />
+                      <button
+                        onClick={handleStake}
+                        disabled={loading}
+                        className="mt-2 w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors"
+                      >
+                        {loading ? "Staking..." : "Stake DRKT"}
+                      </button>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Unstake Amount</label>
+                      <input
+                        type="number"
+                        step="0.000000000000000001"
+                        value={unstakeAmount}
+                        onChange={(e) => setUnstakeAmount(e.target.value)}
+                        className="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400"
+                        placeholder="0.0 DRKT"
+                      />
+                      <button
+                        onClick={handleUnstake}
+                        disabled={loading}
+                        className="mt-2 w-full bg-red-600 hover:bg-red-500 text-white py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors"
+                      >
+                        {loading ? "Unstaking..." : "Unstake DRKT"}
+                      </button>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Donate to Pool</label>
+                      <input
+                        type="number"
+                        step="0.000000000000000001"
+                        value={donateAmount}
+                        onChange={(e) => setDonateAmount(e.target.value)}
+                        className="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400"
+                        placeholder="0.0 DRKT"
+                      />
+                      <button
+                        onClick={handleDonate}
+                        disabled={loading}
+                        className="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors"
+                      >
+                        {loading ? "Donating..." : "Donate DRKT"}
+                      </button>
+                    </div>
+                    <button
+                      onClick={handleClaimRewards}
+                      disabled={loading || parseFloat(pendingRewards) === 0}
+                      className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors"
+                    >
+                      {loading ? "Claiming..." : `Claim ${parseFloat(pendingRewards).toLocaleString()} Rewards`}
+                    </button>
+                    <button
+                      onClick={addTokenToMetaMask}
+                      className="w-full bg-gray-600 hover:bg-gray-500 text-white py-3 rounded-lg font-semibold transition-colors"
+                    >
+                      Add DRKT to MetaMask
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Stake Amount (DRKT)</label>
-                    <input
-                      type="number"
-                      value={stakeAmount}
-                      onChange={(e) => setStakeAmount(e.target.value)}
-                      className="w-full p-2 rounded-lg text-gray-800"
-                      placeholder="Enter amount"
-                    />
-                    <button
-                      onClick={handleStake}
-                      disabled={loading}
-                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
-                    >
-                      {loading ? "Processing..." : "Stake"}
-                    </button>
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Unstake Amount (DRKT)</label>
-                    <input
-                      type="number"
-                      value={unstakeAmount}
-                      onChange={(e) => setUnstakeAmount(e.target.value)}
-                      className="w-full p-2 rounded-lg text-gray-800"
-                      placeholder="Enter amount"
-                    />
-                    <button
-                      onClick={handleUnstake}
-                      disabled={loading}
-                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
-                    >
-                      {loading ? "Processing..." : "Unstake"}
-                    </button>
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Donate to Pool (DRKT)</label>
-                    <input
-                      type="number"
-                      value={donateAmount}
-                      onChange={(e) => setDonateAmount(e.target.value)}
-                      className="w-full p-2 rounded-lg text-gray-800"
-                      placeholder="Enter amount"
-                    />
-                    <button
-                      onClick={handleDonate}
-                      disabled={loading}
-                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
-                    >
-                      {loading ? "Processing..." : "Donate"}
-                    </button>
-                  </div>
-                  <button
-                    onClick={handleClaimRewards}
-                    disabled={loading}
-                    className="w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
-                  >
-                    {loading ? "Processing..." : "Claim Rewards"}
-                  </button>
-                  <button
-                    onClick={addTokenToMetaMask}
-                    className="mt-4 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg"
-                  >
-                    Add DRKT to MetaMask
-                  </button>
-                </div>
-              </div>
-              {error && <p className="text-red-500 mt-4">{error}</p>}
-            </section>
+              </section>
+            </>
           )}
-          <footer className="text-center py-8 text-gray-300">
-            <p>&copy; 2025 DogeRocket. All rights reserved.</p>
+          {error && (
+            <div className="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg mb-8">
+              {error}
+            </div>
+          )}
+          <footer className="text-center py-8 text-gray-300 border-t border-white/10">
+            <p>&copy; 2025 DogeRocket. All rights reserved. | Polygon Mainnet</p>
           </footer>
         </div>
       );

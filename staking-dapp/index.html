@@ -3,131 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="title" content="DogeRocket Staking dApp - Earn Up to 300% APY on Polygon">
-  <meta name="description" content="Stake DRKT tokens in the official DogeRocket staking dApp. Earn dynamic rewards up to 300% APY, manage stakes, and claim rewards securely on Polygon.">
-  <meta name="keywords" content="DogeRocket staking dApp, DRKT stake, Polygon staking, crypto staking, 300% APY, Web3 wallet connect">
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="DogeRocket Team">
-  <meta name="publisher" content="DogeRocket">
-  <meta name="copyright" content="© 2025 DogeRocket. All rights reserved.">
-  <meta property="og:title" content="DogeRocket Staking dApp - Earn Up to 300% APY on Polygon">
-  <meta property="og:description" content="Stake DRKT tokens in the official DogeRocket staking dApp. Earn dynamic rewards up to 300% APY, manage stakes, and claim rewards securely on Polygon.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dapp.dogerocket.site">
-  <meta property="og:image" content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
-  <meta property="og:site_name" content="DogeRocket">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DogeRocket Staking dApp - Earn Up to 300% APY on Polygon">
-  <meta name="twitter:description" content="Stake DRKT tokens in the official DogeRocket staking dApp. Earn dynamic rewards up to 300% APY, manage stakes, and claim rewards securely on Polygon.">
-  <meta name="twitter:image" content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
-  <meta name="twitter:site" content="@DRKTDogeRocket">
-  <link rel="canonical" href="https://dapp.dogerocket.site">
-  <link rel="icon" type="image/png" href="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
-  <!-- Remixicon CDN (Icons) -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+  <title>DogeRocket Staking dApp</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script src="https://unpkg.com/@web3modal/ethers5@3.5.4/dist/index.js"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'dark-blue': '#1E3A8A',
-            'light-blue': '#00BFFF',
-            'secondary-blue': '#0EA5E9',
-          },
-          animation: {
-            'float': 'float 3s ease-in-out infinite',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    /* GTranslate - Reduced Height ~50% */
-    #google_translate_element { font-size: 8px; width: 100px; height: 10px; }
-    #google_translate_element > div { font-size: 8px !important; }
-    .goog-te-gadget .goog-te-combo { font-size: 8px !important; padding: 1px !important; }
-    @media (max-width: 768px) { 
-      #google_translate_element { width: 90px; height: 9px; }
-      .goog-te-gadget .goog-te-combo { font-size: 7px !important; padding: 0.5px !important; }
-    }
-    /* Social Icons with Color Hover */
-    .social-icons a {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2);
-      color: #00BFFF; font-size: 1.2rem; transition: all 0.4s ease; margin: 0 6px;
-      backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .social-icons a:hover {
-      transform: translateY(-3px) scale(1.1);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-    }
-    .social-icons a:hover i { animation: pulse 1s infinite; }
-    .social-icons a[href*="github"]:hover { background: #333; color: white; }
-    .social-icons a[href*="x.com"]:hover, .social-icons a[href*="twitter"]:hover { background: #000; color: white; }
-    .social-icons a[href*="telegram"]:hover { background: #229ED9; color: white; }
-    .social-icon a[href*="discord"]:hover { background: #5865F2; color: white; }
-    html { scroll-behavior: smooth; }
-  </style>
 </head>
-<body class="bg-gradient-to-br from-dark-blue via-blue-800 to-light-blue text-white min-h-screen font-sans overflow-x-hidden">
-  <!-- Fixed Header -->
-  <header class="fixed w-full bg-white/95 backdrop-blur-md shadow-lg z-50 border-b border-light-blue/20">
-    <div class="container mx-auto px-4 flex justify-between items-center py-3">
-      <div class="flex items-center">
-        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="w-8 h-8 rounded-full mr-2">
-        <strong class="text-xl text-dark-blue">Staking dApp</strong>
-      </div>
-      <div class="flex items-center gap-4">
-        <nav class="hidden md:flex">
-          <ul class="flex gap-6">
-            <li><a href="https://dogerocket.site" class="text-dark-blue hover:text-light-blue font-semibold transition-colors">Home</a></li>
-            <li><a href="https://dogerocket.site/ido.html" class="text-dark-blue hover:text-light-blue font-semibold transition-colors">IDO</a></li>
-            <li><a href="https://dogerocket.site/whitepaper.html" class="text-dark-blue hover:text-light-blue font-semibold transition-colors">Whitepaper</a></li>
-          </ul>
-        </nav>
-        <div id="google_translate_element"></div>
-        <button class="md:hidden text-dark-blue text-2xl" onclick="toggleMenu()">☰</button>
-      </div>
-    </div>
-    <nav id="mobile-menu" class="hidden md:hidden bg-white px-4 py-2 border-t">
-      <ul class="flex flex-col gap-2">
-        <li><a href="https://dogerocket.site" class="text-dark-blue hover:text-light-blue py-2">Home</a></li>
-        <li><a href="https://dogerocket.site/ido.html" class="text-dark-blue hover:text-light-blue py-2">IDO</a></li>
-        <li><a href="https://dogerocket.site/whitepaper.html" class="text-dark-blue hover:text-light-blue py-2">Whitepaper</a></li>
-      </ul>
-    </nav>
-  </header>
-
+<body class="bg-gradient-to-b from-blue-900 to-blue-500 text-white min-h-screen font-sans">
   <div id="root"></div>
-
   <script type="text/babel">
     const { useState, useEffect } = React;
     const { ethers } = window.ethers;
 
-    // Environment variables (replace with Vercel env vars at build time, e.g., via Next.js or Vite)
-    // In a static HTML, these can be injected via build script; for Vercel, use NEXT_PUBLIC_ prefix in Next.js
-    const INFURA_KEY = process.env.NEXT_PUBLIC_INFURA_KEY || 'YOUR_INFURA_KEY'; // Fetch from Vercel env: NEXT_PUBLIC_INFURA_KEY
-    const WALLET_CONNECT_PROJECT_ID = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || 'YOUR_WALLET_CONNECT_PROJECT_ID'; // Fetch from Vercel env: NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
-
     // Production values
     const CONTRACT_ADDRESS = "0x03720cc99a302c101dbd48489a6c2c8bb52d178d";
     const CHAIN_ID = 137; // Polygon Mainnet
-    const RPC_URL = `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`;
-
+    const RPC_URL = "https://polygon-mainnet.infura.io/v3/4e16c4dd948a444ba97a4cdb992b33d1";
     const ABI = [
       {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
       {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},
@@ -200,7 +93,7 @@
     ];
 
     // Web3Modal configuration
-    const projectId = WALLET_CONNECT_PROJECT_ID;
+    const projectId = "d2ef0dc4e30bb16fb86b1a73175e2261"; 
     let modal = null;
     if (window.Web3Modal && window.Web3Modal.Web3Modal) {
       modal = new window.Web3Modal.Web3Modal({
@@ -208,7 +101,7 @@
         walletConnectVersion: 2,
         themeMode: "dark",
         themeVariables: {
-          "--w3m-accent-color": "#00BFFF",
+          "--w3m-accent-color": "#1E40AF",
           "--w3m-background-color": "#1E3A8A"
         }
       });
@@ -241,6 +134,7 @@
             const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, ABI, ethersProvider);
             setProvider(ethersProvider);
             setContract(contractInstance);
+
             // Fetch initial data
             const apyRaw = await contractInstance.currentAPY();
             setApy(ethers.utils.formatEther(apyRaw) / 100);
@@ -269,14 +163,17 @@
           const signerInstance = ethersProvider.getSigner();
           const address = await signerInstance.getAddress();
           const chainId = Number((await ethersProvider.getNetwork()).chainId);
+
           if (chainId !== CHAIN_ID) {
-            setError(`Please switch to Polygon Mainnet (Chain ID: ${CHAIN_ID})`);
+            setError(`Please switch to Polygon Mainnet`);
             return;
           }
+
           setSigner(signerInstance);
           setAccount(address);
           const contractWithSigner = new ethers.Contract(CONTRACT_ADDRESS, ABI, signerInstance);
           setContract(contractWithSigner);
+
           // Fetch user data
           const balanceRaw = await contractWithSigner.balanceOf(address);
           setBalance(ethers.utils.formatEther(balanceRaw));
@@ -293,10 +190,7 @@
 
       // Handle stake
       const handleStake = async () => {
-        if (!signer || !stakeAmount || parseFloat(stakeAmount) < 0.0001) {
-          setError("Invalid stake amount. Minimum 0.0001 DRKT.");
-          return;
-        }
+        if (!signer || !stakeAmount) return;
         try {
           setLoading(true);
           setError("");
@@ -305,7 +199,6 @@
           const tx = await contract.stake(amount);
           await tx.wait();
           setStakeAmount("");
-          // Refresh data
           const balanceRaw = await contract.balanceOf(account);
           setBalance(ethers.utils.formatEther(balanceRaw));
           const stakeData = await contract.dogeStakes(account);
@@ -323,10 +216,7 @@
 
       // Handle unstake
       const handleUnstake = async () => {
-        if (!signer || !unstakeAmount || parseFloat(unstakeAmount) <= 0) {
-          setError("Invalid unstake amount.");
-          return;
-        }
+        if (!signer || !unstakeAmount) return;
         try {
           setLoading(true);
           setError("");
@@ -334,7 +224,6 @@
           const tx = await contract.unstake(amount);
           await tx.wait();
           setUnstakeAmount("");
-          // Refresh data
           const balanceRaw = await contract.balanceOf(account);
           setBalance(ethers.utils.formatEther(balanceRaw));
           const stakeData = await contract.dogeStakes(account);
@@ -352,16 +241,12 @@
 
       // Handle claim rewards
       const handleClaimRewards = async () => {
-        if (!signer || parseFloat(pendingRewards) <= 0) {
-          setError("No rewards to claim.");
-          return;
-        }
+        if (!signer) return;
         try {
           setLoading(true);
           setError("");
           const tx = await contract.claimReward();
           await tx.wait();
-          // Refresh data
           const balanceRaw = await contract.balanceOf(account);
           setBalance(ethers.utils.formatEther(balanceRaw));
           const stakeData = await contract.dogeStakes(account);
@@ -377,10 +262,7 @@
 
       // Handle donate to pool
       const handleDonate = async () => {
-        if (!signer || !donateAmount || parseFloat(donateAmount) < 0.0001) {
-          setError("Invalid donation amount. Minimum 0.0001 DRKT.");
-          return;
-        }
+        if (!signer || !donateAmount) return;
         try {
           setLoading(true);
           setError("");
@@ -389,7 +271,6 @@
           const tx = await contract.donateToPool(amount);
           await tx.wait();
           setDonateAmount("");
-          // Refresh data
           const balanceRaw = await contract.balanceOf(account);
           setBalance(ethers.utils.formatEther(balanceRaw));
           const rewardPoolRaw = await contract.rewardPool();
@@ -402,192 +283,128 @@
       };
 
       return (
-        <div className="pt-20"> {/* Offset for fixed header */}
-          <div className="container mx-auto px-4 py-8">
-            {/* Hero Section */}
-            <section className="text-center py-12 mb-12">
-              <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" className="mx-auto w-24 h-24 rounded-full shadow-xl logo-float mb-6" />
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">DogeRocket Staking dApp</h1>
-              <p className="text-xl text-gray-300 mb-8">Earn up to 300% APY with secure, dynamic staking on Polygon</p>
-              <button
-                onClick={connectWallet}
-                disabled={loading}
-                className="cta-button text-sm px-8 py-3"
-              >
-                {loading ? <i className="ri-loader-line animate-spin mr-2"></i> : <i className="ri-wallet-line mr-2"></i>}
-                {loading ? "Connecting..." : (account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : "Connect Wallet")}
-              </button>
-            </section>
+        <div className="container mx-auto px-4 py-8">
+          <header className="text-center py-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-white">DogeRocket</h1>
+            <p className="text-lg md:text-xl text-gray-300 mt-4">
+              A decentralized staking token with dynamic APY rewards
+            </p>
+            <button
+              onClick={connectWallet}
+              disabled={loading}
+              className="mt-6 bg-blue-700 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg disabled:opacity-50"
+            >
+              {loading ? "Connecting..." : (account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : "Connect Wallet")}
+            </button>
+          </header>
 
-            {/* About Section */}
-            <section className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
-              <h2 className="text-3xl font-bold mb-6 text-center">About DogeRocket</h2>
-              <p className="text-lg text-gray-300 text-center mb-8">
-                DogeRocket (DRKT) is an ERC20 token on Polygon with a total supply of 1B tokens. Stake DRKT to earn rewards with dynamic APY (up to 300%). 40% allocated to staking rewards, 30% to locked pool, and community-driven growth.
-              </p>
-              <div className="flex justify-center space-x-6">
-                <a href="https://dogerocket.site" className="text-light-blue hover:text-white transition-colors"><i className="ri-home-line text-xl"></i> Website</a>
-                <a href="https://x.com/DRKTDogeRocket" className="text-light-blue hover:text-white transition-colors"><i className="ri-twitter-line text-xl"></i> Twitter</a>
-                <a href="https://discord.gg/9QQ8FmY6nq" className="text-light-blue hover:text-white transition-colors"><i className="ri-discord-line text-xl"></i> Discord</a>
-              </div>
-            </section>
+          <section className="bg-gray-100 text-gray-800 rounded-lg p-6 mb-8">
+            <h2 className="text-2xl font-semibold mb-4">About DogeRocket</h2>
+            <p className="text-lg">
+              DogeRocket (DRKT) is an ERC20 token on Polygon with a total supply of 1B tokens. Stake DRKT to earn rewards with a dynamic APY (5.8% to 347%). 30% is allocated to the team (vested over 10 years), 40% to staking rewards, and 30% to the locked pool.
+            </p>
+            <div className="mt-4 flex space-x-4">
+              <a href="https://dogerocket.site" className="text-blue-600 hover:underline">Website</a>
+              <a href="https://x.com/DRKTDogeRocket" className="text-blue-600 hover:underline">Twitter</a>
+              <a href="https://discord.gg/9QQ8FmY6nq" className="text-blue-600 hover:underline">Discord</a>
+            </div>
+          </section>
 
-            {/* Stats Grid */}
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-light-blue/30">
-                <h3 className="text-lg font-semibold text-gray-300 mb-2">Current APY</h3>
-                <p className="text-3xl font-bold text-light-blue">{apy}%</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-light-blue/30">
-                <h3 className="text-lg font-semibold text-gray-300 mb-2">Total Staked</h3>
-                <p className="text-3xl font-bold text-light-blue">{totalStaked} DRKT</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 text-center border border-light-blue/30">
-                <h3 className="text-lg font-semibold text-gray-300 mb-2">Reward Pool</h3>
-                <p className="text-3xl font-bold text-light-blue">{rewardPool} DRKT</p>
-              </div>
-            </section>
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-blue-800 p-6 rounded-lg text-center">
+              <h3 className="text-lg font-semibold text-gray-300">Current APY</h3>
+              <p className="text-2xl font-bold">{apy}%</p>
+            </div>
+            <div className="bg-blue-800 p-6 rounded-lg text-center">
+              <h3 className="text-lg font-semibold text-gray-300">Total Staked</h3>
+              <p className="text-2xl font-bold">{totalStaked} DRKT</p>
+            </div>
+            <div className="bg-blue-800 p-6 rounded-lg text-center">
+              <h3 className="text-lg font-semibold text-gray-300">Reward Pool</h3>
+              <p className="text-2xl font-bold">{rewardPool} DRKT</p>
+            </div>
+          </section>
 
-            {account ? (
-              // Connected Wallet Dashboard
-              <section className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
-                <h2 className="text-3xl font-bold mb-8 text-center">Your Staking Dashboard</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                  <div className="text-center">
-                    <h3 className="text-xl font-semibold mb-2">Account Overview</h3>
-                    <p className="text-lg mb-1"><strong>Wallet:</strong> {account}</p>
-                    <p className="text-lg mb-1"><strong>Balance:</strong> {balance} DRKT</p>
-                    <p className="text-lg mb-1"><strong>Your Stake:</strong> {userStake} DRKT</p>
-                    <p className="text-lg mb-4"><strong>Pending Rewards:</strong> {pendingRewards} DRKT</p>
-                  </div>
-                  <div>
-                    <button
-                      onClick={handleClaimRewards}
-                      disabled={loading || parseFloat(pendingRewards) <= 0}
-                      className="w-full bg-light-blue hover:bg-blue-300 text-dark-blue font-bold py-3 rounded-lg mb-4 disabled:opacity-50 transition-colors"
-                    >
-                      <i className="ri-gift-line mr-2"></i>
-                      {loading ? "Claiming..." : "Claim Rewards"}
-                    </button>
-                  </div>
+          {account && (
+            <section className="bg-gray-100 text-gray-800 rounded-lg p-6">
+              <h2 className="text-2xl font-semibold mb-4">Staking Dashboard</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h3 className="text-lg font-semibold">Your Balance: {balance} DRKT</h3>
+                  <h3 className="text-lg font-semibold">Your Stake: {userStake} DRKT</h3>
+                  <h3 className="text-lg font-semibold">Pending Rewards: {pendingRewards} DRKT</h3>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Stake Card */}
-                  <div className="bg-dark-blue/50 rounded-xl p-6 border border-light-blue/30">
-                    <h3 className="text-xl font-bold mb-4 text-center">Stake DRKT</h3>
+                <div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium mb-2">Stake Amount (DRKT)</label>
                     <input
                       type="number"
                       value={stakeAmount}
                       onChange={(e) => setStakeAmount(e.target.value)}
-                      className="w-full p-3 rounded-lg text-dark-blue bg-white/80 mb-4"
-                      placeholder="Enter amount (min 0.0001)"
+                      className="w-full p-2 rounded-lg text-gray-800"
+                      placeholder="Enter amount"
                     />
                     <button
                       onClick={handleStake}
                       disabled={loading}
-                      className="w-full bg-light-blue hover:bg-blue-300 text-dark-blue font-bold py-3 rounded-lg disabled:opacity-50 transition-colors"
+                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
                     >
-                      <i className="ri-add-circle-line mr-2"></i>
-                      {loading ? "Staking..." : "Stake"}
+                      {loading ? "Processing..." : "Stake"}
                     </button>
                   </div>
-
-                  {/* Unstake Card */}
-                  <div className="bg-dark-blue/50 rounded-xl p-6 border border-light-blue/30">
-                    <h3 className="text-xl font-bold mb-4 text-center">Unstake DRKT</h3>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium mb-2">Unstake Amount (DRKT)</label>
                     <input
                       type="number"
                       value={unstakeAmount}
                       onChange={(e) => setUnstakeAmount(e.target.value)}
-                      className="w-full p-3 rounded-lg text-dark-blue bg-white/80 mb-4"
+                      className="w-full p-2 rounded-lg text-gray-800"
                       placeholder="Enter amount"
                     />
                     <button
                       onClick={handleUnstake}
                       disabled={loading}
-                      className="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold py-3 rounded-lg disabled:opacity-50 transition-colors"
+                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
                     >
-                      <i className="ri-subtract-circle-line mr-2"></i>
-                      {loading ? "Unstaking..." : "Unstake (2% Fee)"}
+                      {loading ? "Processing..." : "Unstake"}
                     </button>
                   </div>
-
-                  {/* Donate Card */}
-                  <div className="bg-dark-blue/50 rounded-xl p-6 border border-light-blue/30">
-                    <h3 className="text-xl font-bold mb-4 text-center">Donate to Pool</h3>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium mb-2">Donate to Pool (DRKT)</label>
                     <input
                       type="number"
                       value={donateAmount}
                       onChange={(e) => setDonateAmount(e.target.value)}
-                      className="w-full p-3 rounded-lg text-dark-blue bg-white/80 mb-4"
-                      placeholder="Enter amount (min 0.0001)"
+                      className="w-full p-2 rounded-lg text-gray-800"
+                      placeholder="Enter amount"
                     />
                     <button
                       onClick={handleDonate}
                       disabled={loading}
-                      className="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg disabled:opacity-50 transition-colors"
+                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
                     >
-                      <i className="ri-heart-line mr-2"></i>
-                      {loading ? "Donating..." : "Donate"}
+                      {loading ? "Processing..." : "Donate"}
                     </button>
                   </div>
+                  <button
+                    onClick={handleClaimRewards}
+                    disabled={loading}
+                    className="w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
+                  >
+                    {loading ? "Processing..." : "Claim Rewards"}
+                  </button>
                 </div>
-                {error && <p className="text-red-400 text-center mt-6 font-semibold">{error}</p>}
-              </section>
-            ) : (
-              // Pre-Connect Prompt
-              <section className="text-center py-16">
-                <h2 className="text-3xl font-bold mb-4">Ready to Stake?</h2>
-                <p className="text-xl text-gray-300 mb-8">Connect your wallet to start earning up to 300% APY on DRKT</p>
-                <button
-                  onClick={connectWallet}
-                  disabled={loading}
-                  className="cta-button text-lg px-12 py-4"
-                >
-                  <i className="ri-wallet-3-line mr-2"></i>
-                  {loading ? "Connecting..." : "Connect Wallet"}
-                </button>
-              </section>
-            )}
-
-            {/* About & Links */}
-            <section className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-12">
-              <h2 className="text-3xl font-bold mb-6 text-center">About DogeRocket</h2>
-              <p className="text-lg text-gray-300 text-center mb-8">
-                DogeRocket (DRKT) is an ERC20 token on Polygon with a total supply of 1B tokens. Stake DRKT to earn rewards with dynamic APY (up to 300%). 40% allocated to staking rewards, 30% to locked pool, and community-driven growth.
-              </p>
-              <div className="flex justify-center space-x-8">
-                <a href="https://dogerocket.site" className="text-light-blue hover:text-white transition-colors flex items-center"><i className="ri-home-line mr-2"></i> Website</a>
-                <a href="https://x.com/DRKTDogeRocket" className="text-light-blue hover:text-white transition-colors flex items-center"><i className="ri-twitter-line mr-2"></i> Twitter</a>
-                <a href="https://discord.gg/9QQ8FmY6nq" className="text-light-blue hover:text-white transition-colors flex items-center"><i className="ri-discord-line mr-2"></i> Discord</a>
               </div>
+              {error && <p className="text-red-500 mt-4">{error}</p>}
             </section>
-
-            <footer className="text-center py-8 text-gray-300 border-t border-light-blue/30">
-              <p>&copy; 2025 DogeRocket. All rights reserved. | <a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d" className="text-light-blue hover:underline">Contract Explorer</a></p>
-            </footer>
-          </div>
+          )}
+          <footer className="text-center py-8 text-gray-300">
+            <p>&copy; 2025 DogeRocket. All rights reserved.</p>
+          </footer>
         </div>
       );
     }
-
     ReactDOM.render(<App />, document.getElementById("root"));
-
-    // Toggle Mobile Menu
-    function toggleMenu() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      mobileMenu.classList.toggle('hidden');
-    }
-
-    // GTranslate Init
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
-      }, 'google_translate_element');
-    }
   </script>
 </body>
 </html>

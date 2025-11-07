@@ -132,7 +132,8 @@
             setContract(contractInstance);
             // Fetch initial data
             const apyRaw = await contractInstance.currentAPY();
-            setApy((Number(ethers.utils.formatEther(apyRaw)) / 100).toFixed(2));
+            const apyValue = parseFloat(ethers.utils.formatUnits(apyRaw, 0)) / 100;
+            setApy(apyValue.toFixed(2));
             const totalStakedRaw = await contractInstance.totalStaked();
             setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
             const rewardPoolRaw = await contractInstance.rewardPool();
@@ -150,9 +151,9 @@
           try {
             setLoading(true);
             setError("");
-            const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+            let ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
             await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const chainId = Number((await ethersProvider.getNetwork()).chainId);
+            let chainId = Number((await ethersProvider.getNetwork()).chainId);
             if (chainId !== CHAIN_ID) {
               try {
                 await window.ethereum.request({
@@ -179,6 +180,8 @@
                   throw switchError;
                 }
               }
+              // Recreate provider after chain switch
+              ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
             }
             const signerInstance = ethersProvider.getSigner();
             const address = await signerInstance.getAddress();
@@ -388,14 +391,14 @@
                   disabled={loading}
                   className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-3 px-8 rounded-lg disabled:opacity-50 transition-colors"
                 >
-                  {loading && !loadingWalletConnect ? "Connecting..." : "Connect MetaMask"}
+                  {loading ? "Connecting..." : "Connect MetaMask"}
                 </button>
                 <button
                   onClick={connectWalletConnect}
                   disabled={loading}
                   className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg disabled:opacity-50 transition-colors"
                 >
-                  {loading && loadingWalletConnect ? "Connecting..." : "Connect WalletConnect"}
+                  {loading ? "Connecting..." : "Connect WalletConnect"}
                 </button>
               </div>
             ) : (

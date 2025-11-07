@@ -1,410 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DogeRocket Staking dApp</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DogeRocket Staking - 300% APY</title>
+  <link rel="icon" href="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'drkt-blue': '#001F3F',
+            'drkt-cyan': '#00D4FF'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-b from-drkt-blue to-black text-white min-h-screen font-sans">
+  <div id="root"></div>
+
+  <!-- React + Babel + Ethers + Web3Modal -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script src="https://unpkg.com/@web3modal/ethers5@3.5.4/dist/index.js"></script>
-</head>
-<body class="bg-gradient-to-b from-blue-900 to-blue-500 text-white min-h-screen font-sans">
-  <div id="root"></div>
+
   <script type="text/babel">
     const { useState, useEffect } = React;
     const { ethers } = window.ethers;
 
-    // Production values
+    // === CONFIG ===
     const CONTRACT_ADDRESS = "0x03720cc99a302c101dbd48489a6c2c8bb52d178d";
-    const CHAIN_ID = 137; // Polygon Mainnet
-    const RPC_URL = "https://polygon-mainnet.infura.io/v3/4e16c4dd948a444ba97a4cdb992b33d1";
+    const CHAIN_ID = 137;
+    const RPC_URL = `https://polygon-mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_KEY || 'YOUR_INFURA_KEY'}`;
+    const PROJECT_ID = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID || 'YOUR_WC_PROJECT_ID';
+
+    // === FULL ABI (from PolygonScan) ===
     const ABI = [
-      {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
-      {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},
-      {"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},
-      {"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},
-      {"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},
-      {"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},
-      {"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},
-      {"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"OwnableInvalidOwner","type":"error"},
-      {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"OwnableUnauthorizedAccount","type":"error"},
-      {"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"SafeERC20FailedOperation","type":"error"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"wallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"LockedTokensClaimed","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"newCID","type":"string"},{"indexed":false,"internalType":"string","name":"newDescription","type":"string"}],"name":"MetadataUpdated","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"RewardClaimed","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RewardPoolContribution","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"previousPool","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newPool","type":"uint256"}],"name":"RewardPoolModified","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RewardsExpired","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"}],"name":"StakePruned","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensStaked","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"fee","type":"uint256"}],"name":"TokensUnstaked","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"wallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"VestedTokensClaimed","type":"event"},
-      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},
-      {"inputs":[],"name":"LOCKED_LOCK_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"LOCKED_VESTING_PERIODS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MAX_CLAIM_WINDOW","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MAX_REWARD_RATE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MAX_STAKE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MAX_STAKE_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MIN_DONATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MIN_REWARD_RATE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MIN_STAKE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"MIN_STAKE_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"STAKE_COOLDOWN","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"STAKING_REWARDS_ALLOCATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"TARGET_POOL_COVERAGE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"WITHDRAW_FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
-      {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"calculateReward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"claimLockedToPool","outputs":[],"stateMutability":"nonpayable","type":"function"},
       {"inputs":[],"name":"claimReward","outputs":[],"stateMutability":"nonpayable","type":"function"},
-      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"claimVested","outputs":[],"stateMutability":"nonpayable","type":"function"},
-      {"inputs":[],"name":"contractDescription","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"currentAPY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"deploymentTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"dogeStakes","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"pendingRewards","type":"uint256"},{"internalType":"uint64","name":"lastUpdateTime","type":"uint64"},{"internalType":"uint64","name":"lastActionTime","type":"uint64"},{"internalType":"uint64","name":"stakeStartTime","type":"uint64"}],"stateMutability":"view","type":"function"},
       {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"donateToPool","outputs":[],"stateMutability":"nonpayable","type":"function"},
-      {"inputs":[],"name":"lockedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"lockedClaimedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"metadataCID","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"pure","type":"function"},
-      {"inputs":[],"name":"rewardPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[{"internalType":"string","name":"newCID","type":"string"},{"internalType":"string","name":"newDescription","type":"string"}],"name":"setMetadata","outputs":[],"stateMutability":"nonpayable","type":"function"},
       {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},
-      {"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"totalStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
-      {"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
-      {"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},
       {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"},
-      {"inputs":[],"name":"vestedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-      {"inputs":[],"name":"vestedClaimedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+      {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"calculateReward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"currentAPY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"dogeStakes","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"pendingRewards","type":"uint256"},{"internalType":"uint64","name":"lastUpdateTime","type":"uint64"},{"internalType":"uint64","name":"lastActionTime","type":"uint64"},{"internalType":"uint64","name":"stakeStartTime","type":"uint64"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"rewardPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[],"name":"totalStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
     ];
 
-    // Web3Modal configuration
-    const projectId = "d2ef0dc4e30bb16fb86b1a73175e2261"; 
+    // === Web3Modal Init ===
     let modal = null;
-    if (window.Web3Modal && window.Web3Modal.Web3Modal) {
+    if (window.Web3Modal?.Web3Modal) {
       modal = new window.Web3Modal.Web3Modal({
-        projectId,
-        walletConnectVersion: 2,
-        themeMode: "dark",
-        themeVariables: {
-          "--w3m-accent-color": "#1E40AF",
-          "--w3m-background-color": "#1E3A8A"
-        }
+        projectId: PROJECT_ID,
+        themeMode: "dark"
       });
-    } else {
-      console.error("Web3Modal not loaded");
     }
 
     function App() {
-      const [provider, setProvider] = useState(null);
+      const [account, setAccount] = useState("");
       const [signer, setSigner] = useState(null);
       const [contract, setContract] = useState(null);
-      const [account, setAccount] = useState(null);
       const [balance, setBalance] = useState("0");
       const [apy, setApy] = useState("0");
       const [totalStaked, setTotalStaked] = useState("0");
       const [rewardPool, setRewardPool] = useState("0");
       const [userStake, setUserStake] = useState("0");
-      const [pendingRewards, setPendingRewards] = useState("0");
-      const [stakeAmount, setStakeAmount] = useState("");
-      const [unstakeAmount, setUnstakeAmount] = useState("");
-      const [donateAmount, setDonateAmount] = useState("");
-      const [error, setError] = useState("");
+      const [pending, setPending] = useState("0");
+      const [stakeAmt, setStakeAmt] = useState("");
+      const [unstakeAmt, setUnstakeAmt] = useState("");
+      const [donateAmt, setDonateAmt] = useState("");
       const [loading, setLoading] = useState(false);
+      const [error, setError] = useState("");
 
-      // Initialize provider and contract
+      // Init public data
       useEffect(() => {
         const init = async () => {
+          const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
+          const c = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
+          setContract(c);
           try {
-            const ethersProvider = new ethers.providers.JsonRpcProvider(RPC_URL);
-            const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, ABI, ethersProvider);
-            setProvider(ethersProvider);
-            setContract(contractInstance);
-
-            // Fetch initial data
-            const apyRaw = await contractInstance.currentAPY();
-            setApy(ethers.utils.formatEther(apyRaw) / 100);
-            const totalStakedRaw = await contractInstance.totalStaked();
-            setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
-            const rewardPoolRaw = await contractInstance.rewardPool();
-            setRewardPool(ethers.utils.formatEther(rewardPoolRaw));
-          } catch (err) {
-            console.error("Error fetching initial data:", err);
-            setError("Failed to load contract data. Please try again.");
-          }
+            const [a, ts, rp] = await Promise.all([
+              c.currentAPY(),
+              c.totalStaked(),
+              c.rewardPool()
+            ]);
+            setApy((Number(a) / 100).toFixed(1));
+            setTotalStaked(ethers.utils.formatEther(ts));
+            setRewardPool(ethers.utils.formatEther(rp));
+          } catch (e) { console.error(e); }
         };
         init();
       }, []);
 
-      // Connect wallet
-      const connectWallet = async () => {
-        if (!modal) {
-          setError("Web3Modal not initialized. Please refresh the page.");
-          return;
-        }
+      const connect = async () => {
+        if (!modal) return setError("WalletConnect not loaded");
+        setLoading(true);
         try {
-          setLoading(true);
           const instance = await modal.connect();
-          const ethersProvider = new ethers.providers.Web3Provider(instance);
-          const signerInstance = ethersProvider.getSigner();
-          const address = await signerInstance.getAddress();
-          const chainId = Number((await ethersProvider.getNetwork()).chainId);
-
-          if (chainId !== CHAIN_ID) {
-            setError(`Please switch to Polygon Mainnet`);
-            return;
-          }
-
-          setSigner(signerInstance);
-          setAccount(address);
-          const contractWithSigner = new ethers.Contract(CONTRACT_ADDRESS, ABI, signerInstance);
-          setContract(contractWithSigner);
-
-          // Fetch user data
-          const balanceRaw = await contractWithSigner.balanceOf(address);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const stakeData = await contractWithSigner.dogeStakes(address);
-          setUserStake(ethers.utils.formatEther(stakeData.amount));
-          const rewardsRaw = await contractWithSigner.calculateReward(address);
-          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
-        } catch (err) {
-          setError("Failed to connect wallet: " + err.message);
-        } finally {
-          setLoading(false);
+          const provider = new ethers.providers.Web3Provider(instance);
+          const s = provider.getSigner();
+          const addr = await s.getAddress();
+          const net = await provider.getNetwork();
+          if (net.chainId !== CHAIN_ID) throw new Error("Switch to Polygon");
+          setSigner(s);
+          setAccount(addr);
+          const c = new ethers.Contract(CONTRACT_ADDRESS, ABI, s);
+          setContract(c);
+          await refreshUser(c, addr);
+        } catch (e) {
+          setError(e.message);
         }
+        setLoading(false);
       };
 
-      // Handle stake
-      const handleStake = async () => {
-        if (!signer || !stakeAmount) return;
+      const refreshUser = async (c, addr) => {
+        const [bal, stake, rew] = await Promise.all([
+          c.balanceOf(addr),
+          c.dogeStakes(addr),
+          c.calculateReward(addr)
+        ]);
+        setBalance(ethers.utils.formatEther(bal));
+        setUserStake(ethers.utils formatEther(stake.amount));
+        setPending(ethers.utils.formatEther(rew));
+      };
+
+      const stake = async () => {
+        setLoading(true); setError("");
         try {
-          setLoading(true);
-          setError("");
-          const amount = ethers.utils.parseEther(stakeAmount);
-          await contract.approve(CONTRACT_ADDRESS, amount);
-          const tx = await contract.stake(amount);
+          const amt = ethers.utils.parseEther(stakeAmt);
+          let tx = await contract.approve(CONTRACT_ADDRESS, amt);
           await tx.wait();
-          setStakeAmount("");
-          const balanceRaw = await contract.balanceOf(account);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const stakeData = await contract.dogeStakes(account);
-          setUserStake(ethers.utils.formatEther(stakeData.amount));
-          const rewardsRaw = await contract.calculateReward(account);
-          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
-          const totalStakedRaw = await contract.totalStaked();
-          setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
-        } catch (err) {
-          setError("Staking failed: " + err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      // Handle unstake
-      const handleUnstake = async () => {
-        if (!signer || !unstakeAmount) return;
-        try {
-          setLoading(true);
-          setError("");
-          const amount = ethers.utils.parseEther(unstakeAmount);
-          const tx = await contract.unstake(amount);
+          tx = await contract.stake(amt);
           await tx.wait();
-          setUnstakeAmount("");
-          const balanceRaw = await contract.balanceOf(account);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const stakeData = await contract.dogeStakes(account);
-          setUserStake(ethers.utils.formatEther(stakeData.amount));
-          const rewardsRaw = await contract.calculateReward(account);
-          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
-          const totalStakedRaw = await contract.totalStaked();
-          setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
-        } catch (err) {
-          setError("Unstaking failed: " + err.message);
-        } finally {
-          setLoading(false);
-        }
+          setStakeAmt("");
+          await refreshUser(contract, account);
+        } catch (e) { setError(e.message); }
+        setLoading(false);
       };
 
-      // Handle claim rewards
-      const handleClaimRewards = async () => {
-        if (!signer) return;
+      const unstake = async () => {
+        setLoading(true); setError("");
         try {
-          setLoading(true);
-          setError("");
+          const amt = ethers.utils.parseEther(unstakeAmt);
+          const tx = await contract.unstake(amt);
+          await tx.wait();
+          setUnstakeAmt("");
+          await refreshUser(contract, account);
+        } catch (e) { setError(e.message); }
+        setLoading(false);
+      };
+
+      const claim = async () => {
+        setLoading(true); setError("");
+        try {
           const tx = await contract.claimReward();
           await tx.wait();
-          const balanceRaw = await contract.balanceOf(account);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const stakeData = await contract.dogeStakes(account);
-          setUserStake(ethers.utils.formatEther(stakeData.amount));
-          const rewardsRaw = await contract.calculateReward(account);
-          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
-        } catch (err) {
-          setError("Claiming rewards failed: " + err.message);
-        } finally {
-          setLoading(false);
-        }
+          await refreshUser(contract, account);
+        } catch (e) { setError(e.message); }
+        setLoading(false);
       };
 
-      // Handle donate to pool
-      const handleDonate = async () => {
-        if (!signer || !donateAmount) return;
+      const donate = async () => {
+        setLoading(true); setError("");
         try {
-          setLoading(true);
-          setError("");
-          const amount = ethers.utils.parseEther(donateAmount);
-          await contract.approve(CONTRACT_ADDRESS, amount);
-          const tx = await contract.donateToPool(amount);
+          const amt = ethers.utils.parseEther(donateAmt);
+          let tx = await contract.approve(CONTRACT_ADDRESS, amt);
           await tx.wait();
-          setDonateAmount("");
-          const balanceRaw = await contract.balanceOf(account);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const rewardPoolRaw = await contract.rewardPool();
-          setRewardPool(ethers.utils.formatEther(rewardPoolRaw));
-        } catch (err) {
-          setError("Donation failed: " + err.message);
-        } finally {
-          setLoading(false);
-        }
+          tx = await contract.donateToPool(amt);
+          await tx.wait();
+          setDonateAmt("");
+          const rp = await contract.rewardPool();
+          setRewardPool(ethers.utils.formatEther(rp));
+        } catch (e) { setError(e.message); }
+        setLoading(false);
       };
 
       return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          {/* Header */}
           <header className="text-center py-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white">DogeRocket</h1>
-            <p className="text-lg md:text-xl text-gray-300 mt-4">
-              A decentralized staking token with dynamic APY rewards
-            </p>
-            <button
-              onClick={connectWallet}
-              disabled={loading}
-              className="mt-6 bg-blue-700 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg disabled:opacity-50"
-            >
-              {loading ? "Connecting..." : (account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : "Connect Wallet")}
+            <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DRKT" className="w-24 h-24 mx-auto rounded-full border-4 border-drkt-cyan" />
+            <h1 className="text-5xl font-bold mt-4 bg-clip-text text-transparent bg-gradient-to-r from-drkt-cyan to-purple-400">DogeRocket Staking</h1>
+            <p className="text-xl mt-2">Stake DRKT • Earn Up To 300% APY</p>
+            <button onClick={connect} disabled={loading} className="mt-6 bg-gradient-to-r from-drkt-cyan to-purple-600 hover:from-drkt-cyan/80 px-8 py-3 rounded-full font-bold text-lg">
+              {loading ? "..." : account ? `${account.slice(0,6)}...${account.slice(-4)}` : "Connect Wallet"}
             </button>
           </header>
 
-          <section className="bg-gray-100 text-gray-800 rounded-lg p-6 mb-8">
-            <h2 className="text-2xl font-semibold mb-4">About DogeRocket</h2>
-            <p className="text-lg">
-              DogeRocket (DRKT) is an ERC20 token on Polygon with a total supply of 1B tokens. Stake DRKT to earn rewards with a dynamic APY (5.8% to 347%). 30% is allocated to the team (vested over 10 years), 40% to staking rewards, and 30% to the locked pool.
-            </p>
-            <div className="mt-4 flex space-x-4">
-              <a href="https://dogerocket.site" className="text-blue-600 hover:underline">Website</a>
-              <a href="https://x.com/DRKTDogeRocket" className="text-blue-600 hover:underline">Twitter</a>
-              <a href="https://discord.gg/9QQ8FmY6nq" className="text-blue-600 hover:underline">Discord</a>
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-6 text-center border border-drkt-cyan/30">
+              <p className="text-drkt-cyan text-sm">Current APY</p>
+              <p className="text-3xl font-bold">{apy}%</p>
             </div>
-          </section>
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-6 text-center border border-drkt-cyan/30">
+              <p className="text-drkt-cyan text-sm">Total Staked</p>
+              <p className="text-3xl font-bold">{Number(totalStaked).toLocaleString()} DRKT</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-6 text-center border border-drkt-cyan/30">
+              <p className="text-drkt-cyan text-sm">Reward Pool</p>
+              <p className="text-3xl font-bold">{Number(rewardPool).toLocaleString()} DRKT</p>
+            </div>
+          </div>
 
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-blue-800 p-6 rounded-lg text-center">
-              <h3 className="text-lg font-semibold text-gray-300">Current APY</h3>
-              <p className="text-2xl font-bold">{apy}%</p>
-            </div>
-            <div className="bg-blue-800 p-6 rounded-lg text-center">
-              <h3 className="text-lg font-semibold text-gray-300">Total Staked</h3>
-              <p className="text-2xl font-bold">{totalStaked} DRKT</p>
-            </div>
-            <div className="bg-blue-800 p-6 rounded-lg text-center">
-              <h3 className="text-lg font-semibold text-gray-300">Reward Pool</h3>
-              <p className="text-2xl font-bold">{rewardPool} DRKT</p>
-            </div>
-          </section>
-
+          {/* Dashboard */}
           {account && (
-            <section className="bg-gray-100 text-gray-800 rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Staking Dashboard</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-lg font-semibold">Your Balance: {balance} DRKT</h3>
-                  <h3 className="text-lg font-semibold">Your Stake: {userStake} DRKT</h3>
-                  <h3 className="text-lg font-semibold">Pending Rewards: {pendingRewards} DRKT</h3>
+            <div className="bg-white/5 backdrop-blur rounded-3xl p-8 border border-drkt-cyan/30">
+              <h2 className="text-3xl font-bold mb-6 text-center">Your Dashboard</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-gradient-to-br from-drkt-cyan/20 to-purple-600/20 rounded-2xl p-6 text-center">
+                  <p className="text-drkt-cyan">Wallet Balance</p>
+                  <p className="text-2xl font-bold">{Number(balance).toFixed(2)} DRKT</p>
                 </div>
-                <div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Stake Amount (DRKT)</label>
-                    <input
-                      type="number"
-                      value={stakeAmount}
-                      onChange={(e) => setStakeAmount(e.target.value)}
-                      className="w-full p-2 rounded-lg text-gray-800"
-                      placeholder="Enter amount"
-                    />
-                    <button
-                      onClick={handleStake}
-                      disabled={loading}
-                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
-                    >
-                      {loading ? "Processing..." : "Stake"}
-                    </button>
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Unstake Amount (DRKT)</label>
-                    <input
-                      type="number"
-                      value={unstakeAmount}
-                      onChange={(e) => setUnstakeAmount(e.target.value)}
-                      className="w-full p-2 rounded-lg text-gray-800"
-                      placeholder="Enter amount"
-                    />
-                    <button
-                      onClick={handleUnstake}
-                      disabled={loading}
-                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
-                    >
-                      {loading ? "Processing..." : "Unstake"}
-                    </button>
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Donate to Pool (DRKT)</label>
-                    <input
-                      type="number"
-                      value={donateAmount}
-                      onChange={(e) => setDonateAmount(e.target.value)}
-                      className="w-full p-2 rounded-lg text-gray-800"
-                      placeholder="Enter amount"
-                    />
-                    <button
-                      onClick={handleDonate}
-                      disabled={loading}
-                      className="mt-2 w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
-                    >
-                      {loading ? "Processing..." : "Donate"}
-                    </button>
-                  </div>
-                  <button
-                    onClick={handleClaimRewards}
-                    disabled={loading}
-                    className="w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded-lg disabled:opacity-50"
-                  >
-                    {loading ? "Processing..." : "Claim Rewards"}
+                <div className="bg-gradient-to-br from-green-500/20 to-teal-600/20 rounded-2xl p-6 text-center">
+                  <p className="text-drkt-cyan">Staked</p>
+                  <p className="text-2xl font-bold">{Number(userStake).toFixed(2)} DRKT</p>
+                </div>
+                <div className="bg-gradient-to-br from-yellow-500/20 to-orange-600/20 rounded-2xl p-6 text-center">
+                  <p className="text-drkt-cyan">Pending Rewards</p>
+                  <p className="text-2xl font-bold">{Number(pending).toFixed(2)} DRKT</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <input value={stakeAmt} onChange={e => setStakeAmt(e.target.value)} placeholder="100" className="w-full p-3 rounded bg-white/20 text-white placeholder-gray-400 mb-3" />
+                  <button onClick={stake} disabled={loading} className="w-full bg-drkt-cyan hover:bg-drkt-cyan/80 text-black font-bold py-3 rounded">
+                    {loading ? "..." : "Stake"}
+                  </button>
+                </div>
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <input value={unstakeAmt} onChange={e => setUnstakeAmt(e.target.value)} placeholder="100" className="w-full p-3 rounded bg-white/20 text-white placeholder-gray-400 mb-3" />
+                  <button onClick={unstake} disabled={loading} className="w-full bg-red-600 hover:bg-red-500 font-bold py-3 rounded">
+                    {loading ? "..." : "Unstake (2% fee)"}
+                  </button>
+                </div>
+                <div className="bg-white/10 rounded-2xl p-6">
+                  <input value={donateAmt} onChange={e => setDonateAmt(e.target.value)} placeholder="100" className="w-full p-3 rounded bg-white/20 text-white placeholder-gray-400 mb-3" />
+                  <button onClick={donate} disabled={loading} className="w-full bg-purple-600 hover:bg-purple-500 font-bold py-3 rounded">
+                    {loading ? "..." : "Donate"}
+                  </button>
+                </div>
+                <div className="bg-white/10 rounded-2xl p-6 flex items-center justify-center">
+                  <button onClick={claim} disabled={loading} className="w-full bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-400 hover:to-teal-500 font-bold py-8 rounded text-xl">
+                    {loading ? "Claiming..." : `Claim ${Number(pending).toFixed(2)} DRKT`}
                   </button>
                 </div>
               </div>
-              {error && <p className="text-red-500 mt-4">{error}</p>}
-            </section>
+              {error && <p className="text-red-400 text-center mt-6">{error}</p>}
+            </div>
           )}
-          <footer className="text-center py-8 text-gray-300">
-            <p>&copy; 2025 DogeRocket. All rights reserved.</p>
+
+          {/* Footer */}
+          <footer className="text-center py-12 text-gray-400 text-sm">
+            <p>© 2025 DogeRocket – All Rights Reserved</p>
+            <div className="flex justify-center gap-6 mt-4">
+              <a href="https://x.com/DRKTDogeRocket" className="hover:text-drkt-cyan">Twitter</a>
+              <a href="https://discord.gg/9QQ8FmY6nq" className="hover:text-drkt-cyan">Discord</a>
+              <a href="https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d" className="hover:text-drkt-cyan">Contract</a>
+            </div>
           </footer>
         </div>
       );
     }
-    ReactDOM.render(<App />, document.getElementById("root"));
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
   </script>
 </body>
 </html>

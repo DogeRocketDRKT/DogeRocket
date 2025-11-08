@@ -445,7 +445,7 @@
                       <button
                         onClick={connectMetaMask}
                         disabled={loading}
-                        className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-3 px-6 rounded-lg disabled:opacity-50 transition-colors flex items-center"
+                        className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-3 px-6 rounded-full disabled:opacity-50 transition-colors flex items-center"
                       >
                         <i className="ri-wallet-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                         {loading ? "Connecting..." : "Connect MetaMask"}
@@ -453,7 +453,7 @@
                       <button
                         onClick={connectWalletConnect}
                         disabled={loading}
-                        className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg disabled:opacity-50 transition-colors flex items-center"
+                        className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-full disabled:opacity-50 transition-colors flex items-center"
                       >
                         <i className="ri-wallet-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                         {loading ? "Connecting..." : "Connect WalletConnect"}
@@ -466,7 +466,7 @@
                       </p>
                       <button
                         onClick={disconnectWallet}
-                        className="bg-red-600 hover:bg-red-500 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center"
+                        className="bg-red-600 hover:bg-red-500 text-white font-semibold py-3 px-6 rounded-full transition-colors flex items-center"
                       >
                         <i className="ri-logout-box-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                         Disconnect
@@ -479,14 +479,14 @@
                     href={SALE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-green-600 hover:bg-green-500 text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center"
+                    className="bg-green-600 hover:bg-green-500 text-white py-3 px-6 rounded-full font-semibold transition-colors flex items-center"
                   >
                     <i className="ri-shopping-cart-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                     Buy DRKT
                   </a>
                   <button
                     onClick={addTokenToMetaMask}
-                    className="bg-gray-600 hover:bg-gray-500 text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center"
+                    className="bg-gray-600 hover:bg-gray-500 text-white py-3 px-6 rounded-full font-semibold transition-colors flex items-center"
                   >
                     <i className="ri-add-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                     Add DRKT to MetaMask
@@ -558,7 +558,7 @@
                         <button
                           onClick={handleStake}
                           disabled={loading}
-                          className="mt-2 w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors"
+                          className="mt-2 w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-full font-semibold disabled:opacity-50 transition-colors"
                         >
                           {loading ? "Staking..." : "Stake DRKT"}
                         </button>
@@ -576,7 +576,7 @@
                         <button
                           onClick={handleUnstake}
                           disabled={loading}
-                          className="mt-2 w-full bg-red-600 hover:bg-red-500 text-white py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors"
+                          className="mt-2 w-full bg-red-600 hover:bg-red-500 text-white py-3 rounded-full font-semibold disabled:opacity-50 transition-colors"
                         >
                           {loading ? "Unstaking..." : "Unstake DRKT"}
                         </button>
@@ -594,7 +594,7 @@
                         <button
                           onClick={handleDonate}
                           disabled={loading}
-                          className="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors"
+                          className="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-full font-semibold disabled:opacity-50 transition-colors"
                         >
                           {loading ? "Donating..." : "Donate DRKT"}
                         </button>
@@ -602,7 +602,7 @@
                       <button
                         onClick={handleClaimRewards}
                         disabled={loading || parseFloat(pendingRewards) === 0}
-                        className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors"
+                        className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-full font-semibold disabled:opacity-50 transition-colors"
                       >
                         {loading ? "Claiming..." : `Claim ${parseFloat(pendingRewards).toLocaleString()} Rewards`}
                       </button>

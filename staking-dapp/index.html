@@ -205,7 +205,7 @@
             const rewardsRaw = await contractWithSigner.calculateReward(address);
             setPendingRewards(ethers.utils.formatEther(rewardsRaw));
           } catch (err) {
-            setError("Failed to connect MetaMask: " + err.message);
+            setError(getUserFriendlyError(err));
           } finally {
             setLoading(false);
           }
@@ -244,7 +244,7 @@
           const rewardsRaw = await contractWithSigner.calculateReward(address);
           setPendingRewards(ethers.utils.formatEther(rewardsRaw));
         } catch (err) {
-          setError("Failed to connect WalletConnect: " + err.message);
+          setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
         }
@@ -294,7 +294,7 @@
             console.log('Failed to add DRKT token to MetaMask.');
           }
         } catch (err) {
-          setError("Failed to add DRKT token: " + err.message);
+          setError(getUserFriendlyError(err));
         }
       };
       // Handle stake
@@ -322,8 +322,7 @@
           const totalStakedRaw = await contract.totalStaked();
           setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
         } catch (err) {
-          console.error(err);
-          setError("Staking failed: " + (err.message || err.data?.message || "Unknown error"));
+          setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
         }
@@ -351,8 +350,7 @@
           const totalStakedRaw = await contract.totalStaked();
           setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
         } catch (err) {
-          console.error(err);
-          setError("Unstaking failed: " + (err.message || err.data?.message || "Unknown error"));
+          setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
         }
@@ -373,8 +371,7 @@
           const rewardsRaw = await contract.calculateReward(account);
           setPendingRewards(ethers.utils.formatEther(rewardsRaw));
         } catch (err) {
-          console.error(err);
-          setError("Claiming rewards failed: " + (err.message || err.data?.message || "Unknown error"));
+          setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
         }
@@ -400,15 +397,33 @@
           const rewardPoolRaw = await contract.rewardPool();
           setRewardPool(ethers.utils.formatEther(rewardPoolRaw));
         } catch (err) {
-          console.error(err);
-          setError("Donation failed: " + (err.message || err.data?.message || "Unknown error"));
+          setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
+        }
+      };
+      // User-friendly error mapping
+      const getUserFriendlyError = (err) => {
+        if (err.message.includes("Too frequent")) {
+          return "Action on cooldown. You can only perform this action every 24 hours. Please wait and try again.";
+        } else if (err.message.includes("execution reverted")) {
+          return "Transaction reverted: " + (err.reason || "Unknown contract error. Check your inputs and try again.");
+        } else if (err.message.includes("insufficient funds")) {
+          return "Insufficient funds in your wallet for this transaction.";
+        } else if (err.message.includes("UNPREDICTABLE_GAS_LIMIT")) {
+          return "Gas estimation failed. The transaction may revert—check contract conditions or try with a manual gas limit.";
+        } else {
+          return err.message || "An unknown error occurred. Please try again.";
         }
       };
       return (
         <>
           <div className="container mx-auto px-4 py-8">
+            {error && (
+              <div className="sticky top-0 z-10 bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg mb-8">
+                {error}
+              </div>
+            )}
             <header className="text-center py-12">
               <div className="flex justify-center items-center mb-4">
                 <img src={LOGO_URL} alt="DogeRocket Logo" className="w-20 h-20" />
@@ -424,7 +439,7 @@
                       <button
                         onClick={connectMetaMask}
                         disabled={loading}
-                        className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-3 px-8 rounded-lg disabled:opacity-50 transition-colors flex items-center"
+                        className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-3 px-6 rounded-lg disabled:opacity-50 transition-colors flex items-center"
                       >
                         <i className="ri-wallet-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                         {loading ? "Connecting..." : "Connect MetaMask"}
@@ -432,7 +447,7 @@
                       <button
                         onClick={connectWalletConnect}
                         disabled={loading}
-                        className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg disabled:opacity-50 transition-colors flex items-center"
+                        className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg disabled:opacity-50 transition-colors flex items-center"
                       >
                         <i className="ri-wallet-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                         {loading ? "Connecting..." : "Connect WalletConnect"}
@@ -445,7 +460,7 @@
                       </p>
                       <button
                         onClick={disconnectWallet}
-                        className="bg-red-600 hover:bg-red-500 text-white font-semibold py-3 px-8 rounded-lg transition-colors flex items-center"
+                        className="bg-red-600 hover:bg-red-500 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center"
                       >
                         <i className="ri-logout-box-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                         Disconnect
@@ -458,14 +473,14 @@
                     href={SALE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-green-600 hover:bg-green-500 text-white py-3 px-8 rounded-lg font-semibold transition-colors flex items-center"
+                    className="bg-green-600 hover:bg-green-500 text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center"
                   >
                     <i className="ri-shopping-cart-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                     Buy DRKT
                   </a>
                   <button
                     onClick={addTokenToMetaMask}
-                    className="bg-gray-600 hover:bg-gray-500 text-white py-3 px-8 rounded-lg font-semibold transition-colors flex items-center"
+                    className="bg-gray-600 hover:bg-gray-500 text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center"
                   >
                     <i className="ri-add-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
                     Add DRKT to MetaMask
@@ -589,11 +604,6 @@
                   </div>
                 </section>
               </>
-            )}
-            {error && (
-              <div className="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg mb-8">
-                {error}
-              </div>
             )}
             <footer className="text-center py-8 text-gray-300 border-t border-white/10">
               <p>&copy; 2025 DogeRocket. All rights reserved. | Polygon Mainnet</p>

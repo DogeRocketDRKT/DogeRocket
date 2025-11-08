@@ -210,7 +210,7 @@
             setLoading(false);
           }
         } else {
-          setError("MetaMask not installed.");
+          setError("MetaMask not installed. Please install MetaMask to connect.");
         }
       };
       // Connect with WalletConnect
@@ -228,7 +228,7 @@
           const address = await signerInstance.getAddress();
           const chainId = Number((await ethersProvider.getNetwork()).chainId);
           if (chainId !== CHAIN_ID) {
-            setError(`Please switch to Polygon Mainnet (Chain ID: ${CHAIN_ID})`);
+            setError(`Please switch to Polygon Mainnet (Chain ID: ${CHAIN_ID}) in your wallet.`);
             return;
           }
           setProvider(ethersProvider);
@@ -271,7 +271,7 @@
       // Add token to MetaMask
       const addTokenToMetaMask = async () => {
         if (!window.ethereum) {
-          setError("MetaMask not installed.");
+          setError("MetaMask not installed. Please install MetaMask to add the token.");
           return;
         }
         try {
@@ -300,7 +300,7 @@
       // Handle stake
       const handleStake = async () => {
         if (!signer || !stakeAmount || parseFloat(stakeAmount) <= 0) {
-          setError("Please enter a valid stake amount.");
+          setError("Please enter a valid stake amount greater than zero.");
           return;
         }
         try {
@@ -330,7 +330,7 @@
       // Handle unstake
       const handleUnstake = async () => {
         if (!signer || !unstakeAmount || parseFloat(unstakeAmount) <= 0) {
-          setError("Please enter a valid unstake amount.");
+          setError("Please enter a valid unstake amount greater than zero.");
           return;
         }
         try {
@@ -379,7 +379,7 @@
       // Handle donate to pool
       const handleDonate = async () => {
         if (!signer || !donateAmount || parseFloat(donateAmount) <= 0) {
-          setError("Please enter a valid donation amount.");
+          setError("Please enter a valid donation amount greater than zero.");
           return;
         }
         try {
@@ -407,21 +407,27 @@
         if (err.message.includes("Too frequent")) {
           return "Action on cooldown. You can only perform this action every 24 hours. Please wait and try again.";
         } else if (err.message.includes("execution reverted")) {
-          return "Transaction reverted: " + (err.reason || "Unknown contract error. Check your inputs and try again.");
+          return "Transaction failed: " + (err.reason || "Please check your inputs and wallet balance.");
         } else if (err.message.includes("insufficient funds")) {
-          return "Insufficient funds in your wallet for this transaction.";
+          return "Insufficient funds in your wallet. Please add more MATIC or tokens.";
         } else if (err.message.includes("UNPREDICTABLE_GAS_LIMIT")) {
-          return "Gas estimation failed. The transaction may revert—check contract conditions or try with a manual gas limit.";
+          return "Unable to estimate gas. The transaction may fail—try increasing gas limit or check contract conditions.";
         } else {
-          return err.message || "An unknown error occurred. Please try again.";
+          return err.message || "An unexpected error occurred. Please try again or contact support.";
         }
       };
       return (
         <>
           <div className="container mx-auto px-4 py-8">
             {error && (
-              <div className="sticky top-0 z-10 bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg mb-8">
+              <div className="sticky top-0 z-10 bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg mb-8 relative">
                 {error}
+                <button
+                  onClick={() => setError("")}
+                  className="absolute top-2 right-2 text-red-300 hover:text-red-100"
+                >
+                  <i className="ri-close-line text-xl"></i>
+                </button>
               </div>
             )}
             <header className="text-center py-12">

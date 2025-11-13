@@ -82,13 +82,14 @@
     .social-icons a[href*="x.com"]:hover, .social-icons a[href*="twitter"]:hover { background: #000; color: white; }
     .social-icons a[href*="telegram"]:hover { background: #229ED9; color: white; }
     .social-icons a[href*="discord"]:hover { background: #5865F2; color: white; }
-    /* GTranslate - Reduced Height ~50% */
-    #google_translate_element { font-size: 8px; width: 100px; height: 10px; }
-    #google_translate_element > div { font-size: 8px !important; }
-    .goog-te-gadget .goog-te-combo { font-size: 8px !important; padding: 1px !important; }
+    /* GTranslate - Reduced Height and Padding */
+    #google_translate_element { font-size: 2px; width: 80px; height: 3px; padding: 0 !important; margin: 0 !important; }
+    #google_translate_element > div { font-size: 2px !important; padding: 0 !important; margin: 0 !important; }
+    .goog-te-gadget { font-size: 2px !important; padding: 0 !important; margin: 0 !important; height: 3px !important; line-height: 3px !important; }
+    .goog-te-gadget .goog-te-combo { font-size: 2px !important; padding: 0 !important; margin: 0 !important; height: 3px !important; line-height: 3px !important; border: none !important; }
     @media (max-width: 768px) {
-      #google_translate_element { width: 90px; height: 9px; }
-      .goog-te-gadget .goog-te-combo { font-size: 7px !important; padding: 0.5px !important; }
+      #google_translate_element { width: 70px; height: 2.5px; }
+      .goog-te-gadget .goog-te-combo { font-size: 1.5px !important; padding: 0 !important; }
       .text-6xl { font-size: 2.5rem; }
       .text-3xl { font-size: 1.5rem; }
     }
@@ -96,8 +97,8 @@
   </style>
 </head>
 <body class="min-h-screen relative">
-  <!-- Fixed Header -->
-  <header class="fixed w-full bg-white/95 backdrop-blur-md shadow-lg z-50 border-b border-light-blue/20">
+  <!-- Static Header -->
+  <header class="w-full bg-white/95 backdrop-blur-md shadow-lg z-50 border-b border-light-blue/20">
     <div class="container mx-auto px-4 flex justify-between items-center py-3">
       <div class="flex items-center">
         <strong class="text-xl text-dark-blue">DogeRocket Airdrops</strong>
@@ -106,20 +107,20 @@
       <div class="flex items-center gap-4">
         <nav class="hidden md:flex">
           <ul class="flex gap-6">
-            <li><a href="https://dogerocket.site" class="text-dark-blue hover:text-light-blue font-semibold">Home</a></li>
+            <li><a href="https://dogerocket.site" class="cta-button">Home</a></li>
             <li><a href="https://dapp.quickswap.exchange/swap/best/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D?chainId=137" class="cta-button">Buy DRKT</a></li>
-            <li><a href="whitepaper.html" class="text-dark-blue hover:text-light-blue font-semibold">Whitepaper</a></li>
+            <li><a href="whitepaper.html" class="cta-button">Whitepaper</a></li>
           </ul>
         </nav>
-        <div id="google_translate_element"></div>
         <button class="md:hidden text-dark-blue text-2xl" onclick="toggleMenu()">☰</button>
+        <div id="google_translate_element"></div>
       </div>
     </div>
     <nav id="mobile-menu" class="hidden md:hidden bg-white px-4 py-2 border-t">
       <ul class="flex flex-col gap-2">
-        <li><a href="https://dogerocket.site" class="text-dark-blue hover:text-light-blue">Home</a></li>
+        <li><a href="https://dogerocket.site" class="cta-button">Home</a></li>
         <li><a href="https://dapp.quickswap.exchange/swap/best/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D?chainId=137" class="cta-button">Buy DRKT</a></li>
-        <li><a href="whitepaper.html" class="text-dark-blue hover:text-light-blue">Whitepaper</a></li>
+        <li><a href="whitepaper.html" class="cta-button">Whitepaper</a></li>
       </ul>
     </nav>
   </header>
@@ -133,7 +134,7 @@
     <div class="particle" style="top:60%;left:70%;animation-delay:5s;"></div>
   </div>
   <!-- Main Content -->
-  <div class="pt-20 container mx-auto px-4 py-12 relative z-10"> <!-- Offset for fixed header -->
+  <div class="container mx-auto px-4 py-12 relative z-10">
     <!-- Logo + Title -->
     <div class="text-center mb-12">
       <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket DRKT Logo" class="mx-auto w-32 h-32 rounded-full border-4 border-cyan-400 shadow-2xl logo-float" aria-label="DogeRocket Logo" />
@@ -166,17 +167,15 @@
           <li>✅ Retweet the Pinned Post</li>
           <li>✅ Join Telegram & Discord Channels</li>
           <li>✅ Tag 3 Friends in Comments</li>
-          <li>✅ Complete a Quick Quiz on DRKT</li>
-          <li>✅ Share Your Favorite Crypto Tip</li>
         </ul>
-        <a href="#" class="block mt-6 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-4 rounded-full text-center" aria-label="Complete Easy Tasks">
-          COMPLETE TASKS (+10 DRKT)
+        <a href="https://zealy.io/cw/dogerocket" class="block mt-6 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-4 rounded-full text-center" aria-label="Join Zealy Community">
+          JOIN ZEALY COMMUNITY (+10 DRKT)
         </a>
       </div>
       <div class="bg-white/10 backdrop-blur rounded-3xl p-8 border border-purple-500/50">
         <h3 class="text-2xl font-bold mb-4">BONUS QUESTS (Airdrop 2)</h3>
         <ul class="space-y-4 text-lg">
-          <li>🔥 Stake 20 DRKT → 200 DRKT Bonus</li>
+          <li>🔥 Stake 2000 DRKT → 200 DRKT Bonus</li>
           <li>🔥 Create & Share a Meme → Top 1 Wins 2,000 DRKT</li>
           <li>🔥 Refer a Friend → 100 DRKT Each</li>
           <li>🔥 Participate in Community AMA → 500 DRKT</li>

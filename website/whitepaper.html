@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="title" content="DogeRocket Whitepaper: Up to 300% APY Staking on Polygon">
-  <meta name="description" content="Explore the DogeRocket whitepaper: A Polygon-based meme coin with 300% APY staking, innovative tokenomics, and community-driven DAO. Join the IDO and launch to the stars.">
-  <meta name="keywords" content="DogeRocket whitepaper, DRKT token, meme coin, Polygon staking, 300% APY, crypto whitepaper, DogeDAO">
+  <meta name="title" content="DogeRocket Whitepaper: High-Yield Staking on Polygon Network">
+  <meta name="description" content="DogeRocket Whitepaper: A Polygon-based utility token offering competitive staking rewards, sustainable tokenomics, and community governance. Explore the technical and economic framework.">
+  <meta name="keywords" content="DogeRocket whitepaper, DRKT token, Polygon network, staking rewards, tokenomics, decentralized finance, DeFi whitepaper">
   <meta name="robots" content="index, follow">
   <meta name="author" content="DogeRocket Team">
   <meta name="publisher" content="DogeRocket">
   <meta name="copyright" content="© 2025 DogeRocket. All rights reserved.">
-  <meta property="og:title" content="DogeRocket Whitepaper: Up to 300% APY Staking on Polygon">
-  <meta property="og:description" content="Explore the DogeRocket whitepaper: A Polygon-based meme coin with 300% APY staking, innovative tokenomics, and community-driven DAO. Join the IDO and launch to the stars.">
+  <meta property="og:title" content="DogeRocket Whitepaper: High-Yield Staking on Polygon Network">
+  <meta property="og:description" content="DogeRocket Whitepaper: A Polygon-based utility token offering competitive staking rewards, sustainable tokenomics, and community governance. Explore the technical and economic framework.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dogerocket.site/whitepaper.html">
   <meta property="og:image" content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
   <meta property="og:site_name" content="DogeRocket">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DogeRocket Whitepaper: Up to 300% APY Staking on Polygon">
-  <meta name="twitter:description" content="Explore the DogeRocket whitepaper: A Polygon-based meme coin with 300% APY staking, innovative tokenomics, and community-driven DAO.">
+  <meta name="twitter:title" content="DogeRocket Whitepaper: High-Yield Staking on Polygon Network">
+  <meta name="twitter:description" content="DogeRocket Whitepaper: A Polygon-based utility token offering competitive staking rewards, sustainable tokenomics, and community governance.">
   <meta name="twitter:image" content="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i">
   <meta name="twitter:site" content="@DRKTDogeRocket">
   <link rel="canonical" href="https://dogerocket.site/whitepaper.html">
@@ -33,18 +33,17 @@
       theme: {
         extend: {
           colors: {
-            'dark-blue': '#1E3A8A',
-            'light-blue': '#00BFFF',
-            'secondary-blue': '#0EA5E9',
+            'primary': '#1E3A8A',
+            'secondary': '#3B82F6',
+            'accent': '#10B981',
           },
           animation: {
-            'pulse-slow': 'pulse 3s infinite',
-            'float': 'float 3s ease-in-out infinite',
+            'fade-in': 'fadeIn 0.5s ease-in-out',
           },
           keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
             }
           }
         }
@@ -54,111 +53,110 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body { 
-      background: linear-gradient(135deg, #1E3A8A 0%, #00BFFF 100%); 
-      color: #FFFFFF; 
+      background: #FFFFFF; 
+      color: #333333; 
       line-height: 1.6; 
       min-height: 100vh;
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    h1, h2 { color: #FFFFFF; text-align: center; font-weight: 700; margin-bottom: 20px; }
-    h2 { font-size: 2.5rem; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 10px; }
-    h3 { color: #00BFFF; font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; }
+    h1, h2 { color: #1E3A8A; text-align: center; font-weight: 700; margin-bottom: 20px; }
+    h2 { font-size: 2.5rem; border-bottom: 2px solid #E5E7EB; padding-bottom: 10px; }
+    h3 { color: #3B82F6; font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; }
     section { 
-      background: rgba(30, 58, 138, 0.8); 
+      background: #F9FAFB; 
       margin: 30px auto; 
       padding: 30px; 
-      border-radius: 15px; 
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
-      backdrop-filter: blur(10px);
+      border-radius: 8px; 
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); 
     }
     .visual-image { 
       max-width: 100%; 
       height: auto; 
       margin: 20px auto; 
       display: block; 
-      border-radius: 10px; 
-      border: 2px solid #00BFFF;
-      box-shadow: 0 5px 15px rgba(0, 191, 255, 0.3);
+      border-radius: 8px; 
+      border: 1px solid #D1D5DB;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
     table { 
       width: 100%; 
       border-collapse: collapse; 
       margin: 20px 0; 
-      background: rgba(255,255,255,0.1); 
-      border-radius: 10px; 
+      background: #FFFFFF; 
+      border-radius: 8px; 
       overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
     th, td { 
-      border: 1px solid #00BFFF; 
+      border: 1px solid #D1D5DB; 
       padding: 12px; 
       text-align: left; 
     }
     th { 
-      background: rgba(0, 191, 255, 0.2); 
-      color: #FFFFFF; 
+      background: #F3F4F6; 
+      color: #374151; 
       font-weight: 600;
     }
     ul { list-style-type: none; padding-left: 0; }
     ul li { 
       padding: 8px 0; 
       position: relative; 
-      padding-left: 25px;
+      padding-left: 20px;
     }
     ul li::before { 
-      content: '🚀'; 
+      content: '•'; 
       position: absolute; 
       left: 0; 
       font-size: 1.2rem;
+      color: #3B82F6;
     }
     .toc { list-style-type: none; padding: 0; }
     .toc li { margin: 15px 0; }
-    .toc a { color: #00BFFF; text-decoration: none; font-weight: 500; transition: color 0.3s; }
-    .toc a:hover { color: #FFFFFF; text-decoration: underline; }
+    .toc a { color: #3B82F6; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+    .toc a:hover { color: #1E3A8A; text-decoration: underline; }
     .cta-button { 
       display: inline-block; 
       padding: 12px 24px; 
-      background: #00BFFF; 
-      color: #1E3A8A; 
-      border-radius: 8px; 
+      background: #3B82F6; 
+      color: #FFFFFF; 
+      border-radius: 6px; 
       text-decoration: none; 
       font-weight: 600; 
       transition: all 0.3s; 
-      box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+      box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
     }
     .cta-button:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4); 
+      background: #2563EB; 
+      transform: translateY(-1px); 
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3); 
     }
-    /* Social Icons with Color Hover */
+    /* Social Icons */
     .social-icons a {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2);
-      color: #00BFFF; font-size: 1.2rem; transition: all 0.4s ease; margin: 0 6px;
-      backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 40px; height: 40px; border-radius: 50%; background: #F3F4F6;
+      color: #6B7280; font-size: 1.2rem; transition: all 0.3s ease; margin: 0 6px;
+      text-decoration: none;
     }
     .social-icons a:hover {
-      transform: translateY(-3px) scale(1.1);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    .social-icons a:hover i { animation: pulse 1s infinite; }
-    .social-icons a[href*="github"]:hover { background: #333; color: white; }
-    .social-icons a[href*="x.com"]:hover, .social-icons a[href*="twitter"]:hover { background: #000; color: white; }
-    .social-icons a[href*="telegram"]:hover { background: #229ED9; color: white; }
-    .social-icons a[href*="discord"]:hover { background: #5865F2; color: white; }
+    .social-icons a:hover i { color: #3B82F6; }
     /* Team Icons */
     .team-icon {
       width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;
       display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
-      color: #00BFFF; background: rgba(0, 191, 255, 0.1); transition: all 0.3s ease;
+      color: #3B82F6; background: #F0F9FF; transition: all 0.3s ease;
+      border: 1px solid #DBEAFE;
     }
-    .team-member:hover .team-icon { background: rgba(0, 191, 255, 0.2); transform: scale(1.1); }
-    /* GTranslate - Reduced Height ~50% */
-    #google_translate_element { font-size: 6px; width: 80px; height: 20px; line-height: 1; vertical-align: middle; }
-    #google_translate_element > div { font-size: 6px !important; height: 20px !important; }
-    .goog-te-gadget .goog-te-combo { font-size: 6px !important; padding: 0.5px !important; height: 20px !important; line-height: 1; }
+    .team-member:hover .team-icon { background: #DBEAFE; transform: scale(1.05); }
+    /* GTranslate */
+    #google_translate_element { font-size: 12px; width: 120px; height: 24px; line-height: 1; vertical-align: middle; }
+    #google_translate_element > div { font-size: 12px !important; height: 24px !important; }
+    .goog-te-gadget .goog-te-combo { font-size: 12px !important; padding: 2px !important; height: 24px !important; line-height: 1; }
     @media (max-width: 768px) { 
-      #google_translate_element { width: 70px; height: 18px; }
-      .goog-te-gadget .goog-te-combo { font-size: 5px !important; padding: 0.25px !important; height: 18px !important; }
+      #google_translate_element { width: 100px; height: 20px; }
+      .goog-te-gadget .goog-te-combo { font-size: 10px !important; padding: 1px !important; height: 20px !important; }
     }
     /* Responsive */
     @media (max-width: 768px) { 
@@ -171,279 +169,264 @@
 </head>
 <body>
   <!-- Fixed Header -->
-  <header class="fixed w-full bg-white/95 backdrop-blur-md shadow-lg z-50 border-b border-light-blue/20">
+  <header class="fixed w-full bg-white shadow-sm z-50 border-b border-gray-200">
     <div class="container mx-auto px-4 flex justify-between items-center py-3">
       <div class="flex items-center">
-        <strong class="text-xl text-dark-blue">DogeRocket Whitepaper</strong>
-        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="Logo" class="ml-2 w-8 h-8 rounded-full">
+        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="ml-2 w-8 h-8 rounded-full">
+        <strong class="text-xl text-primary ml-2">DogeRocket Whitepaper</strong>
       </div>
       <div class="flex items-center gap-4">
         <nav class="hidden md:flex">
           <ul class="flex gap-6">
-            <li><a href="https://dogerocket.site" class="text-dark-blue hover:text-light-blue font-semibold">Home</a></li>
-            <li><a href="https://dapp.quickswap.exchange/swap/best/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D?chainId=137" class="text-dark-blue hover:text-light-blue font-semibold" target="_blank" rel="noopener noreferrer">Buy DRKT</a></li>
+            <li><a href="https://dogerocket.site" class="text-primary hover:text-secondary font-semibold">Home</a></li>
+            <li><a href="https://dapp.quickswap.exchange/swap/best/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D?chainId=137" class="text-primary hover:text-secondary font-semibold" target="_blank" rel="noopener noreferrer">Acquire DRKT</a></li>
           </ul>
         </nav>
         <div id="google_translate_element"></div>
-        <button class="md:hidden text-dark-blue text-2xl" onclick="toggleMenu()">☰</button>
+        <button class="md:hidden text-primary text-2xl" onclick="toggleMenu()">☰</button>
       </div>
     </div>
     <nav id="mobile-menu" class="hidden md:hidden bg-white px-4 py-2 border-t">
       <ul class="flex flex-col gap-2">
-        <li><a href="https://dogerocket.site" class="text-dark-blue hover:text-light-blue">Home</a></li>
-        <li><a href="https://dapp.quickswap.exchange/swap/best/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D?chainId=137" class="text-dark-blue hover:text-light-blue" target="_blank" rel="noopener noreferrer">Buy DRKT</a></li>
+        <li><a href="https://dogerocket.site" class="text-primary hover:text-secondary">Home</a></li>
+        <li><a href="https://dapp.quickswap.exchange/swap/best/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D?chainId=137" class="text-primary hover:text-secondary" target="_blank" rel="noopener noreferrer">Acquire DRKT</a></li>
       </ul>
     </nav>
   </header>
 
   <!-- Main Content -->
-  <div class="pt-20"> <!-- Offset for fixed header -->
+  <div class="pt-20">
     <div class="container">
       <!-- Table of Contents -->
       <section id="toc" class="mb-12">
         <h2>Table of Contents</h2>
         <ul class="toc grid md:grid-cols-2 gap-4">
           <li><a href="#executive-summary">1. Executive Summary</a></li>
-          <li><a href="#problem">2. The Problem: Meme Coins Lack Longevity</a></li>
-          <li><a href="#solution">3. The Solution: DogeRocket’s Model</a></li>
-          <li><a href="#tokenomics">4. Tokenomics: Powering Growth</a></li>
-          <li><a href="#staking">5. Staking: Up to 300% APY</a></li>
-          <li><a href="#technology">6. Technology: Robust and Secure</a></li>
-          <li><a href="#roadmap">7. Roadmap: To the Stars</a></li>
-          <li><a href="#team">8. Team: The DogeRocket Pack</a></li>
-          <li><a href="#use-of-funds">9. Use of Funds</a></li>
-          <li><a href="#risks">10. Risks: Navigating Crypto</a></li>
-          <li><a href="#community">11. Community Engagement</a></li>
-          <li><a href="#legal">12. Legal Considerations</a></li>
-          <li><a href="#conclusion">13. Conclusion: Join the Mission</a></li>
+          <li><a href="#problem">2. Market Challenges: Sustainability in Meme Tokens</a></li>
+          <li><a href="#solution">3. DogeRocket Framework</a></li>
+          <li><a href="#tokenomics">4. Tokenomics</a></li>
+          <li><a href="#staking">5. Staking Mechanism</a></li>
+          <li><a href="#technology">6. Technical Architecture</a></li>
+          <li><a href="#roadmap">7. Development Roadmap</a></li>
+          <li><a href="#team">8. Core Team</a></li>
+          <li><a href="#use-of-funds">9. Allocation of Proceeds</a></li>
+          <li><a href="#risks">10. Risk Factors</a></li>
+          <li><a href="#community">11. Community Governance</a></li>
+          <li><a href="#legal">12. Legal and Regulatory Considerations</a></li>
+          <li><a href="#conclusion">13. Conclusion</a></li>
         </ul>
       </section>
 
       <!-- Executive Summary -->
       <section id="executive-summary">
         <h2>1. Executive Summary</h2>
-        <p>DogeRocket (DRKT) is a Polygon-based meme coin that fuses Dogecoin’s iconic charm with a sophisticated, community-driven staking ecosystem. Updated as of November 01, 2025, DRKT offers up to 300% APY through a dynamic staking model, supported by a 2% tax sent entirely to the reward pool. With a total supply of 1 billion DRKT, the tokenomics include 10% unlocked at TGE for IDO, liquidity, and airdrops, 40% allocated to the reward pool, 30% locked as a backup reward pool fund, and 20% locked for future marketing campaigns, treasury allocation, and team rewards over a 10-year vesting period. Built using OpenZeppelin’s secure libraries (ERC20, ReentrancyGuard), DRKT ensures robustness with metadata CID: bafkreicab7kdzy3rr4ugaesbeattgoqdhltb5ps2g6yog3c3gebtunrxf4. Future plans include DAO governance and liquidity locks starting Q2 2026, empowering our growing community of over 10,000 Telegram members. Join the DogeRocket pack and launch your portfolio to the cosmos!</p>
-        <!-- <img src="executive-summary-image.png" alt="Cartoon dog waving from rocket" class="visual-image"> -->
+        <p>DogeRocket (DRKT) is a utility token deployed on the Polygon network, combining community engagement with a structured staking protocol. Updated as of November 13, 2025, DRKT provides competitive annual percentage yields (APY) through a dynamic staking model, supported by a 2% transaction tax allocated exclusively to the rewards pool. The total supply is 1 billion DRKT, distributed as follows: 10% unlocked at Token Generation Event (TGE) for initial distribution, liquidity provision, and airdrops; 40% to the primary rewards pool; 30% to a reserve rewards fund; and 20% vested over 10 years for marketing, treasury, and team incentives. The protocol utilizes OpenZeppelin's ERC-20 and ReentrancyGuard standards, with contract metadata CID: bafkreicab7kdzy3rr4ugaesbeattgoqdhltb5ps2g6yog3c3gebtunrxf4. Future enhancements include decentralized autonomous organization (DAO) governance and liquidity management commencing in Q2 2026, serving a community exceeding 10,000 members on Telegram. Participation in the DogeRocket ecosystem is open to aligned stakeholders.</p>
       </section>
 
-      <!-- The Problem -->
+      <!-- Market Challenges -->
       <section id="problem">
-        <h2>2. The Problem: Meme Coins Lack Longevity</h2>
-        <p>Meme coins, exemplified by Dogecoin and Shiba Inu, have captured the crypto market with their humor and viral appeal but often falter due to high volatility, lack of utility, and unsustainable economics. Industry data reveals an average lifespan of just 12-18 months, with platforms like Pump.fun collapsing within 12 days due to speculative trading and insufficient fundamentals. This highlights a critical need for meme coins with long-term value propositions, such as staking rewards and community governance, to break the pump-and-dump cycle.</p>
-        <!-- <img src="problem-chart.png" alt="Bar graph of meme coin longevity" class="visual-image"> -->
+        <h2>2. Market Challenges: Sustainability in Meme Tokens</h2>
+        <p>Meme tokens, such as Dogecoin and Shiba Inu, have gained prominence through community-driven narratives but face structural limitations including price volatility, limited utility, and economic models prone to short-term speculation. Empirical data indicates an average project lifespan of 12-18 months, with many initiatives, including those on platforms like Pump.fun, failing within weeks due to insufficient fundamentals. This underscores the necessity for meme-inspired tokens to incorporate enduring mechanisms, such as yield-generating staking and participatory governance, to foster long-term viability.</p>
       </section>
 
-      <!-- The Solution -->
+      <!-- Framework -->
       <section id="solution">
-        <h2>3. The Solution: DogeRocket’s Model</h2>
-        <p>DogeRocket revolutionizes the meme coin space with a sustainable, Polygon-based ecosystem designed for longevity and community success:</p>
+        <h2>3. DogeRocket Framework</h2>
+        <p>The DogeRocket protocol addresses these challenges through a Polygon-integrated ecosystem emphasizing sustainability and stakeholder alignment:</p>
         <ul>
-          <li><strong>2% Tax Allocation:</strong> 100% directed to the reward pool, enhancing staking incentives without external diversions.</li>
-          <li><strong>300% APY Staking:</strong> Dynamic rewards with a 14-day minimum duration, encouraging long-term holding and stability.</li>
-          <li><strong>Polygon Efficiency:</strong> Leveraging Polygon’s Layer 2 scalability for low fees and high throughput.</li>
-          <li><strong>Community Empowerment:</strong> DAO governance planned post-10 years, supported by a vibrant community of 10K+ Telegram members.</li>
-          <li><strong>Security First:</strong> Built with OpenZeppelin libraries (ERC20, ReentrancyGuard) for a secure and transparent platform.</li>
+          <li><strong>Transaction Tax:</strong> A 2% levy on transfers, fully directed to the rewards pool to support staking incentives.</li>
+          <li><strong>Staking Yields:</strong> Variable APY up to 300%, with a minimum 14-day lock period to promote holding and network stability.</li>
+          <li><strong>Network Efficiency:</strong> Deployment on Polygon Layer 2 for reduced transaction costs and enhanced scalability.</li>
+          <li><strong>Governance:</strong> DAO implementation scheduled post-vesting period, backed by an established community exceeding 10,000 members.</li>
+          <li><strong>Security Measures:</strong> Integration of OpenZeppelin libraries (ERC-20, ReentrancyGuard) to mitigate common vulnerabilities.</li>
         </ul>
-        <p>DogeRocket is a meme coin engineered for enduring success and community triumph.</p>
-        <!-- <img src="solution-image.png" alt="Cartoon dog with DRKT tokens" class="visual-image"> -->
+        <p>This framework positions DogeRocket as a resilient utility token within the decentralized finance landscape.</p>
       </section>
 
       <!-- Tokenomics -->
       <section id="tokenomics">
-        <h2>4. Tokenomics: Powering Growth</h2>
-        <p>DogeRocket’s 1 billion DRKT total supply is meticulously structured to balance immediate accessibility with long-term sustainability:</p>
+        <h2>4. Tokenomics</h2>
+        <p>The DRKT token features a fixed total supply of 1 billion, designed to ensure balanced liquidity, reward distribution, and long-term incentives:</p>
         <table>
           <thead>
             <tr>
-              <th>Category</th>
+              <th>Allocation</th>
               <th>Percentage</th>
-              <th>Amount (DRKT)</th>
+              <th>Quantity (DRKT)</th>
               <th>Description</th>
-              <th>Lock/Vesting</th>
+              <th>Vesting/Lockup</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>IDO, Liquidity, Airdrops</td>
+              <td>Initial Distribution</td>
               <td>10%</td>
               <td>100,000,000</td>
-              <td>Unlocked at TGE for initial distribution, liquidity on DEXs, and airdrop campaigns to bootstrap adoption.</td>
-              <td>Unlocked at TGE, with ongoing liquidity locks from Q2 2026.</td>
+              <td>Allocated for TGE unlocks, decentralized exchange liquidity, and airdrop initiatives to facilitate adoption.</td>
+              <td>Unlocked at TGE; liquidity locks implemented from Q2 2026.</td>
             </tr>
             <tr>
-              <td>Reward Pool</td>
+              <td>Primary Rewards Pool</td>
               <td>40%</td>
               <td>400,000,000</td>
-              <td>Funds the 300% APY staking rewards, replenished by the 2% tax.</td>
-              <td>Contract-managed, dynamically adjusted.</td>
+              <td>Dedicated to funding staking rewards, augmented by transaction taxes.</td>
+              <td>Smart contract governed; dynamically managed based on participation.</td>
             </tr>
             <tr>
-              <td>Backup Reward Pool Funds</td>
+              <td>Reserve Rewards Fund</td>
               <td>30%</td>
               <td>300,000,000</td>
-              <td>Locked as a reserve to support future staking rewards and pool stability.</td>
-              <td>10-year lock, 10% annual claims post-year 1.</td>
+              <td>Reserve allocation to maintain reward sustainability during variable market conditions.</td>
+              <td>10-year lockup; 10% annual release commencing post-Year 1.</td>
             </tr>
             <tr>
-              <td>Marketing Campaigns, Treasury, Team Rewards</td>
+              <td>Marketing, Treasury, and Incentives</td>
               <td>20%</td>
               <td>200,000,000</td>
-              <td>Locked for future marketing (e.g., airdrops, events), treasury management, and team incentives.</td>
-              <td>10-year vesting, 10% annual claims post-year 1 under DAO oversight.</td>
+              <td>Reserved for promotional activities, operational treasury, and performance-based incentives.</td>
+              <td>10-year vesting; 10% annual release under DAO supervision post-Year 1.</td>
             </tr>
           </tbody>
         </table>
-        <p><strong>2% Tax Mechanism:</strong> Entirely allocated to the reward pool, ensuring continuous growth of staking incentives and ecosystem health.</p>
-        <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreifn5zc3vpvifvmfztrhub6hfsa2ed6kqjw2xwovyeds5kkdlfvtaa" alt="Tokenomics pie chart" class="visual-image">
-        <!-- <img src="tax-flow-diagram.png" alt="Tax flow diagram" class="visual-image"> -->
+        <p><strong>Tax Mechanism:</strong> The 2% transaction tax is channeled entirely to the rewards pool, promoting ecosystem growth and participant retention.</p>
       </section>
 
       <!-- Staking -->
       <section id="staking">
-        <h2>5. Staking: Up to 300% APY</h2>
-        <p>Earn up to 300% APY with DogeRocket’s dynamic staking system, powered by 400M DRKT in the reward pool and the 2% tax sent exclusively to the pool. This model incentivizes long-term participation while maintaining ecosystem stability:</p>
+        <h2>5. Staking Mechanism</h2>
+        <p>The staking protocol enables participants to earn yields up to 300% APY, drawing from a 400 million DRKT rewards pool supplemented by transaction taxes. Key parameters include:</p>
         <ul>
-          <li><strong>Stake Limits:</strong> Minimum 100 DRKT, Maximum 1M DRKT per wallet.</li>
-          <li><strong>Duration:</strong> Minimum 14 days, Maximum 365 days for optimal rewards.</li>
-          <li><strong>Cooldown:</strong> 24-hour period between actions to prevent rapid unstaking.</li>
-          <li><strong>Withdraw Fee:</strong> 2% applies if unstaked before 14 days.</li>
-          <li><strong>Claim Window:</strong> 3 years to claim rewards, ensuring flexibility.</li>
-          <li><strong>Example:</strong> Staking 100 DRKT for 365 days at 300% APY yields approximately 300 DRKT in rewards.</li>
+          <li><strong>Participation Limits:</strong> Minimum stake of 100 DRKT; maximum of 1,000,000 DRKT per address.</li>
+          <li><strong>Lock Periods:</strong> Minimum 14 days; maximum 365 days to optimize yields.</li>
+          <li><strong>Cooldown Period:</strong> 24 hours between stake adjustments to mitigate short-term volatility.</li>
+          <li><strong>Early Withdrawal Penalty:</strong> 2% fee for unstaking prior to the minimum period.</li>
+          <li><strong>Reward Claim Period:</strong> 3-year window for claiming accrued rewards.</li>
+          <li><strong>Illustrative Yield:</strong> A 100 DRKT stake held for 365 days at 300% APY generates approximately 300 DRKT in rewards.</li>
         </ul>
-        <p>Enhanced with ReentrancyGuard for security, users can also donate to the pool, amplifying rewards for all. The backup reward pool (30%) ensures longevity even during market fluctuations.</p>
-        <!-- <img src="staking-flowchart.png" alt="Staking flowchart" class="visual-image"> -->
-        <!-- <img src="reward-graph.png" alt="Reward graph" class="visual-image"> -->
+        <p>Security is enhanced via ReentrancyGuard, with optional pool contributions permitted to bolster collective yields. The reserve fund (30%) provides a buffer against market fluctuations.</p>
       </section>
 
-      <!-- Technology -->
+      <!-- Technical Architecture -->
       <section id="technology">
-        <h2>6. Technology: Robust and Secure</h2>
-        <p>DogeRocket leverages cutting-edge blockchain technology to deliver a reliable platform:</p>
+        <h2>6. Technical Architecture</h2>
+        <p>DogeRocket employs established blockchain standards to ensure reliability and security:</p>
         <ul>
-          <li><strong>Polygon Network:</strong> Utilizes Polygon’s Layer 2 scalability for low fees and high throughput.</li>
-          <li><strong>OpenZeppelin Libraries:</strong> Implements ERC20 and ReentrancyGuard for secure token management and protection against common vulnerabilities.</li>
-          <li><strong>Smart Contract:</strong> Fully audited code with metadata CID: bafkreicab7kdzy3rr4ugaesbeattgoqdhltb5ps2g6yog3c3gebtunrxf4 for transparency.</li>
-          <li><strong>Dynamic APY:</strong> Algorithm adjusts rewards based on pool coverage, ensuring fairness and sustainability.</li>
+          <li><strong>Polygon Integration:</strong> Leverages Layer 2 for cost-effective transactions and high throughput.</li>
+          <li><strong>Security Libraries:</strong> Utilizes OpenZeppelin's ERC-20 for token standards and ReentrancyGuard for vulnerability protection.</li>
+          <li><strong>Smart Contract:</strong> Audited implementation with metadata CID: bafkreicab7kdzy3rr4ugaesbeattgoqdhltb5ps2g6yog3c3gebtunrxf4 for verifiable transparency.</li>
+          <li><strong>Yield Algorithm:</strong> Adaptive model that calibrates APY based on pool utilization to maintain equity and longevity.</li>
         </ul>
-        <p>This technological foundation supports a seamless user experience and long-term viability.</p>
-        <!-- <img src="tech-diagram.png" alt="Technology diagram" class="visual-image"> -->
+        <p>This architecture facilitates a secure and efficient user interface, supporting scalable adoption.</p>
       </section>
 
       <!-- Roadmap -->
       <section id="roadmap">
-        <h2>7. Roadmap: To the Stars</h2>
-        <p>Our ambitious journey to crypto dominance, with milestones to propel us forward:</p>
+        <h2>7. Development Roadmap</h2>
+        <p>The phased rollout prioritizes foundational deployment followed by iterative enhancements:</p>
         <ul>
-          <li><strong>Q4 2025:</strong> Deploy on Polygon, launch IDO, initial liquidity locks, and community airdrop of 1M DRKT.</li>
-          <li><strong>Q1 2026:</strong> List on major DEXs (e.g., QuickSwap), activate staking, and expand marketing efforts.</li>
-          <li><strong>Q2 2026:</strong> Host virtual events with influencers, implement first liquidity lock, and introduce staking boosts.</li>
-          <li><strong>Q3 2026:</strong> Launch NFT collection with staking benefits, expand to additional DEXs, and initiate DAO setup.</li>
-          <li><strong>Q4 2026:</strong> Achieve 50K+ community members, unlock first tranche of backup reward pool, and enhance treasury operations.</li>
+          <li><strong>Q4 2025:</strong> Polygon mainnet deployment, TGE execution, liquidity provisioning, and initial airdrop of 1 million DRKT.</li>
+          <li><strong>Q1 2026:</strong> Listing on primary decentralized exchanges (e.g., QuickSwap), staking activation, and targeted outreach.</li>
+          <li><strong>Q2 2026:</strong> Community events, initial liquidity locks, and yield optimization features.</li>
+          <li><strong>Q3 2026:</strong> Non-fungible token (NFT) launch with staking integrations, expanded exchange presence, and DAO preparatory measures.</li>
+          <li><strong>Q4 2026:</strong> Community expansion to 50,000+ members, reserve fund tranche release, and treasury formalization.</li>
         </ul>
-        <p>A community-led ascent to the cosmos with every milestone!</p>
-        <!-- <img src="roadmap-timeline.png" alt="Roadmap timeline" class="visual-image"> -->
+        <p>Progress is community-monitored, with adaptability to emerging priorities.</p>
       </section>
 
-      <!-- Team -->
+      <!-- Core Team -->
       <section id="team">
-        <h2>8. Team: The DogeRocket Pack</h2>
-        <p>Our expert crew driving the mission:</p>
+        <h2>8. Core Team</h2>
+        <p>The development team comprises experienced professionals in blockchain and finance:</p>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="team-member text-center p-4 bg-white/10 rounded-lg">
+          <div class="team-member text-center p-4 bg-white rounded-lg">
             <div class="team-icon"><i class="ri-code-line"></i></div>
             <h3>CryptoDoge</h3>
-            <p>5 years in Solidity development, 3 successful Polygon DApps.</p>
+            <p>Lead Developer: 5+ years in Solidity; authored 3 Polygon-based decentralized applications.</p>
           </div>
-          <div class="team-member text-center p-4 bg-white/10 rounded-lg">
+          <div class="team-member text-center p-4 bg-white rounded-lg">
             <div class="team-icon"><i class="ri-megaphone-line"></i></div>
             <h3>MoonBarker</h3>
-            <p>3 viral crypto marketing campaigns, expert in community engagement.</p>
+            <p>Marketing Lead: Directed 3 high-impact cryptocurrency campaigns focused on community growth.</p>
           </div>
-          <div class="team-member text-center p-4 bg-white/10 rounded-lg">
+          <div class="team-member text-center p-4 bg-white rounded-lg">
             <div class="team-icon"><i class="ri-group-line"></i></div>
             <h3>StarPup</h3>
-            <p>Manages Telegram/Discord with AMAs, growing our 10K+ member base.</p>
+            <p>Community Manager: Oversees Telegram and Discord channels, managing a base of 10,000+ members.</p>
           </div>
-          <div class="team-member text-center p-4 bg-white/10 rounded-lg">
+          <div class="team-member text-center p-4 bg-white rounded-lg">
             <div class="team-icon"><i class="ri-rocket-line"></i></div>
             <h3>RocketPaw</h3>
-            <p>7 years in DeFi, overseeing technical strategy and execution.</p>
+            <p>Technical Strategist: 7+ years in DeFi protocols; guides architectural and execution decisions.</p>
           </div>
         </div>
-        <p class="mt-6">Pseudonymous team members with vested tokens managed under future DAO oversight for alignment with community goals.</p>
-        <!-- <img src="team-illustration.png" alt="Team illustration" class="visual-image"> -->
+        <p class="mt-6">Team members operate pseudonymously, with incentives aligned via vested tokens under future DAO governance.</p>
       </section>
 
-      <!-- Use of Funds -->
+      <!-- Allocation of Proceeds -->
       <section id="use-of-funds">
-        <h2>9. Use of Funds</h2>
-        <p>Strategic allocation to fuel our cosmic journey and ensure sustainable growth:</p>
+        <h2>9. Allocation of Proceeds</h2>
+        <p>Proceeds from initial distributions are allocated to support operational and growth objectives:</p>
         <ul>
-          <li><strong>10% Liquidity/IDO/Airdrops:</strong> Unlocked at TGE for initial DEX liquidity, IDO participation, and airdrop campaigns to bootstrap adoption.</li>
-          <li><strong>60% Development/Staking/Backup Pool:</strong> Invested in platform development, staking infrastructure, and the 30% backup reward pool for long-term stability.</li>
-          <li><strong>20% Marketing/Community:</strong> Funds promotional events, influencer partnerships, and community initiatives to amplify our reach.</li>
-          <li><strong>10% Team Reserves:</strong> Allocated for team incentives, ensuring motivation and retention over the 10-year vesting period.</li>
+          <li><strong>10% Liquidity and Distribution:</strong> For decentralized exchange liquidity, TGE participation, and airdrops to enable market entry.</li>
+          <li><strong>60% Development and Rewards Infrastructure:</strong> Funding protocol enhancements, staking systems, and the 30% reserve pool for stability.</li>
+          <li><strong>20% Marketing and Engagement:</strong> For strategic partnerships, events, and community programs to drive adoption.</li>
+          <li><strong>10% Team Incentives:</strong> Vested allocations to ensure long-term commitment over the 10-year horizon.</li>
         </ul>
-        <p>With the 300% Rocket Booster for Our Journey to the Stars, plus explosive airdrops and treasury growth, we’re poised to dominate the crypto galaxy!</p>
-        <!-- <img src="use-of-funds-pie-chart.png" alt="Use of funds chart" class="visual-image"> -->
+        <p>This allocation strategy prioritizes sustainability and value accrual to token holders.</p>
       </section>
 
-      <!-- Risks -->
+      <!-- Risk Factors -->
       <section id="risks">
-        <h2>10. Risks: Navigating Crypto</h2>
-        <p>Investment risks to consider as we navigate the crypto frontier:</p>
+        <h2>10. Risk Factors</h2>
+        <p>Participants should evaluate the following risks inherent to blockchain-based protocols:</p>
         <ul>
-          <li><strong>Volatility:</strong> DRKT prices may experience significant fluctuations due to market conditions.</li>
-          <li><strong>No Guarantees:</strong> The 300% APY depends on pool health, participation levels, and market dynamics.</li>
-          <li><strong>Contract Risks:</strong> Non-recoverable donations and potential smart contract vulnerabilities, mitigated by OpenZeppelin libraries.</li>
+          <li><strong>Market Volatility:</strong> DRKT value may fluctuate significantly in response to broader cryptocurrency market dynamics.</li>
+          <li><strong>Yield Variability:</strong> APY levels are contingent on pool performance, participation rates, and economic conditions; no fixed returns are assured.</li>
+          <li><strong>Smart Contract Risks:</strong> Potential exploits or irreversible actions (e.g., donations), though mitigated by audited OpenZeppelin implementations.</li>
         </ul>
-        <p>Invest only what you can afford to lose; refer to the full disclaimer at dogerocket.site for detailed risk assessment.</p>
-        <!-- <img src="risks-image.png" alt="Cartoon dog navigating asteroids" class="visual-image"> -->
+        <p>Investments should be limited to disposable capital. Full disclosures are available at dogerocket.site.</p>
       </section>
 
-      <!-- Community -->
+      <!-- Community Governance -->
       <section id="community">
-        <h2>11. Community Engagement</h2>
-        <p>DogeRocket thrives on its vibrant community, the backbone of our success:</p>
+        <h2>11. Community Governance</h2>
+        <p>Community involvement forms the foundation of DogeRocket's operations:</p>
         <ul>
-          <li><strong>Telegram & Discord:</strong> Over 10,000 members with daily AMAs and updates.</li>
-          <li><strong>Social Media:</strong> Active on X with real-time news and community polls.</li>
-          <li><strong>Airdrops & Events:</strong> Regular campaigns to reward early adopters and boost engagement.</li>
-          <li><strong>DAO Future:</strong> Planned governance model to give token holders a voice post-10 years.</li>
+          <li><strong>Communication Channels:</strong> Active Telegram and Discord servers with over 10,000 members, hosting regular updates and discussions.</li>
+          <li><strong>Social Engagement:</strong> Presence on X (formerly Twitter) for announcements and stakeholder input.</li>
+          <li><strong>Incentive Programs:</strong> Periodic airdrops and events to recognize early contributors.</li>
+          <li><strong>Governance Model:</strong> Transition to DAO post-vesting, enabling token-holder proposals and voting.</li>
         </ul>
-        <p>Join the pack and shape the future of DogeRocket!</p>
-        <!-- <img src="community-image.png" alt="Community illustration" class="visual-image"> -->
+        <p>Stakeholders are encouraged to engage actively in protocol evolution.</p>
       </section>
 
-      <!-- Legal -->
+      <!-- Legal Considerations -->
       <section id="legal">
-        <h2>12. Legal Considerations</h2>
-        <p>While DogeRocket operates as a decentralized project, certain legal aspects are noted:</p>
+        <h2>12. Legal and Regulatory Considerations</h2>
+        <p>DogeRocket functions as a decentralized protocol, with the following notes:</p>
         <ul>
-          <li><strong>Non-Security Claim:</strong> DRKT is intended as a utility token for staking and is not marketed as a security.</li>
-          <li><strong>Jurisdiction:</strong> Governed under international crypto norms, with no specific regulatory oversight.</li>
-          <li><strong>Disclaimer:</strong> Users assume all risks; see dogerocket.site for the full legal disclaimer.</li>
+          <li><strong>Token Classification:</strong> DRKT is designed as a utility token for staking participation and is not intended as a security.</li>
+          <li><strong>Jurisdictional Scope:</strong> Operates under general blockchain principles without specific regulatory affiliation.</li>
+          <li><strong>Disclaimer:</strong> All risks are borne by users; comprehensive terms are accessible at dogerocket.site.</li>
         </ul>
-        <p>Consult a legal professional for personalized advice before investing.</p>
-        <!-- <img src="legal-image.png" alt="Legal document illustration" class="visual-image"> -->
+        <p>Professional legal counsel is recommended prior to engagement.</p>
       </section>
 
       <!-- Conclusion -->
       <section id="conclusion">
-        <h2>13. Conclusion: Join the Mission</h2>
-        <p>DogeRocket is more than a meme coin—it’s a movement destined for the stars! With 300% APY staking, a robust reward pool fueled by a 2% tax, DAO governance, and strategic liquidity locks, built on Polygon with our community at its core, we’re set for a stellar ascent. The 10% TGE unlock, 30% backup pool, and 20% marketing treasury ensure a balanced and explosive growth trajectory. Join the DogeRocket pack at dogerocket.site and let’s blast off to the cosmos together!</p>
-        <!-- <img src="conclusion-image.png" alt="Cartoon dog on moon" class="visual-image"> -->
+        <h2>13. Conclusion</h2>
+        <p>DogeRocket represents a structured approach to utility-driven tokenomics on Polygon, featuring yield-bearing staking, tax-funded rewards, and forthcoming DAO governance. With initial unlocks at 10%, a 30% reserve buffer, and 20% for strategic reserves, the protocol is engineered for equitable growth and resilience. Stakeholders are invited to review resources at dogerocket.site and consider integration into diversified portfolios.</p>
         <div class="text-center mt-8">
-          <a href="https://dogerocket.site" class="cta-button">Visit Website</a>
+          <a href="https://dogerocket.site" class="cta-button">Project Website</a>
         </div>
       </section>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="bg-dark-blue text-center py-8 px-4 mt-12" style="background: rgba(30, 58, 138, 0.95); border-top: 3px solid #00BFFF;">
-    <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="mx-auto w-20 h-20 rounded-full mb-4">
-    <p class="mb-4">DogeRocket: To the Stars! | <a href="https://dogerocket.site" class="text-light-blue hover:underline">dogerocket.site</a></p>
+  <footer class="bg-primary text-white text-center py-8 px-4 mt-12">
+    <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo" class="mx-auto w-16 h-16 rounded-full mb-4">
+    <p class="mb-4">DogeRocket Protocol | <a href="https://dogerocket.site" class="text-secondary hover:underline">dogerocket.site</a></p>
     <div class="social-icons mb-4">
       <a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer" title="X (Twitter)"><i class="ri-twitter-x-fill"></i></a>
       <a href="https://t.me/DogeRocketDRKT" target="_blank" rel="noopener noreferrer" title="Telegram"><i class="ri-telegram-fill"></i></a>
@@ -464,39 +447,6 @@
     function toggleMenu() {
       const mobileMenu = document.getElementById('mobile-menu');
       mobileMenu.classList.toggle('hidden');
-    }
-
-    function addToMetaMask() {
-      const tokenAddress = '0x03720cc99a302c101dbd48489a6c2c8bb52d178d';
-      const tokenSymbol = 'DRKT';
-      const tokenDecimals = 18;
-      const tokenImage = 'https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i';
-
-      if (typeof window.ethereum !== 'undefined') {
-        window.ethereum.request({
-          method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20',
-            options: {
-              address: tokenAddress,
-              symbol: tokenSymbol,
-              decimals: tokenDecimals,
-              image: tokenImage,
-            },
-          },
-        }).then((success) => {
-          if (success) {
-            alert('DRKT has been added to your MetaMask wallet!');
-          } else {
-            alert('Failed to add DRKT to MetaMask. Please try again.');
-          }
-        }).catch((err) => {
-          console.error(err);
-          alert('An error occurred: ' + err.message);
-        });
-      } else {
-        alert('Please install MetaMask to add DRKT to your wallet.');
-      }
     }
   </script>
 </body>

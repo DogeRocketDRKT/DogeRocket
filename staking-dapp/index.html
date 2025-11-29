@@ -9,25 +9,68 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <script src="https://unpkg.com/@web3modal/ethers5@3.5.4/dist/index.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <!-- Web3Modal v5+ (ethers v5) - modern UI, unified wallet connect (MetaMask + WalletConnect + others) -->
+  <script type="module">
+    import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@5.1.10';
+
+    const projectId = "d2ef0dc4e30bb16fb86b1a73175e2261";
+
+    const metadata = {
+      name: "DogeRocket Staking",
+      description: "Elevate your portfolio to stellar heights",
+      url: window.location.href,
+      icons: ["https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i"]
+    };
+
+    const polygon = {
+      chainId: 137,
+      name: "Polygon Mainnet",
+      currency: "MATIC",
+      explorerUrl: "https://polygonscan.com",
+      rpcUrl: "https://polygon-rpc.com"
+    };
+
+    window.w3mModal = createWeb3Modal({
+      ethersConfig: defaultConfig({
+        metadata,
+        defaultChainId: 137,
+        enableEIP6963: true,
+        enableInjected: true,
+        enableCoinbase: true
+      }),
+      chains: [polygon],
+      projectId,
+      themeMode: "dark",
+      themeVariables: {
+        "--w3m-accent": "#1E40AF",
+        "--w3m-background": "#1E3A8A",
+        "--w3m-border-radius-master": "2px"
+      },
+      enableAnalytics: false,
+      enableOnramp: false
+    });
+  </script>
+
   <style>
-    body {
-      overflow-y: auto;
-    }
+    body { overflow-y: auto; }
   </style>
 </head>
 <body class="bg-gradient-to-b from-blue-900 to-blue-500 text-white min-h-screen font-sans">
   <div id="root"></div>
+
   <script type="text/babel">
     const { useState, useEffect } = React;
     const { ethers } = window.ethers;
+
     // Production values
-    const CONTRACT_ADDRESS = "0x03720cc99a302c101dbd48489a6c2c8bb52d178d";
-    const CHAIN_ID = 137; // Polygon Mainnet
-    const RPC_URL = "https://polygon-mainnet.infura.io/v3/4e16c4dd948a444ba97a4cdb992b33d1";
+    const CONTRACT_ADDRESS = "0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D";
+    const CHAIN_ID = 137;
+    const RPC_URL = "https://polygon-rpc.com";
     const LOGO_URL = "https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i";
-    const SALE_URL = "https://dapp.quickswap.exchange/swap/best/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D?chainId=137";
+    const SALE_URL = "https://dapp.quickswap.exchange/swap/v3/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D";
+
     const ABI = [
       {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
       {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},
@@ -98,22 +141,7 @@
       {"inputs":[],"name":"vestedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
       {"inputs":[],"name":"vestedClaimedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
     ];
-    // Web3Modal configuration
-    const projectId = "d2ef0dc4e30bb16fb86b1a73175e2261";
-    let modal = null;
-    if (window.Web3Modal) {
-      modal = new window.Web3Modal({
-        projectId,
-        walletConnectVersion: 2,
-        themeMode: "dark",
-        themeVariables: {
-          "--w3m-accent-color": "#1E40AF",
-          "--w3m-background-color": "#1E3A8A"
-        }
-      });
-    } else {
-      console.error("Web3Modal not loaded");
-    }
+
     function App() {
       const [provider, setProvider] = useState(null);
       const [signer, setSigner] = useState(null);
@@ -130,7 +158,8 @@
       const [donateAmount, setDonateAmount] = useState("");
       const [error, setError] = useState("");
       const [loading, setLoading] = useState(false);
-      // Initialize provider and contract
+
+      // Initial contract + global data load
       useEffect(() => {
         const init = async () => {
           try {
@@ -138,145 +167,117 @@
             const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, ABI, ethersProvider);
             setProvider(ethersProvider);
             setContract(contractInstance);
-            // Fetch initial data
-            const apyRaw = await contractInstance.currentAPY();
-            const apyValue = parseFloat(ethers.utils.formatUnits(apyRaw, 0)) / 100;
+
+            const [apyRaw, totalStakedRaw, rewardPoolRaw] = await Promise.all([
+              contractInstance.currentAPY(),
+              contractInstance.totalStaked(),
+              contractInstance.rewardPool()
+            ]);
+
+            const apyValue = Number(ethers.utils.formatUnits(apyRaw, 0)) / 100;
             setApy(apyValue.toFixed(2));
-            const totalStakedRaw = await contractInstance.totalStaked();
             setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
-            const rewardPoolRaw = await contractInstance.rewardPool();
             setRewardPool(ethers.utils.formatEther(rewardPoolRaw));
           } catch (err) {
-            console.error("Error fetching initial data:", err);
-            setError("Failed to load contract data. Please try again.");
+            console.error(err);
+            setError("Failed to load contract data.");
           }
         };
         init();
       }, []);
-      // Connect with MetaMask
-      const connectMetaMask = async () => {
-        if (window.ethereum) {
-          try {
-            setLoading(true);
-            setError("");
-            let ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-            await window.ethereum.request({ method: 'eth_requestAccounts' });
-            let chainId = Number((await ethersProvider.getNetwork()).chainId);
-            if (chainId !== CHAIN_ID) {
-              try {
-                await window.ethereum.request({
-                  method: 'wallet_switchEthereumChain',
-                  params: [{ chainId: `0x${CHAIN_ID.toString(16)}` }],
-                });
-              } catch (switchError) {
-                if (switchError.code === 4902) {
-                  await window.ethereum.request({
-                    method: 'wallet_addEthereumChain',
-                    params: [{
-                      chainId: `0x${CHAIN_ID.toString(16)}`,
-                      chainName: 'Polygon Mainnet',
-                      nativeCurrency: {
-                        name: 'MATIC',
-                        symbol: 'MATIC',
-                        decimals: 18,
-                      },
-                      rpcUrls: ['https://polygon-rpc.com'],
-                      blockExplorerUrls: ['https://polygonscan.com/'],
-                    }],
-                  });
-                } else {
-                  throw switchError;
-                }
-              }
-              // Recreate provider after chain switch
-              ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
-            }
-            const signerInstance = ethersProvider.getSigner();
-            const address = await signerInstance.getAddress();
-            setSigner(signerInstance);
-            setAccount(address);
-            const contractWithSigner = new ethers.Contract(CONTRACT_ADDRESS, ABI, signerInstance);
-            setContract(contractWithSigner);
-            // Fetch user data
-            const balanceRaw = await contractWithSigner.balanceOf(address);
-            setBalance(ethers.utils.formatEther(balanceRaw));
-            const stakeData = await contractWithSigner.dogeStakes(address);
-            setUserStake(ethers.utils.formatEther(stakeData.amount));
-            const rewardsRaw = await contractWithSigner.calculateReward(address);
-            setPendingRewards(ethers.utils.formatEther(rewardsRaw));
-          } catch (err) {
-            setError(getUserFriendlyError(err));
-          } finally {
-            setLoading(false);
-          }
-        } else {
-          setError("MetaMask not installed. Please install MetaMask to connect.");
-        }
-      };
-      // Connect with WalletConnect
-      const connectWalletConnect = async () => {
-        if (!modal) {
-          setError("Web3Modal not initialized. Please refresh the page.");
-          return;
-        }
-        try {
-          setLoading(true);
-          setError("");
-          const instance = await modal.connect();
-          const ethersProvider = new ethers.providers.Web3Provider(instance);
-          const signerInstance = ethersProvider.getSigner();
-          const address = await signerInstance.getAddress();
-          const chainId = Number((await ethersProvider.getNetwork()).chainId);
-          if (chainId !== CHAIN_ID) {
-            setError(`Please switch to Polygon Mainnet (Chain ID: ${CHAIN_ID}) in your wallet.`);
+
+      // Web3Modal subscription - handles connect, disconnect, chain changes, etc.
+      useEffect(() => {
+        if (!window.w3mModal) return;
+
+        const unsubscribe = window.w3mModal.subscribeProvider(async (state) => {
+          const { provider: w3mProvider, isConnected, address, chainId } = state;
+
+          if (!isConnected || !w3mProvider || !address) {
+            // Disconnected
+            setSigner(null);
+            setAccount(null);
+            setBalance("0");
+            setUserStake("0");
+            setPendingRewards("0");
+            const rpcProvider = new ethers.providers.JsonRpcProvider(RPC_URL);
+            setProvider(rpcProvider);
+            setContract(new ethers.Contract(CONTRACT_ADDRESS, ABI, rpcProvider));
             return;
           }
+
+          // Wrong network - auto switch
+          if (chainId !== CHAIN_ID) {
+            setError("Switching to Polygon Mainnet...");
+            try {
+              await window.w3mModal.switchNetwork({ chainId: CHAIN_ID });
+              return; // callback will fire again after switch
+            } catch {
+              setError("Please switch to Polygon Mainnet manually");
+              return;
+            }
+          }
+
+          // Connected correctly
+          setError("");
+          const ethersProvider = new ethers.providers.Web3Provider(w3mProvider, "any");
+          const signerInstance = ethersProvider.getSigner();
+          const contractWithSigner = new ethers.Contract(CONTRACT_ADDRESS, ABI, signerInstance);
+
           setProvider(ethersProvider);
           setSigner(signerInstance);
           setAccount(address);
-          const contractWithSigner = new ethers.Contract(CONTRACT_ADDRESS, ABI, signerInstance);
           setContract(contractWithSigner);
-          // Fetch user data
-          const balanceRaw = await contractWithSigner.balanceOf(address);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const stakeData = await contractWithSigner.dogeStakes(address);
-          setUserStake(ethers.utils.formatEther(stakeData.amount));
-          const rewardsRaw = await contractWithSigner.calculateReward(address);
-          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
+
+          // Refresh user + global data
+          try {
+            const [balRaw, stakeData, rewardRaw, totalStakedRaw, poolRaw, apyRaw] = await Promise.all([
+              contractWithSigner.balanceOf(address),
+              contractWithSigner.dogeStakes(address),
+              contractWithSigner.calculateReward(address),
+              contractWithSigner.totalStaked(),
+              contractWithSigner.rewardPool(),
+              contractWithSigner.currentAPY()
+            ]);
+
+            setBalance(ethers.utils.formatEther(balRaw));
+            setUserStake(ethers.utils.formatEther(stakeData.amount));
+            setPendingRewards(ethers.utils.formatEther(rewardRaw));
+            setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
+            setRewardPool(ethers.utils.formatEther(poolRaw));
+            const apyValue = Number(ethers.utils.formatUnits(apyRaw, 0)) / 100;
+            setApy(apyValue.toFixed(2));
+          } catch (err) {
+            console.error(err);
+          }
+        });
+
+        return () => unsubscribe();
+      }, []);
+
+      const connectWallet = async () => {
+        if (!window.w3mModal) return setError("Web3Modal failed to load");
+        setLoading(true);
+        setError("");
+        try {
+          await window.w3mModal.open();
         } catch (err) {
-          setError(getUserFriendlyError(err));
+          setError("Connection rejected or failed");
         } finally {
           setLoading(false);
         }
       };
-      // Disconnect wallet
+
       const disconnectWallet = async () => {
-        try {
-          if (provider && provider.provider && typeof provider.provider.close === 'function') {
-            await provider.provider.close();
-          }
-        } catch (err) {
-          console.error("Error disconnecting:", err);
+        if (window.w3mModal?.getIsConnected()) {
+          await window.w3mModal.disconnect();
         }
-        setSigner(null);
-        setAccount(null);
-        setBalance("0");
-        setUserStake("0");
-        setPendingRewards("0");
-        const ethersProvider = new ethers.providers.JsonRpcProvider(RPC_URL);
-        const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, ABI, ethersProvider);
-        setContract(contractInstance);
-        setProvider(ethersProvider);
       };
-      // Add token to MetaMask
+
       const addTokenToMetaMask = async () => {
-        if (!window.ethereum) {
-          setError("MetaMask not installed. Please install MetaMask to add the token.");
-          return;
-        }
+        if (!window.ethereum) return setError("MetaMask not detected");
         try {
-          setError("");
-          const wasAdded = await window.ethereum.request({
+          await window.ethereum.request({
             method: 'wallet_watchAsset',
             params: {
               type: 'ERC20',
@@ -288,336 +289,293 @@
               },
             },
           });
-          if (wasAdded) {
-            console.log('DRKT token added to MetaMask successfully.');
-          } else {
-            console.log('Failed to add DRKT token to MetaMask.');
-          }
         } catch (err) {
-          setError(getUserFriendlyError(err));
+          setError("Failed to add token");
         }
       };
-      // Handle stake
+
       const handleStake = async () => {
-        if (!signer || !stakeAmount || parseFloat(stakeAmount) <= 0) {
-          setError("Please enter a valid stake amount greater than zero.");
-          return;
-        }
+        if (!signer || !stakeAmount || Number(stakeAmount) <= 0) return setError("Enter valid amount");
+        setLoading(true);
+        setError("");
         try {
-          setLoading(true);
-          setError("");
           const amount = ethers.utils.parseEther(stakeAmount);
-          const approveTx = await contract.approve(CONTRACT_ADDRESS, amount);
-          await approveTx.wait();
-          const tx = await contract.stake(amount);
+          let tx = await contract.approve(CONTRACT_ADDRESS, amount);
+          await tx.wait();
+          tx = await contract.stake(amount);
           await tx.wait();
           setStakeAmount("");
-          // Refresh data
-          const balanceRaw = await contract.balanceOf(account);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const stakeData = await contract.dogeStakes(account);
+
+          // Refresh everything
+          const [bal, stakeData, rew, totalS, pool, apyRaw] = await Promise.all([
+            contract.balanceOf(account),
+            contract.dogeStakes(account),
+            contract.calculateReward(account),
+            contract.totalStaked(),
+            contract.rewardPool(),
+            contract.currentAPY()
+          ]);
+          setBalance(ethers.utils.formatEther(bal));
           setUserStake(ethers.utils.formatEther(stakeData.amount));
-          const rewardsRaw = await contract.calculateReward(account);
-          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
-          const totalStakedRaw = await contract.totalStaked();
-          setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
+          setPendingRewards(ethers.utils.formatEther(rew));
+          setTotalStaked(ethers.utils.formatEther(totalS));
+          setRewardPool(ethers.utils.formatEther(pool));
+          setApy((Number(ethers.utils.formatUnits(apyRaw, 0)) / 100).toFixed(2));
         } catch (err) {
           setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
         }
       };
-      // Handle unstake
+
       const handleUnstake = async () => {
-        if (!signer || !unstakeAmount || parseFloat(unstakeAmount) <= 0) {
-          setError("Please enter a valid unstake amount greater than zero.");
-          return;
-        }
+        if (!signer || !unstakeAmount || Number(unstakeAmount) <= 0) return setError("Enter valid amount");
+        setLoading(true);
+        setError("");
         try {
-          setLoading(true);
-          setError("");
           const amount = ethers.utils.parseEther(unstakeAmount);
           const tx = await contract.unstake(amount);
           await tx.wait();
           setUnstakeAmount("");
-          // Refresh data
-          const balanceRaw = await contract.balanceOf(account);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const stakeData = await contract.dogeStakes(account);
+
+          const [bal, stakeData, rew, totalS, pool, apyRaw] = await Promise.all([
+            contract.balanceOf(account),
+            contract.dogeStakes(account),
+            contract.calculateReward(account),
+            contract.totalStaked(),
+            contract.rewardPool(),
+            contract.currentAPY()
+          ]);
+          setBalance(ethers.utils.formatEther(bal));
           setUserStake(ethers.utils.formatEther(stakeData.amount));
-          const rewardsRaw = await contract.calculateReward(account);
-          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
-          const totalStakedRaw = await contract.totalStaked();
-          setTotalStaked(ethers.utils.formatEther(totalStakedRaw));
+          setPendingRewards(ethers.utils.formatEther(rew));
+          setTotalStaked(ethers.utils.formatEther(totalS));
+          setRewardPool(ethers.utils.formatEther(pool));
+          setApy((Number(ethers.utils.formatUnits(apyRaw, 0)) / 100).toFixed(2));
         } catch (err) {
           setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
         }
       };
-      // Handle claim rewards
+
       const handleClaimRewards = async () => {
         if (!signer) return;
+        setLoading(true);
+        setError("");
         try {
-          setLoading(true);
-          setError("");
           const tx = await contract.claimReward();
           await tx.wait();
-          // Refresh data
-          const balanceRaw = await contract.balanceOf(account);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const stakeData = await contract.dogeStakes(account);
+
+          const [bal, stakeData, rew] = await Promise.all([
+            contract.balanceOf(account),
+            contract.dogeStakes(account),
+            contract.calculateReward(account)
+          ]);
+          setBalance(ethers.utils.formatEther(bal));
           setUserStake(ethers.utils.formatEther(stakeData.amount));
-          const rewardsRaw = await contract.calculateReward(account);
-          setPendingRewards(ethers.utils.formatEther(rewardsRaw));
+          setPendingRewards(ethers.utils.formatEther(rew));
         } catch (err) {
           setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
         }
       };
-      // Handle donate to pool
+
       const handleDonate = async () => {
-        if (!signer || !donateAmount || parseFloat(donateAmount) <= 0) {
-          setError("Please enter a valid donation amount greater than zero.");
-          return;
-        }
+        if (!signer || !donateAmount || Number(donateAmount) <= 0) return setError("Enter valid amount");
+        setLoading(true);
+        setError("");
         try {
-          setLoading(true);
-          setError("");
           const amount = ethers.utils.parseEther(donateAmount);
-          const approveTx = await contract.approve(CONTRACT_ADDRESS, amount);
-          await approveTx.wait();
-          const tx = await contract.donateToPool(amount);
+          let tx = await contract.approve(CONTRACT_ADDRESS, amount);
+          await tx.wait();
+          tx = await contract.donateToPool(amount);
           await tx.wait();
           setDonateAmount("");
-          // Refresh data
-          const balanceRaw = await contract.balanceOf(account);
-          setBalance(ethers.utils.formatEther(balanceRaw));
-          const rewardPoolRaw = await contract.rewardPool();
-          setRewardPool(ethers.utils.formatEther(rewardPoolRaw));
+
+          const [bal, pool] = await Promise.all([
+            contract.balanceOf(account),
+            contract.rewardPool()
+          ]);
+          setBalance(ethers.utils.formatEther(bal));
+          setRewardPool(ethers.utils.formatEther(pool));
         } catch (err) {
           setError(getUserFriendlyError(err));
         } finally {
           setLoading(false);
         }
       };
-      // User-friendly error mapping
+
       const getUserFriendlyError = (err) => {
-        if (err.message.includes("Too frequent")) {
-          return "Action on cooldown. You can only perform this action every 24 hours. Please wait and try again.";
-        } else if (err.message.includes("execution reverted")) {
-          return "Transaction failed: " + (err.reason || "Please check your inputs and wallet balance.");
-        } else if (err.message.includes("insufficient funds")) {
-          return "Insufficient funds in your wallet. Please add more MATIC or tokens.";
-        } else if (err.message.includes("UNPREDICTABLE_GAS_LIMIT")) {
-          return "Unable to estimate gas. The transaction may fail—try increasing gas limit or check contract conditions.";
-        } else {
-          return err.message || "An unexpected error occurred. Please try again or contact support.";
-        }
+        const msg = err?.message || err?.reason || "";
+        if (msg.includes("Too frequent")) return "Action on cooldown (24h). Please wait.";
+        if (msg.includes("insufficient")) return "Insufficient balance or allowance";
+        if (msg.includes("user rejected")) return "Transaction rejected";
+        return "Transaction failed – check console for details";
       };
+
       return (
         <>
           <div className="container mx-auto px-4 py-8">
             {error && (
-              <div className="sticky top-0 z-10 bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg mb-8 relative">
-                {error}
-                <button
-                  onClick={() => setError("")}
-                  className="absolute top-2 right-2 text-red-300 hover:text-red-100"
-                >
-                  <i className="ri-close-line text-xl"></i>
-                </button>
+              <div className="sticky top-0 z-50 bg-red-600/90 border border-red-500 text-white p-4 rounded-lg mb-8 flex justify-between items-start">
+                <span>{error}</span>
+                <button onClick={() => setError("")} className="text-xl">×</button>
               </div>
             )}
+
             <header className="text-center py-12">
-              <div className="flex justify-center items-center mb-4">
-                <img src={LOGO_URL} alt="DogeRocket Logo" className="w-20 h-20" />
+              <div className="flex justify-center mb-6">
+                <img src={LOGO_URL} alt="DogeRocket Logo" className="w-24 h-24 rounded-full border-4 border-yellow-400" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">DogeRocket Staking</h1>
-              <p className="text-lg md:text-xl text-gray-300 mt-4">
-                Elevate your portfolio to stellar heights
-              </p>
-              <div className="mt-8 flex flex-col sm:flex-row justify-between items-center">
-                <div className="flex items-center space-x-4">
+              <h1 className="text-5xl font-bold mb-4">DogeRocket Staking</h1>
+              <p className="text-xl text-gray-300">Elevate your portfolio to stellar heights</p>
+
+              <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-6">
+                <div className="flex items-center gap-4">
                   {!account ? (
-                    <>
-                      <button
-                        onClick={connectMetaMask}
-                        disabled={loading}
-                        className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-3 px-6 rounded-full disabled:opacity-50 transition-colors flex items-center"
-                      >
-                        <i className="ri-wallet-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
-                        {loading ? "Connecting..." : "Connect MetaMask"}
-                      </button>
-                      <button
-                        onClick={connectWalletConnect}
-                        disabled={loading}
-                        className="bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-full disabled:opacity-50 transition-colors flex items-center"
-                      >
-                        <i className="ri-wallet-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
-                        {loading ? "Connecting..." : "Connect WalletConnect"}
-                      </button>
-                    </>
+                    <button
+                      onClick={connectWallet}
+                      disabled={loading}
+                      className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 px-8 rounded-full flex items-center gap-3 text-lg transition"
+                    >
+                      <i className="ri-wallet-3-line text-2xl"></i>
+                      {loading ? "Connecting..." : "Connect Wallet"}
+                    </button>
                   ) : (
-                    <>
-                      <p className="text-white font-semibold">
-                        Connected: <span className="font-mono">{account.slice(0, 6)}...{account.slice(-4)}</span>
-                      </p>
+                    <div className="flex items-center gap-4">
+                      <span className="font-mono bg-white/10 px-4 py-2 rounded-full">
+                        {account.slice(0, 6)}...{account.slice(-4)}
+                      </span>
                       <button
                         onClick={disconnectWallet}
-                        className="bg-red-600 hover:bg-red-500 text-white font-semibold py-3 px-6 rounded-full transition-colors flex items-center"
+                        className="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-full flex items-center gap-2"
                       >
-                        <i className="ri-logout-box-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
-                        Disconnect
+                        <i className="ri-logout-box-line"></i> Disconnect
                       </button>
-                    </>
+                    </div>
                   )}
                 </div>
-                <div className="flex space-x-4 mt-2 sm:mt-0">
+
+                <div className="flex gap-4">
                   <a
                     href={SALE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-green-600 hover:bg-green-500 text-white py-3 px-6 rounded-full font-semibold transition-colors flex items-center"
+                    className="bg-green-600 hover:bg-green-500 text-white py-3 px-8 rounded-full font-bold flex items-center gap-2 transition"
                   >
-                    <i className="ri-shopping-cart-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
-                    Buy DRKT
+                    <i className="ri-swap-line"></i> Swap on Quickswap
                   </a>
                   <button
                     onClick={addTokenToMetaMask}
-                    className="bg-gray-600 hover:bg-gray-500 text-white py-3 px-6 rounded-full font-semibold transition-colors flex items-center"
+                    className="bg-gray-700 hover:bg-gray-600 text-white py-3 px-6 rounded-full flex items-center gap-2 transition"
                   >
-                    <i className="ri-add-line mr-2 text-xl hover:text-yellow-400 transition-colors"></i>
-                    Add DRKT to MetaMask
+                    <i className="ri-add-circle-line"></i> Add DRKT Token
                   </button>
                 </div>
               </div>
             </header>
-            <section className="bg-white/10 backdrop-blur-sm text-white rounded-xl p-6 mb-8">
-              <h2 className="text-2xl font-semibold mb-4">About DogeRocket</h2>
-              <p className="text-gray-300 mb-4">
-                DogeRocket (DRKT) is a decentralized ERC-20 staking token built on the Polygon blockchain, with a fixed total supply of 1 billion tokens. Users can stake DRKT to generate rewards through a dynamic Annual Percentage Yield (APY) mechanism, ranging from 5.8% to 347%. Token allocation is structured as follows: 20% vested to the DogeDAO over a 10-year period, 40% reserved for staking rewards, and 30% committed to a locked staking rewards pool.
+
+            <section className="bg-white/10 backdrop-blur-sm rounded-xl p-8 mb-8">
+              <h2 className="text-3xl font-bold mb-6 text-center">About DogeRocket</h2>
+              <p className="text-gray-200 text-lg leading-relaxed mb-6">
+                DogeRocket (DRKT) is a decentralized ERC-20 staking token on Polygon with a fixed 1B supply.
+                Dynamic APY ranges from 5.8% to 347%. Allocation: 20% 10-year vest to DogeDAO,
+                40% staking rewards, 30% locked reward pool.
               </p>
-              <div className="flex flex-wrap justify-center space-x-4 space-y-2">
-                <a href="https://dogerocket.site" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 flex items-center">
-                  <i className="ri-global-line mr-1 text-xl hover:text-yellow-400 transition-colors"></i>Website
+              <div className="flex flex-wrap justify-center gap-6 text-blue-300">
+                <a href="https://dogerocket.site" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition">
+                  <i className="ri-global-line text-2xl"></i> Website
                 </a>
-                <a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 flex items-center">
-                  <i className="ri-twitter-line mr-1 text-xl hover:text-yellow-400 transition-colors"></i>Twitter
+                <a href="https://x.com/DRKTDogeRocket" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition">
+                  <i className="ri-twitter-x-line text-2xl"></i> Twitter/X
                 </a>
-                <a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 flex items-center">
-                  <i className="ri-discord-line mr-1 text-xl hover:text-yellow-400 transition-colors"></i>Discord
+                <a href="https://discord.gg/9QQ8FmY6nq" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition">
+                  <i className="ri-discord-line text-2xl"></i> Discord
                 </a>
               </div>
             </section>
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
-                <h3 className="text-lg font-semibold text-gray-300">Current APY</h3>
-                <p className="text-3xl font-bold text-yellow-400">{apy}%</p>
+
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl text-center">
+                <h3 className="text-xl font-semibold text-gray-300">Current APY</h3>
+                <p className="text-5xl font-bold text-yellow-400 mt-2">{apy}%</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
-                <h3 className="text-lg font-semibold text-gray-300">Total Staked</h3>
-                <p className="text-3xl font-bold">{parseFloat(totalStaked).toLocaleString()} DRKT</p>
+              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl text-center">
+                <h3 className="text-xl font-semibold text-gray-300">Total Staked</h3>
+                <p className="text-4xl font-bold mt-2">{parseFloat(totalStaked).toLocaleString(undefined, {maximumFractionDigits: 0})} DRKT</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
-                <h3 className="text-lg font-semibold text-gray-300">Reward Pool</h3>
-                <p className="text-3xl font-bold">{parseFloat(rewardPool).toLocaleString()} DRKT</p>
+              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl text-center">
+                <h3 className="text-xl font-semibold text-gray-300">Reward Pool</h3>
+                <p className="text-4xl font-bold mt-2">{parseFloat(rewardPool).toLocaleString(undefined, {maximumFractionDigits: 0})} DRKT</p>
               </div>
             </section>
+
             {account && (
-              <>
-                <section className="bg-white/10 backdrop-blur-sm text-white rounded-xl p-6 mb-8">
-                  <h2 className="text-2xl font-semibold mb-6 text-center">Your Dashboard</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <div className="bg-blue-800/50 p-4 rounded-lg">
-                        <h3 className="text-lg font-semibold">Balance</h3>
-                        <p className="text-2xl font-bold">{parseFloat(balance).toLocaleString()} DRKT</p>
-                      </div>
-                      <div className="bg-blue-800/50 p-4 rounded-lg">
-                        <h3 className="text-lg font-semibold">Staked</h3>
-                        <p className="text-2xl font-bold">{parseFloat(userStake).toLocaleString()} DRKT</p>
-                      </div>
-                      <div className="bg-green-800/50 p-4 rounded-lg">
-                        <h3 className="text-lg font-semibold">Pending Rewards</h3>
-                        <p className="text-2xl font-bold text-green-400">{parseFloat(pendingRewards).toLocaleString()} DRKT</p>
-                      </div>
+              <section className="bg-white/10 backdrop-blur-sm rounded-xl p-8">
+                <h2 className="text-3xl font-bold mb-8 text-center">Your Dashboard</h2>
+                <div className="grid md:grid-cols-2 gap-10">
+                  <div className="space-y-6">
+                    <div className="bg-blue-900/50 p-6 rounded-xl">
+                      <h3 className="text-xl font-semibold text-gray-300">Wallet Balance</h3>
+                      <p className="text-4xl font-bold text-yellow-400">{parseFloat(balance).toLocaleString()} DRKT</p>
                     </div>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Stake Amount</label>
-                        <input
-                          type="number"
-                          step="0.000000000000000001"
-                          value={stakeAmount}
-                          onChange={(e) => setStakeAmount(e.target.value)}
-                          className="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400"
-                          placeholder="0.0 DRKT"
-                        />
-                        <button
-                          onClick={handleStake}
-                          disabled={loading}
-                          className="mt-2 w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-full font-semibold disabled:opacity-50 transition-colors"
-                        >
-                          {loading ? "Staking..." : "Stake DRKT"}
-                        </button>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Unstake Amount</label>
-                        <input
-                          type="number"
-                          step="0.000000000000000001"
-                          value={unstakeAmount}
-                          onChange={(e) => setUnstakeAmount(e.target.value)}
-                          className="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400"
-                          placeholder="0.0 DRKT"
-                        />
-                        <button
-                          onClick={handleUnstake}
-                          disabled={loading}
-                          className="mt-2 w-full bg-red-600 hover:bg-red-500 text-white py-3 rounded-full font-semibold disabled:opacity-50 transition-colors"
-                        >
-                          {loading ? "Unstaking..." : "Unstake DRKT"}
-                        </button>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Donate to Pool</label>
-                        <input
-                          type="number"
-                          step="0.000000000000000001"
-                          value={donateAmount}
-                          onChange={(e) => setDonateAmount(e.target.value)}
-                          className="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400"
-                          placeholder="0.0 DRKT"
-                        />
-                        <button
-                          onClick={handleDonate}
-                          disabled={loading}
-                          className="mt-2 w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-full font-semibold disabled:opacity-50 transition-colors"
-                        >
-                          {loading ? "Donating..." : "Donate DRKT"}
-                        </button>
-                      </div>
-                      <button
-                        onClick={handleClaimRewards}
-                        disabled={loading || parseFloat(pendingRewards) === 0}
-                        className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-full font-semibold disabled:opacity-50 transition-colors"
-                      >
-                        {loading ? "Claiming..." : `Claim ${parseFloat(pendingRewards).toLocaleString()} Rewards`}
-                      </button>
+                    <div className="bg-blue-900/50 p-6 rounded-xl">
+                      <h3 className="text-xl font-semibold text-gray-300">Staked Amount</h3>
+                      <p className="text-4xl font-bold text-cyan-400">{parseFloat(userStake).toLocaleString()} DRKT</p>
+                    </div>
+                    <div className="bg-green-900/50 p-6 rounded-xl">
+                      <h3 className="text-xl font-semibold text-gray-300">Pending Rewards</h3>
+                      <p className="text-4xl font-bold text-green-400">{parseFloat(pendingRewards).toLocaleString()} DRKT</p>
                     </div>
                   </div>
-                </section>
-              </>
+
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-lg mb-2">Stake DRKT</label>
+                      <input type="number" value={stakeAmount} onChange={e => setStakeAmount(e.target.value)} placeholder="0.0" className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" />
+                      <button onClick={handleStake} disabled={loading} className="mt-3 w-full bg-green-600 hover:bg-green-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition">
+                        {loading ? "Processing..." : "Stake"}
+                      </button>
+                    </div>
+
+                    <div>
+                      <label className="block text-lg mb-2">Unstake DRKT</label>
+                      <input type="number" value={unstakeAmount} onChange={e => setUnstakeAmount(e.target.value)} placeholder="0.0" className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" />
+                      <button onClick={handleUnstake} disabled={loading} className="mt-3 w-full bg-red-600 hover:bg-red-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition">
+                        {loading ? "Processing..." : "Unstake"}
+                      </button>
+                    </div>
+
+                    <div>
+                      <label className="block text-lg mb-2">Donate to Reward Pool</label>
+                      <input type="number" value={donateAmount} onChange={e => setDonateAmount(e.target.value)} placeholder="0.0" className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" />
+                      <button onClick={handleDonate} disabled={loading} className="mt-3 w-full bg-purple-600 hover:bg-purple-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition">
+                        {loading ? "Processing..." : "Donate"}
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={handleClaimRewards}
+                      disabled={loading || Number(pendingRewards) === 0}
+                      className="w-full bg-yellow-600 hover:bg-yellow-500 disabled:opacity-50 py-5 rounded-full font-bold text-xl transition"
+                    >
+                      {loading ? "Claiming..." : `Claim ${parseFloat(pendingRewards).toLocaleString()} DRKT Rewards`}
+                    </button>
+                  </div>
+                </div>
+              </section>
             )}
-            <footer className="text-center py-8 text-gray-300 border-t border-white/10">
-              <p>&copy; 2025 DogeRocket. All rights reserved. | Polygon Mainnet</p>
+
+            <footer className="text-center py-12 text-gray-400 border-t border-white/10 mt-16">
+              <p>&copy; 2025 DogeRocket • Polygon Mainnet • All Rights Reserved</p>
             </footer>
           </div>
         </>
       );
     }
+
     ReactDOM.render(<App />, document.getElementById("root"));
   </script>
 </body>

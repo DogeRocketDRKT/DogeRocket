@@ -11,45 +11,35 @@
   <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
   
-  <!-- Web3Modal v5+ (ethers v5) - modern UI, unified wallet connect (MetaMask + WalletConnect + others) -->
+  <!-- Polyfill for ES modules in older browsers -->
+  <script src="https://unpkg.com/@web3modal/html@2.1.2/dist/index.js"></script>
   <script type="module">
-    import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@5.1.10';
-
-    const projectId = "d2ef0dc4e30bb16fb86b1a73175e2261";
-
-    const metadata = {
-      name: "DogeRocket Staking",
-      description: "Elevate your portfolio to stellar heights",
-      url: window.location.href,
-      icons: ["https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i"]
-    };
-
-    const polygon = {
-      chainId: 137,
-      name: "Polygon Mainnet",
-      currency: "MATIC",
-      explorerUrl: "https://polygonscan.com",
-      rpcUrl: "https://polygon-rpc.com"
-    };
+    import { createWeb3Modal, defaultConfig } from 'https://cdn.jsdelivr.net/npm/@web3modal/ethers5@3.6.0/dist/index.js';
 
     window.w3mModal = createWeb3Modal({
       ethersConfig: defaultConfig({
-        metadata,
-        defaultChainId: 137,
-        enableEIP6963: true,
-        enableInjected: true,
-        enableCoinbase: true
+        chains: [
+          {
+            chainId: 137,
+            name: 'polygon',
+            currency: 'MATIC',
+            explorerUrl: 'https://polygonscan.com',
+            rpcUrl: 'https://polygon-rpc.com'
+          }
+        ],
+        projectId: 'd2ef0dc4e30bb16fb86b1a73175e2261',
+        metadata: {
+          name: 'DogeRocket Staking',
+          description: 'Elevate your portfolio to stellar heights',
+          url: window.location.origin,
+          icons: ['https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i']
+        }
       }),
-      chains: [polygon],
-      projectId,
-      themeMode: "dark",
+      themeMode: 'dark',
       themeVariables: {
-        "--w3m-accent": "#1E40AF",
-        "--w3m-background": "#1E3A8A",
-        "--w3m-border-radius-master": "2px"
-      },
-      enableAnalytics: false,
-      enableOnramp: false
+        '--w3m-accent': '#1E40AF',
+        '--w3m-background': '#1E3A8A'
+      }
     });
   </script>
 
@@ -188,7 +178,11 @@
 
       // Web3Modal subscription - handles connect, disconnect, chain changes, etc.
       useEffect(() => {
-        if (!window.w3mModal) return;
+        if (!window.w3mModal) {
+          console.error("Web3Modal not loaded");
+          setError("Web3Modal failed to load. Please refresh the page.");
+          return;
+        }
 
         const unsubscribe = window.w3mModal.subscribeProvider(async (state) => {
           const { provider: w3mProvider, isConnected, address, chainId } = state;
@@ -534,24 +528,57 @@
                   <div className="space-y-6">
                     <div>
                       <label className="block text-lg mb-2">Stake DRKT</label>
-                      <input type="number" value={stakeAmount} onChange={e => setStakeAmount(e.target.value)} placeholder="0.0" className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" />
-                      <button onClick={handleStake} disabled={loading} className="mt-3 w-full bg-green-600 hover:bg-green-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition">
+                      <input 
+                        type="number" 
+                        step="0.000000000000000001"
+                        value={stakeAmount} 
+                        onChange={e => setStakeAmount(e.target.value)} 
+                        placeholder="0.0" 
+                        className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" 
+                      />
+                      <button 
+                        onClick={handleStake} 
+                        disabled={loading} 
+                        className="mt-3 w-full bg-green-600 hover:bg-green-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition"
+                      >
                         {loading ? "Processing..." : "Stake"}
                       </button>
                     </div>
 
                     <div>
                       <label className="block text-lg mb-2">Unstake DRKT</label>
-                      <input type="number" value={unstakeAmount} onChange={e => setUnstakeAmount(e.target.value)} placeholder="0.0" className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" />
-                      <button onClick={handleUnstake} disabled={loading} className="mt-3 w-full bg-red-600 hover:bg-red-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition">
+                      <input 
+                        type="number" 
+                        step="0.000000000000000001"
+                        value={unstakeAmount} 
+                        onChange={e => setUnstakeAmount(e.target.value)} 
+                        placeholder="0.0" 
+                        className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" 
+                      />
+                      <button 
+                        onClick={handleUnstake} 
+                        disabled={loading} 
+                        className="mt-3 w-full bg-red-600 hover:bg-red-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition"
+                      >
                         {loading ? "Processing..." : "Unstake"}
                       </button>
                     </div>
 
                     <div>
                       <label className="block text-lg mb-2">Donate to Reward Pool</label>
-                      <input type="number" value={donateAmount} onChange={e => setDonateAmount(e.target.value)} placeholder="0.0" className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" />
-                      <button onClick={handleDonate} disabled={loading} className="mt-3 w-full bg-purple-600 hover:bg-purple-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition">
+                      <input 
+                        type="number" 
+                        step="0.000000000000000001"
+                        value={donateAmount} 
+                        onChange={e => setDonateAmount(e.target.value)} 
+                        placeholder="0.0" 
+                        className="w-full p-4 rounded-lg bg-white/10 text-white text-lg" 
+                      />
+                      <button 
+                        onClick={handleDonate} 
+                        disabled={loading} 
+                        className="mt-3 w-full bg-purple-600 hover:bg-purple-500 disabled:opacity-50 py-4 rounded-full font-bold text-xl transition"
+                      >
                         {loading ? "Processing..." : "Donate"}
                       </button>
                     </div>

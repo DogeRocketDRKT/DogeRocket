@@ -11,27 +11,9 @@
   <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
   
-  <!-- Particle Network ConnectKit (v1.2+) -->
-  <script type="module">
-    import { createModal } from 'https://esm.sh/@particle-network/connectkit@1.2.1';
-    import { Polygon } from 'https://esm.sh/@particle-network/connectkit@1.2.1/chains';
-
-    const modal = createModal({
-      projectId: "9760558a-904d-4c5d-8269-e91fbee8841d",
-      clientKey: "cUKIOgr2QLZilFc6UReXcOjaMST54GaiWqrnFv7c",
-      appId: "7308a30f-34c2-4093-a368-feddbc9013e7",
-      chains: [Polygon],
-      theme: 'dark',
-      walletConnect: true,
-      supportAA: false, // set true if you want Account Abstraction / gasless later
-      language: 'en'
-    });
-
-    window.ParticleModal = modal;
-  </script>
-
   <style>
     body { overflow-y: auto; }
+    #particle-modal { all: initial; display: none; } /* Hide default if needed */
   </style>
 </head>
 <body class="bg-gradient-to-b from-blue-900 to-blue-500 text-white min-h-screen font-sans">
@@ -48,7 +30,7 @@
     const LOGO_URL = "https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i";
     const SALE_URL = "https://dapp.quickswap.exchange/swap/v3/ETH/0x03720Cc99a302C101dbd48489a6c2c8Bb52D178D";
 
-    // Full ABI (unchanged)
+    // Full ABI
     const ABI = [
       {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
       {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},
@@ -157,31 +139,12 @@
         init();
       }, []);
 
-      // Particle connection handling
-      const connectWallet = async () => {
-        if (!window.ParticleModal) return setError("Particle not loaded");
-        setLoading(true);
-        setError("");
-        try {
-          await window.ParticleModal.open(); // Opens beautiful Particle modal
-        } catch (e) {
-          setError("Connection cancelled");
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      const disconnectWallet = async () => {
-        await window.ParticleModal.logout();
-      };
-
-      // Listen to Particle provider events
+      // Listen to provider events
       useEffect(() => {
         if (!window.ethereum) return;
 
         const handleAccountsChanged = async (accounts) => {
           if (accounts.length === 0) {
-            // Disconnected
             setAccount(null);
             setSigner(null);
             setBalance("0");
@@ -209,6 +172,64 @@
           window.ethereum.removeListener('chainChanged', handleChainChanged);
         };
       }, []);
+
+      const connectWallet = async () => {
+        if (!window.ethereum) {
+          setError("No Ethereum provider detected. Please install MetaMask or another wallet.");
+          return;
+        }
+        setLoading(true);
+        setError("");
+        try {
+          // Request accounts
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          // Check chain
+          const chainId = Number((await window.ethereum.request({ method: 'eth_chainId' })));
+          if (chainId !== CHAIN_ID) {
+            try {
+              await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: `0x${CHAIN_ID.toString(16)}` }],
+              });
+            } catch (switchErr) {
+              if (switchErr.code === 4902) {
+                await window.ethereum.request({
+                  method: 'wallet_addEthereumChain',
+                  params: [{
+                    chainId: `0x${CHAIN_ID.toString(16)}`,
+                    chainName: 'Polygon Mainnet',
+                    nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+                    rpcUrls: [RPC_URL],
+                    blockExplorerUrls: ['https://polygonscan.com/'],
+                  }],
+                });
+              } else {
+                throw switchErr;
+              }
+            }
+          }
+          await refreshUserData(accounts[0]);
+        } catch (e) {
+          setError("Connection failed: " + (e.message || "User rejected"));
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const disconnectWallet = async () => {
+        try {
+          await window.ethereum.request({ method: 'eth_accounts' }); // Clear accounts
+          setAccount(null);
+          setSigner(null);
+          setBalance("0");
+          setUserStake("0");
+          setPendingRewards("0");
+          const rpc = new ethers.providers.JsonRpcProvider(RPC_URL);
+          setContract(new ethers.Contract(CONTRACT_ADDRESS, ABI, rpc));
+        } catch (e) {
+          console.error(e);
+        }
+      };
 
       const refreshUserData = async (addr) => {
         const prov = new ethers.providers.Web3Provider(window.ethereum);
@@ -345,7 +366,6 @@
             </div>
           </header>
 
-          {/* Rest of UI unchanged - same clean design */}
           <section className="bg-white/10 backdrop-blur-sm rounded-xl p-8 mb-8 text-center">
             <h2 className="text-3xl font-bold mb-6">About DogeRocket</h2>
             <p className="text-lg text-gray-200 leading-relaxed mb-6">
@@ -384,9 +404,9 @@
                   <div className="bg-green-900/50 p-6 rounded-xl"><h3 className="text-xl text-gray-300">Pending Rewards</h3><p className="text-4xl font-bold text-green-400">{parseFloat(pendingRewards).toLocaleString()} DRKT</p></div>
                 </div>
                 <div className="space-y-6">
-                  <div><input type="number" value={stakeAmount} onChange={e=>setStakeAmount(e.target.value)} placeholder="Amount to stake" className="w-full p-4 bg-white/10 rounded-lg text-lg"/><button onClick={handleStake} disabled={loading} className="mt-3 w-full bg-green-600 hover:bg-green-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Stake</button></div>
-                  <div><input type="number" value={unstakeAmount} onChange={e=>setUnstakeAmount(e.target.value)} placeholder="Amount to unstake" className="w-full p-4 bg-white/10 rounded-lg text-lg"/><button onClick={handleUnstake} disabled={loading} className="mt-3 w-full bg-red-600 hover:bg-red-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Unstake</button></div>
-                  <div><input type="number" value={donateAmount} onChange={e=>setDonateAmount(e.target.value)} placeholder="Donate to pool" className="w-full p-4 bg-white/10 rounded-lg text-lg"/><button onClick={handleDonate} disabled={loading} className="mt-3 w-full bg-purple-600 hover:bg-purple-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Donate</button></div>
+                  <div><label className="block text-lg mb-2">Stake Amount</label><input type="number" step="0.000000000000000001" value={stakeAmount} onChange={e=>setStakeAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleStake} disabled={loading} className="mt-3 w-full bg-green-600 hover:bg-green-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Stake</button></div>
+                  <div><label className="block text-lg mb-2">Unstake Amount</label><input type="number" step="0.000000000000000001" value={unstakeAmount} onChange={e=>setUnstakeAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleUnstake} disabled={loading} className="mt-3 w-full bg-red-600 hover:bg-red-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Unstake</button></div>
+                  <div><label className="block text-lg mb-2">Donate Amount</label><input type="number" step="0.000000000000000001" value={donateAmount} onChange={e=>setDonateAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleDonate} disabled={loading} className="mt-3 w-full bg-purple-600 hover:bg-purple-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Donate</button></div>
                   <button onClick={handleClaim} disabled={loading || Number(pendingRewards)===0} className="w-full bg-yellow-600 hover:bg-yellow-500 py-5 rounded-full font-bold text-xl disabled:opacity-50">
                     {loading ? "Claiming..." : `Claim ${parseFloat(pendingRewards).toLocaleString()} DRKT Rewards`}
                   </button>
@@ -396,7 +416,7 @@
           )}
 
           <footer className="text-center py-12 text-gray-400 border-t border-white/10 mt-16">
-            © 2025 DogeRocket • Polygon Mainnet • Powered by Particle Network
+            © 2025 DogeRocket • Polygon Mainnet • All Rights Reserved
           </footer>
         </div>
       );

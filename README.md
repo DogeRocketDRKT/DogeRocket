@@ -57,7 +57,7 @@ Here's the breakdown of DRKT's 1B total supply:
 
 ## Links
 - [![Website Icon](https://example.com/website-icon.png)](https://dogerocket.site) Website
-- (https://polygonscan.com/token/0x03720cc99a302c101dbd48489a6c2c8bb52d178d) Explorer
+- (https://polygonscan.com/token/0x78835AE70722A6Aa03aAA5d4501E3e0460f723f9) Explorer
 - (https://x.com/DRKTDogeRocket)Twitter
 - (https://discord.gg/9QQ8FmY6nq) Discord
 - (https://dogerocket.medium.com) Medium

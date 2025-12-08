@@ -10,10 +10,8 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
-  
   <style>
     body { overflow-y: auto; }
-    #particle-modal { all: initial; display: none; } /* Hide default if needed */
   </style>
 </head>
 <body class="bg-gradient-to-b from-blue-900 to-blue-500 text-white min-h-screen font-sans">
@@ -23,783 +21,63 @@
     const { useState, useEffect } = React;
     const { ethers } = window.ethers;
 
-    // Contract & Token Info
-    const CONTRACT_ADDRESS = "0xf67eEc63Ef76F59233Fc6ee8EF849Ca2d42c6D4e";
+    // NEW CONTRACTS
+    const TOKEN_ADDRESS = "0x78835AE70722A6Aa03aAA5d4501E3e0460f723f9";   // DRKT token (ERC20 + vesting/locked)
+    const STAKING_ADDRESS = "0xf67eec63ef76f59233fc6ee8ef849ca2d42c6d4e";  // Staking contract
     const CHAIN_ID = 137;
     const RPC_URL = "https://polygon-rpc.com";
     const LOGO_URL = "https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i";
-    const SALE_URL = "https://dapp.quickswap.exchange/swap/v3/ETH/0x78835ae70722a6aa03aaa5d4501e3e0460f723f9";
+    const SALE_URL = "https://dapp.quickswap.exchange/swap/v3/ETH/0x78835AE70722A6Aa03aAA5d4501E3e0460f723f9";
 
-    // Full ABI
-    const ABI = [
-      [
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "initialStaking",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "allowance",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "needed",
-				"type": "uint256"
-			}
-		],
-		"name": "ERC20InsufficientAllowance",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "sender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "balance",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "needed",
-				"type": "uint256"
-			}
-		],
-		"name": "ERC20InsufficientBalance",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "approver",
-				"type": "address"
-			}
-		],
-		"name": "ERC20InvalidApprover",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "receiver",
-				"type": "address"
-			}
-		],
-		"name": "ERC20InvalidReceiver",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "sender",
-				"type": "address"
-			}
-		],
-		"name": "ERC20InvalidSender",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			}
-		],
-		"name": "ERC20InvalidSpender",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			}
-		],
-		"name": "OwnableInvalidOwner",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
-		"name": "OwnableUnauthorizedAccount",
-		"type": "error"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "Approval",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "LockedTokensReleasedToPool",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "newCID",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "newDescription",
-				"type": "string"
-			}
-		],
-		"name": "MetadataUpdated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "oldStaking",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newStaking",
-				"type": "address"
-			}
-		],
-		"name": "StakingContractUpdated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "oldWallet",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newWallet",
-				"type": "address"
-			}
-		],
-		"name": "TeamWalletUpdated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "wallet",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "VestedTokensClaimed",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "DEPLOYER_ALLOCATION",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "INITIAL_LOCK_DURATION",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "LOCKED_ALLOCATION",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "MAX_SUPPLY",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "STAKING_REWARDS_ALLOCATION",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "VESTED_ALLOCATION",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "VESTING_PERIODS",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			}
-		],
-		"name": "allowance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "claimVested",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "contractDescription",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "decimals",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "deploymentTime",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "lockedClaimed",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "lockedRemaining",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "metadataCID",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "name",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "releaseLockedToPool",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "newCID",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "newDescription",
-				"type": "string"
-			}
-		],
-		"name": "setMetadata",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newStaking",
-				"type": "address"
-			}
-		],
-		"name": "setStakingContract",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newTeam",
-				"type": "address"
-			}
-		],
-		"name": "setTeamWallet",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "stakingContract",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "symbol",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "teamWallet",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "totalSupply",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "vestedClaimed",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "vestedRemaining",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-]
+    // Minimal ERC20 ABI for token contract
+    const ERC20_ABI = [
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function balanceOf(address) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)"
+    ];
+
+    // Full original staking ABI (functions are the same in the new staking contract)
+    const STAKING_ABI = [
+      {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
+      {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientAllowance","type":"error"},
+      {"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"needed","type":"uint256"}],"name":"ERC20InsufficientBalance","type":"error"},
+      {"inputs":[{"internalType":"address","name":"approver","type":"address"}],"name":"ERC20InvalidApprover","type":"error"},
+      {"inputs":[{"internalType":"address","name":"receiver","type":"address"}],"name":"ERC20InvalidReceiver","type":"error"},
+      {"inputs":[{"internalType":"address","name":"sender","type":"address"}],"name":"ERC20InvalidSender","type":"error"},
+      {"inputs":[{"internalType":"address","name":"spender","type":"address"}],"name":"ERC20InvalidSpender","type":"error"},
+      {"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"OwnableInvalidOwner","type":"error"},
+      {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"OwnableUnauthorizedAccount","type":"error"},
+      {"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"SafeERC20FailedOperation","type":"error"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"wallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"LockedTokensClaimed","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"newCID","type":"string"},{"indexed":false,"internalType":"string","name":"newDescription","type":"string"}],"name":"MetadataUpdated","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"RewardClaimed","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RewardPoolContribution","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"previousPool","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newPool","type":"uint256"}],"name":"RewardPoolModified","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"RewardsExpired","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"}],"name":"StakePruned","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensStaked","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"fee","type":"uint256"}],"name":"TokensUnstaked","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"wallet","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"VestedTokensClaimed","type":"event"},
+      {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},
+      {"inputs":[],"name":"claimReward","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[],"name":"currentAPY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"dogeStakes","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"pendingRewards","type":"uint256"},{"internalType":"uint64","name":"lastUpdateTime","type":"uint64"},{"internalType":"uint64","name":"lastActionTime","type":"uint64"},{"internalType":"uint64","name":"stakeStartTime","type":"uint64"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"donateToPool","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[],"name":"rewardPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[],"name":"totalStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+      {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"},
+      {"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"calculateReward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
     ];
 
     function App() {
       const [provider, setProvider] = useState(null);
       const [signer, setSigner] = useState(null);
-      const [contract, setContract] = useState(null);
+      const [tokenContract, setTokenContract] = useState(null);
+      const [stakingContract, setStakingContract] = useState(null);
       const [account, setAccount] = useState(null);
       const [balance, setBalance] = useState("0");
       const [apy, setApy] = useState("0");
@@ -813,18 +91,18 @@
       const [error, setError] = useState("");
       const [loading, setLoading] = useState(false);
 
-      // Load global data on start
+      // Initial load (global data from staking contract)
       useEffect(() => {
         const init = async () => {
           const rpc = new ethers.providers.JsonRpcProvider(RPC_URL);
-          const c = new ethers.Contract(CONTRACT_ADDRESS, ABI, rpc);
+          const staking = new ethers.Contract(STAKING_ADDRESS, STAKING_ABI, rpc);
           setProvider(rpc);
-          setContract(c);
+          setStakingContract(staking);
 
           const [apyRaw, totalRaw, poolRaw] = await Promise.all([
-            c.currentAPY(),
-            c.totalStaked(),
-            c.rewardPool()
+            staking.currentAPY(),
+            staking.totalStaked(),
+            staking.rewardPool()
           ]);
           setApy((Number(ethers.utils.formatUnits(apyRaw, 0)) / 100).toFixed(2));
           setTotalStaked(ethers.utils.formatEther(totalRaw));
@@ -833,186 +111,118 @@
         init();
       }, []);
 
-      // Listen to provider events
-      useEffect(() => {
-        if (!window.ethereum) return;
-
-        const handleAccountsChanged = async (accounts) => {
-          if (accounts.length === 0) {
-            setAccount(null);
-            setSigner(null);
-            setBalance("0");
-            setUserStake("0");
-            setPendingRewards("0");
-            const rpc = new ethers.providers.JsonRpcProvider(RPC_URL);
-            setContract(new ethers.Contract(CONTRACT_ADDRESS, ABI, rpc));
-            return;
-          }
-          await refreshUserData(accounts[0]);
-        };
-
-        const handleChainChanged = () => window.location.reload();
-
-        window.ethereum.on('accountsChanged', handleAccountsChanged);
-        window.ethereum.on('chainChanged', handleChainChanged);
-
-        // Auto-connect if already logged in
-        if (window.ethereum.isConnected?.() && window.ethereum.selectedAddress) {
-          handleAccountsChanged([window.ethereum.selectedAddress]);
-        }
-
-        return () => {
-          window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
-          window.ethereum.removeListener('chainChanged', handleChainChanged);
-        };
-      }, []);
-
       const connectWallet = async () => {
-        if (!window.ethereum) {
-          setError("No Ethereum provider detected. Please install MetaMask or another wallet.");
-          return;
-        }
+        if (!window.ethereum) return setError("Please install MetaMask or another wallet");
         setLoading(true);
         setError("");
         try {
-          // Request accounts
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          // Check chain
-          const chainId = Number((await window.ethereum.request({ method: 'eth_chainId' })));
-          if (chainId !== CHAIN_ID) {
-            try {
-              await window.ethereum.request({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId: `0x${CHAIN_ID.toString(16)}` }],
-              });
-            } catch (switchErr) {
-              if (switchErr.code === 4902) {
-                await window.ethereum.request({
-                  method: 'wallet_addEthereumChain',
-                  params: [{
-                    chainId: `0x${CHAIN_ID.toString(16)}`,
-                    chainName: 'Polygon Mainnet',
-                    nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
-                    rpcUrls: [RPC_URL],
-                    blockExplorerUrls: ['https://polygonscan.com/'],
-                  }],
-                });
-              } else {
-                throw switchErr;
-              }
-            }
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+          const prov = new ethers.providers.Web3Provider(window.ethereum);
+          const network = await prov.getNetwork();
+          if (network.chainId !== CHAIN_ID) {
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: `0x${CHAIN_ID.toString(16)}` }],
+            });
           }
-          await refreshUserData(accounts[0]);
+          const signerInst = prov.getSigner();
+          const addr = await signerInst.getAddress();
+
+          const token = new ethers.Contract(TOKEN_ADDRESS, ERC20_ABI, signerInst);
+          const staking = new ethers.Contract(STAKING_ADDRESS, STAKING_ABI, signerInst);
+
+          setProvider(prov);
+          setSigner(signerInst);
+          setTokenContract(token);
+          setStakingContract(staking);
+          setAccount(addr);
+
+          await refreshUserData(addr, token, staking);
         } catch (e) {
-          setError("Connection failed: " + (e.message || "User rejected"));
+          setError(e?.message || "Connection failed");
         } finally {
           setLoading(false);
         }
       };
 
-      const disconnectWallet = async () => {
-        try {
-          await window.ethereum.request({ method: 'eth_accounts' }); // Clear accounts
-          setAccount(null);
-          setSigner(null);
-          setBalance("0");
-          setUserStake("0");
-          setPendingRewards("0");
-          const rpc = new ethers.providers.JsonRpcProvider(RPC_URL);
-          setContract(new ethers.Contract(CONTRACT_ADDRESS, ABI, rpc));
-        } catch (e) {
-          console.error(e);
-        }
-      };
-
-      const refreshUserData = async (addr) => {
-        const prov = new ethers.providers.Web3Provider(window.ethereum);
-        const signerInst = prov.getSigner();
-        const contractWithSigner = new ethers.Contract(CONTRACT_ADDRESS, ABI, signerInst);
-
-        setProvider(prov);
-        setSigner(signerInst);
-        setContract(contractWithSigner);
-        setAccount(addr);
-
-        const [bal, stakeInfo, reward, totalS, pool, apyRaw] = await Promise.all([
-          contractWithSigner.balanceOf(addr),
-          contractWithSigner.dogeStakes(addr),
-          contractWithSigner.calculateReward(addr),
-          contractWithSigner.totalStaked(),
-          contractWithSigner.rewardPool(),
-          contractWithSigner.currentAPY()
+      const refreshUserData = async (addr, token = tokenContract, staking = stakingContract) => {
+        if (!token || !staking) return;
+        const [bal, stakeInfo, rew, totalS, pool, apyRaw] = await Promise.all([
+          token.balanceOf(addr),
+          staking.dogeStakes(addr),
+          staking.calculateReward(addr),
+          staking.totalStaked(),
+          staking.rewardPool(),
+          staking.currentAPY()
         ]);
-
         setBalance(ethers.utils.formatEther(bal));
         setUserStake(ethers.utils.formatEther(stakeInfo.amount));
-        setPendingRewards(ethers.utils.formatEther(reward));
+        setPendingRewards(ethers.utils.formatEther(rew));
         setTotalStaked(ethers.utils.formatEther(totalS));
         setRewardPool(ethers.utils.formatEther(pool));
         setApy((Number(ethers.utils.formatUnits(apyRaw, 0)) / 100).toFixed(2));
+      };
+
+      const handleStake = async () => {
+        if (!stakeAmount || Number(stakeAmount) <= 0) return setError("Invalid amount");
+        setLoading(true);
+        try {
+          const amount = ethers.utils.parseEther(stakeAmount);
+          const approveTx = await tokenContract.approve(STAKING_ADDRESS, amount);
+          await approveTx.wait();
+          const tx = await stakingContract.stake(amount);
+          await tx.wait();
+          setStakeAmount("");
+          await refreshUserData(account);
+        } catch (e) { setError(e?.reason || e?.message || "Stake failed"); }
+        setLoading(false);
+      };
+
+      const handleUnstake = async () => {
+        if (!unstakeAmount || Number(unstakeAmount) <= 0) return setError("Invalid amount");
+        setLoading(true);
+        try {
+          const amount = ethers.utils.parseEther(unstakeAmount);
+          const tx = await stakingContract.unstake(amount);
+          await tx.wait();
+          setUnstakeAmount("");
+          await refreshUserData(account);
+        } catch (e) { setError(e?.reason || e?.message || "Unstake failed"); }
+        setLoading(false);
+      };
+
+      const handleClaimRewards = async () => {
+        setLoading(true);
+        try {
+          const tx = await stakingContract.claimReward();
+          await tx.wait();
+          await refreshUserData(account);
+        } catch (e) { setError(e?.reason || e?.message || "Claim failed"); }
+        setLoading(false);
+      };
+
+      const handleDonate = async () => {
+        if (!donateAmount || Number(donateAmount) <= 0) return setError("Invalid amount");
+        setLoading(true);
+        try {
+          const amount = ethers.utils.parseEther(donateAmount);
+          const approveTx = await tokenContract.approve(STAKING_ADDRESS, amount);
+          await approveTx.wait();
+          const tx = await stakingContract.donateToPool(amount);
+          await tx.wait();
+          setDonateAmount("");
+          await refreshUserData(account);
+        } catch (e) { setError(e?.reason || e?.message || "Donate failed"); }
+        setLoading(false);
       };
 
       const addTokenToWallet = async () => {
         try {
           await window.ethereum.request({
             method: 'wallet_watchAsset',
-            params: { type: 'ERC20', options: { address: CONTRACT_ADDRESS, symbol: 'DRKT', decimals: 18, image: LOGO_URL } }
+            params: { type: 'ERC20', options: { address: TOKEN_ADDRESS, symbol: 'DRKT', decimals: 18, image: LOGO_URL } }
           });
         } catch { }
-      };
-
-      const handleStake = async () => {
-        if (!account || !stakeAmount || Number(stakeAmount) <= 0) return setError("Invalid amount");
-        setLoading(true);
-        try {
-          const amount = ethers.utils.parseEther(stakeAmount);
-          let tx = await contract.approve(CONTRACT_ADDRESS, amount);
-          await tx.wait();
-          tx = await contract.stake(amount);
-          await tx.wait();
-          setStakeAmount("");
-          await refreshUserData(account);
-        } catch (e) { setError(e?.reason || e?.message || "Stake failed") }
-        setLoading(false);
-      };
-
-      const handleUnstake = async () => {
-        if (!account || !unstakeAmount || Number(unstakeAmount) <= 0) return setError("Invalid amount");
-        setLoading(true);
-        try {
-          const amount = ethers.utils.parseEther(unstakeAmount);
-          const tx = await contract.unstake(amount);
-          await tx.wait();
-          setUnstakeAmount("");
-          await refreshUserData(account);
-        } catch (e) { setError(e?.reason || e?.message || "Unstake failed") }
-        setLoading(false);
-      };
-
-      const handleClaim = async () => {
-        if (!account) return;
-        setLoading(true);
-        try {
-          const tx = await contract.claimReward();
-          await tx.wait();
-          await refreshUserData(account);
-        } catch (e) { setError(e?.reason || e?.message || "Claim failed") }
-        setLoading(false);
-      };
-
-      const handleDonate = async () => {
-        if (!account || !donateAmount || Number(donateAmount) <= 0) return setError("Invalid amount");
-        setLoading(true);
-        try {
-          const amount = ethers.utils.parseEther(donateAmount);
-          let tx = await contract.approve(CONTRACT_ADDRESS, amount);
-          await tx.wait();
-          tx = await contract.donateToPool(amount);
-          await tx.wait();
-          setDonateAmount("");
-          await refreshUserData(account);
-        } catch (e) { setError(e?.reason || e?.message || "Donate failed") }
-        setLoading(false);
       };
 
       return (
@@ -1041,7 +251,7 @@
                   <span className="bg-white/10 px-5 py-3 rounded-full font-mono">
                     {account.slice(0,6)}...{account.slice(-4)}
                   </span>
-                  <button onClick={disconnectWallet} className="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-full">
+                  <button onClick={() => window.location.reload()} className="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-full">
                     Disconnect
                   </button>
                 </div>
@@ -1098,10 +308,10 @@
                   <div className="bg-green-900/50 p-6 rounded-xl"><h3 className="text-xl text-gray-300">Pending Rewards</h3><p className="text-4xl font-bold text-green-400">{parseFloat(pendingRewards).toLocaleString()} DRKT</p></div>
                 </div>
                 <div className="space-y-6">
-                  <div><label className="block text-lg mb-2">Stake Amount</label><input type="number" step="0.000000000000000001" value={stakeAmount} onChange={e=>setStakeAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleStake} disabled={loading} className="mt-3 w-full bg-green-600 hover:bg-green-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Stake</button></div>
-                  <div><label className="block text-lg mb-2">Unstake Amount</label><input type="number" step="0.000000000000000001" value={unstakeAmount} onChange={e=>setUnstakeAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleUnstake} disabled={loading} className="mt-3 w-full bg-red-600 hover:bg-red-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Unstake</button></div>
-                  <div><label className="block text-lg mb-2">Donate Amount</label><input type="number" step="0.000000000000000001" value={donateAmount} onChange={e=>setDonateAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleDonate} disabled={loading} className="mt-3 w-full bg-purple-600 hover:bg-purple-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Donate</button></div>
-                  <button onClick={handleClaim} disabled={loading || Number(pendingRewards)===0} className="w-full bg-yellow-600 hover:bg-yellow-500 py-5 rounded-full font-bold text-xl disabled:opacity-50">
+                  <div><input type="number" step="0.000000000000000001" value={stakeAmount} onChange={e=>setStakeAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleStake} disabled={loading} className="mt-3 w-full bg-green-600 hover:bg-green-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Stake</button></div>
+                  <div><input type="number" step="0.000000000000000001" value={unstakeAmount} onChange={e=>setUnstakeAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleUnstake} disabled={loading} className="mt-3 w-full bg-red-600 hover:bg-red-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Unstake</button></div>
+                  <div><input type="number" step="0.000000000000000001" value={donateAmount} onChange={e=>setDonateAmount(e.target.value)} placeholder="0.0 DRKT" className="w-full p-4 bg-white/10 rounded-lg text-lg text-white"/><button onClick={handleDonate} disabled={loading} className="mt-3 w-full bg-purple-600 hover:bg-purple-500 py-4 rounded-full font-bold text-xl disabled:opacity-50">Donate</button></div>
+                  <button onClick={handleClaimRewards} disabled={loading || Number(pendingRewards)===0} className="w-full bg-yellow-600 hover:bg-yellow-500 py-5 rounded-full font-bold text-xl disabled:opacity-50">
                     {loading ? "Claiming..." : `Claim ${parseFloat(pendingRewards).toLocaleString()} DRKT Rewards`}
                   </button>
                 </div>

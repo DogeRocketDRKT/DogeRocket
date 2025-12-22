@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DogeRocket Tokenomics</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #0A1F44; /* Dark Blue Theme */
@@ -18,6 +18,31 @@
             background-size: cover;
             opacity: 0.95;
             line-height: 1.6;
+        }
+        nav {
+            background-color: #1E3A8A; /* Darker Blue Header */
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 4px solid #3B82F6; /* Bright Blue Accent */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #E0E7FF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #3B82F6;
         }
         header {
             background-color: #1E3A8A; /* Darker Blue Header */
@@ -36,7 +61,7 @@
             font-size: 14px;
             color: #93C5FD; /* Secondary Blue */
         }
-        .add-to-metamask {
+        .add-to-metamask, .buy-button {
             display: inline-block;
             margin-top: 10px;
             padding: 8px 16px;
@@ -46,14 +71,19 @@
             border-radius: 8px;
             font-weight: 600;
             transition: background-color 0.3s;
+            margin-left: 10px;
         }
-        .add-to-metamask:hover {
+        .add-to-metamask:hover, .buy-button:hover {
             background-color: #1E40AF; /* Primary Blue on Hover */
         }
         h1, h2 {
             color: #3B82F6; /* Bright Blue Headings */
             font-weight: 700;
             margin-bottom: 10px;
+        }
+        h2 i {
+            margin-right: 10px;
+            font-size: 1.2em;
         }
         section {
             max-width: 1200px;
@@ -69,6 +99,19 @@
             display: block;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .marketing-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .marketing-section img {
+            max-width: 50%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .marketing-section .text {
+            max-width: 50%;
         }
         table {
             width: 100%;
@@ -115,6 +158,16 @@
     </style>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="https://www.dogerocket.site">Home</a></li>
+            <li><a href="https://www.dogerocket.site/whitepaper.html">Whitepaper</a></li>
+            <li><a href="https://staking.dogerocket.site">Staking</a></li>
+            <li><a href="https://t.me/DogeDAO_DRKT">DogeDAO</a></li>
+            <li><a href="https://discord.gg/9QQ8FmY6nq">Discord</a></li>
+            <li><a href="https://x.com/DRKTDogeRocket">X (Twitter)</a></li>
+        </ul>
+    </nav>
     <header>
         <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i" alt="DogeRocket Logo: Cartoon dog in astronaut helmet" class="logo">
         <h1>DogeRocket Tokenomics</h1>
@@ -122,25 +175,33 @@
             <p>Contract Address: <span class="highlight">0x78835AE70722A6Aa03aAA5d4501E3e0460f723f9</span></p>
             <a href="https://polygonscan.com/token/0x78835AE70722A6Aa03aAA5d4501E3e0460f723f9" class="highlight">View on PolygonScan</a>
             <a href="#" class="add-to-metamask" onclick="addToMetaMask()">Add to MetaMask</a>
+            <a href="https://dapp.quickswap.exchange/swap/v3/ETH/0x78835AE70722A6Aa03aAA5d4501E3e0460f723f9" class="buy-button">Buy DRKT</a>
         </div>
         <p>Launch into the Cosmos with DRKT – Stake, Earn, and Govern!</p>
     </header>
-
     <section id="overview">
-        <h2>Overview</h2>
-        <p>Welcome to <strong>DogeRocket (DRKT)</strong>, a decentralized meme coin on the Polygon network that combines fun with a robust economic foundation. With a fixed supply of <strong>1 billion DRKT</strong>, DRKT offers dynamic staking rewards up to <strong>300% APY</strong>, a transparent <strong>2% transaction tax</strong> directed entirely to the reward pool, and a future DAO for community governance. Our metadata (CID: <span class="highlight">bafkreicab7kdzy3rr4ugaesbeattgoqdhltb5ps2g6yog3c3gebtunrxf4</span>) ensures full transparency.</p>
-        <p><strong>Core Values:</strong></p>
+        <h2><i class="ri-information-line"></i> Overview</h2>
+        <p>Welcome to <strong>DogeRocket (DRKT)</strong>, a premier decentralized finance token on the Polygon network that merges engaging meme culture with a solid economic framework designed for long-term value. With a fixed supply of <strong>1 billion DRKT</strong>, DRKT provides attractive staking opportunities, a sustainable 2% unstake fee that bolsters the rewards pool, and upcoming community governance through DogeDAO. This structure ensures transparency, security, and real utility, making DRKT an ideal choice for investors seeking growth in the vibrant DeFi space.</p>
+        <p><strong>Core Values That Drive Success:</strong></p>
         <ul>
-            <li><strong>Fairness:</strong> Locked allocations and liquidity safeguards protect against rug pulls.</li>
-            <li><strong>Sustainability:</strong> The 2% tax fuels the reward pool, enhancing staking rewards.</li>
-            <li><strong>Community Empowerment:</strong> DAO governance and high-yield staking drive engagement.</li>
+            <li><strong>Fairness and Trust:</strong> Locked allocations and robust liquidity measures safeguard your investment, eliminating risks like rug pulls and promoting a secure environment.</li>
+            <li><strong>Sustainable Growth:</strong> The 2% unstake fee is reinvested directly into the rewards pool, creating a self-sustaining cycle that enhances returns for all participants.</li>
+            <li><strong>Community Empowerment:</strong> Through DogeDAO, holders gain a voice in shaping the project's future, fostering innovation and collective prosperity.</li>
         </ul>
         <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreifn5zc3vpvifvmfztrhub6hfsa2ed6kqjw2xwovyeds5kkdlfvtaa" alt="Pie chart of token allocation" class="pie-chart">
     </section>
-
+    <section id="marketing">
+        <h2><i class="ri-star-line"></i> Why Choose DogeRocket?</h2>
+        <div class="marketing-section">
+            <img src="https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreifxz3roezxg5rjlcb3pnfzmffs4wsjybjkqyvqxuqjnf66erqpdfq" alt="DogeRocket Marketing Image">
+            <div class="text">
+                <p>Join the DogeRocket revolution and propel your portfolio to new heights. With seamless integration on Polygon for low-cost transactions, DRKT offers unparalleled opportunities to stake, earn competitive rewards, and participate in a thriving community. Whether you're a seasoned investor or new to DeFi, DogeRocket provides the tools and support to maximize your potential. Don't miss out—secure your stake today and be part of a project that's built for the stars!</p>
+            </div>
+        </div>
+    </section>
     <section id="allocation">
-        <h2>Token Allocation</h2>
-        <p>The 1 billion DRKT supply is strategically distributed to support liquidity, rewards, and long-term growth:</p>
+        <h2><i class="ri-pie-chart-line"></i> Token Allocation: Designed for Stability and Growth</h2>
+        <p>The 1 billion DRKT fixed supply is meticulously allocated to ensure balanced support for liquidity, rewards, and ecosystem expansion, attracting investors by prioritizing long-term viability and community benefits:</p>
         <table>
             <thead>
                 <tr>
@@ -153,91 +214,80 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Owner Allocation</td>
+                    <td>DogeDAO Allocation</td>
                     <td>10%</td>
                     <td>100,000,000</td>
-                    <td>Supports development, marketing, and operations.</td>
-                    <td>Unlocked at deployment for immediate use.</td>
+                    <td>Funds liquidity pools, airdrops, and marketing to drive adoption and community engagement.</td>
+                    <td>Unlocked at deployment for strategic ecosystem initiatives.</td>
                 </tr>
                 <tr>
-                    <td>Reward Pool</td>
+                    <td>Rewards Pool</td>
                     <td>40%</td>
                     <td>400,000,000</td>
-                    <td>Powers up to 300% APY staking rewards, replenished by 2% tax.</td>
-                    <td>Managed in-contract, dynamically adjusted.</td>
+                    <td>Dedicated to powering staking rewards, continuously replenished for sustained investor returns.</td>
+                    <td>Managed in-contract, with dynamic adjustments to optimize performance.</td>
                 </tr>
                 <tr>
-                    <td>Locked Pool</td>
+                    <td>Locked Rewards</td>
                     <td>30%</td>
                     <td>300,000,000</td>
-                    <td>Reserved to enhance the reward pool, vesting over 10 years.</td>
-                    <td>10-year lock, claimable post-1 year in 10% annual increments.</td>
+                    <td>Reserved to bolster the rewards pool over time, ensuring ongoing value for holders.</td>
+                    <td>10-year lock, claimable post-1 year in 10% annual increments under DogeDAO governance.</td>
                 </tr>
                 <tr>
                     <td>Vested Funds</td>
                     <td>20%</td>
                     <td>200,000,000</td>
-                    <td>Allocated for team and community initiatives, vesting over 10 years.</td>
+                    <td>Allocated for liquidity, airdrops, marketing, and treasury to support sustained development and community rewards.</td>
                     <td>10-year vesting, claimable post-1 year in 10% annual increments.</td>
                 </tr>
             </tbody>
         </table>
-        <!-- <img src="https://via.placeholder.com/600x400.png?text=Token+Allocation+Pie+Chart" alt="Pie chart of token allocation" class="pie-chart"> -->
     </section>
-
     <section id="tax">
-        <h2>2% Transaction Tax – All to the Pool</h2>
-        <p>Every DRKT transaction (excluding owner/contract) incurs a <strong>2% tax</strong>, fully allocated to the reward pool to boost staking rewards. This transparent mechanism ensures sustainability without additional marketing fees.</p>
+        <h2><i class="ri-money-dollar-circle-line"></i> 2% Unstake Fee: Fueling Sustainable Rewards</h2>
+        <p>To promote long-term holding and ecosystem health, a <strong>2% fee</strong> applies to unstaking actions. This fee is entirely redirected to the rewards pool, creating a virtuous cycle that enhances staking incentives and benefits all participants. This mechanism underscores our commitment to sustainability, ensuring that every action contributes to collective growth without imposing unnecessary burdens.</p>
         <ul>
-            <li><strong>100% to Reward Pool:</strong> Enhances APY and rewards for stakers.</li>
+            <li><strong>100% to Rewards Pool:</strong> Directly boosts the pool, leading to more attractive returns for dedicated holders.</li>
         </ul>
-        <p>Built with OpenZeppelin’s secure libraries and audited by top firms (Certik/Hacken recommended), DRKT prioritizes trust and safety.</p>
-        <!-- <img src="https://via.placeholder.com/600x400.png?text=Tax+Flow+to+Reward+Pool" alt="Flow diagram of 2% tax distribution" class="flow-diagram"> -->
+        <p>Secured with OpenZeppelin libraries and recommended for audits by leading firms like Certik or Hacken, DRKT is built on a foundation of trust and reliability.</p>
     </section>
-
     <section id="staking">
-        <h2>Staking: Earn Up to 300% APY</h2>
-        <p>Stake your DRKT to unlock dynamic rewards with up to <strong>300% APY</strong>, adjusted based on pool health. The initial 400M DRKT reward pool is continuously replenished by the 2% tax.</p>
+        <h2><i class="ri-coin-line"></i> Alpha Staking Pool (Pool 1): Unlock Competitive Rewards and Build Wealth</h2>
+        <p>Stake your DRKT to access dynamic rewards powered by a robust pool, designed to deliver compelling returns while supporting the ecosystem's longevity. The initial 400M DRKT rewards pool is replenished by the 2% unstake fee, offering investors a reliable path to growth.</p>
         <ul>
-            <li><strong>Min Stake:</strong> 100 DRKT</li>
-            <li><strong>Max Stake:</strong> 1M DRKT</li>
-            <li><strong>Min Duration:</strong> 14 days</li>
-            <li><strong>Cooldown:</strong> 24 hours</li>
-            <li><strong>Withdraw Fee:</strong> 2% (within 14 days)</li>
-            <li><strong>Max Duration:</strong> 365 days</li>
-            <li><strong>Claim Window:</strong> 3 years</li>
+            <li><strong>Minimum Stake:</strong> 100 DRKT – Accessible entry for all investors.</li>
+            <li><strong>Maximum Stake:</strong> 1M DRKT – Scalable for larger portfolios.</li>
+            <li><strong>Minimum Duration:</strong> 14 days – Encourages committed participation.</li>
+            <li><strong>Cooldown Period:</strong> 24 hours – Ensures smooth operations.</li>
+            <li><strong>Unstake Fee:</strong> 2% – Reinvested to enhance rewards for everyone.</li>
+            <li><strong>Maximum Duration:</strong> 365 days – Flexible options for long-term strategies.</li>
+            <li><strong>Claim Window:</strong> Up to 3 years – Ample time to realize your earnings.</li>
         </ul>
-        <p><strong>Example:</strong> Stake 100 DRKT for 365 days at 300% APY to earn approximately 300 DRKT in rewards!</p>
-        <!-- <img src="https://via.placeholder.com/600x400.png?text=Staking+Reward+Graph" alt="Line graph of staking rewards" class="reward-graph"> -->
+        <p><strong>Investor Benefit:</strong> By staking, you not only earn rewards but also contribute to a stronger, more resilient community. Start staking today to secure your share of the ecosystem's success!</p>
     </section>
-
     <section id="governance">
-        <h2>Governance and Community Control</h2>
-        <p>After a 10-year timelock on locked and vested funds, a DAO will empower the community to vote on future allocations, fostering decentralized decision-making.</p>
+        <h2><i class="ri-government-line"></i> Governance: Empower Your Voice with DogeDAO</h2>
+        <p>DogeDAO places control in the hands of the community, allowing DRKT holders to propose, vote on, and implement key decisions regarding treasury allocations, partnerships, and ecosystem enhancements. Launching fully in Q2 2026 after initial vesting periods, DogeDAO ensures decentralized, transparent governance that aligns with holder interests. Join today to contribute ideas, earn rewards through participation, and shape the future of DogeRocket—turning your investment into active influence.</p>
     </section>
-
     <section id="liquidity-commitments">
-        <h2>Liquidity Locking Commitments</h2>
-        <p>DogeRocket commits to locking at least <strong>10% liquidity</strong> continuously, with lock events managed via Team.Finance/UNCX. First event scheduled for Q2 2026.</p>
+        <h2><i class="ri-lock-line"></i> Liquidity Commitments: Ensuring Stability for Investors</h2>
+        <p>DogeRocket is dedicated to maintaining strong liquidity, with at least <strong>10% of liquidity locked</strong> on an ongoing basis. Managed through trusted platforms like Team.Finance or UNCX, our first major lock event is planned for Q2 2026. This commitment provides peace of mind, facilitating smooth trading and protecting against volatility—key factors for confident, long-term investment.</p>
     </section>
-
     <section id="security">
-        <h2>Security and Sustainability</h2>
-        <p>DRKT leverages OpenZeppelin (ERC20, ReentrancyGuard) with non-reentrant functions and transparent metadata (CID: <span class="highlight">bafkreicab7kdzy3rr4ugaesbeattgoqdhltb5ps2g6yog3c3gebtunrxf4</span>). Donations to the pool are non-recoverable, ensuring trust.</p>
+        <h2><i class="ri-shield-check-line"></i> Security and Sustainability: Built to Last</h2>
+        <p>DRKT is engineered with top-tier security using OpenZeppelin standards (ERC20, ReentrancyGuard) and non-reentrant functions to prevent vulnerabilities. Donations to the rewards pool are irreversible, reinforcing trust. Our focus on sustainability means every element—from tokenomics to governance—is designed to deliver enduring value, making DRKT a smart choice for forward-thinking investors.</p>
     </section>
-
     <footer>
-        <p>Visit us at <a href="https://dogerocket.site">dogerocket.site</a> | Join <a href="https://discord.gg/9QQ8FmY6nq">Discord</a> | Follow <a href="https://x.com/DRKTDogeRocket">X</a></p>
+        <p>Visit us at <a href="https://www.dogerocket.site">dogerocket.site</a> | Join <a href="https://discord.gg/9QQ8FmY6nq">Discord</a> | Follow <a href="https://x.com/DRKTDogeRocket">X</a></p>
         <p>Ready to join the cosmic journey? Stake DRKT today!</p>
     </footer>
-
     <script>
         function addToMetaMask() {
             const tokenAddress = '0x78835AE70722A6Aa03aAA5d4501E3e0460f723f9';
             const tokenSymbol = 'DRKT';
             const tokenDecimals = 18;
             const tokenImage = 'https://gray-past-falcon-384.mypinata.cloud/ipfs/bafkreign7g276yq7ss6cqo7gtnrbvwrh5qbxmhgboamwdoiy5sv5lo6j4i';
-
             if (window.ethereum) {
                 try {
                     window.ethereum.request({
